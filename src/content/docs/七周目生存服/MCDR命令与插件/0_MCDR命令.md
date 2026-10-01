@@ -6,7 +6,7 @@ description: mcdr常用指令
 
 > 本文根据 MCDReforged 官方文档的 `!!MCDR` 命令页面整理，主要收录服务器管理员日常最常用的基础命令；插件仓库高级操作和 Debug 命令暂不列入。
 
-> 官方文档：https://docs.mcdreforged.com/zh-cn/latest/command/mcdr.html
+> [官方文档](https://docs.mcdreforged.com/zh-cn/latest/command/mcdr.html)
 
 ## 1. 基本说明
 
