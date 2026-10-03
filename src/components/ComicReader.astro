@@ -1,0 +1,223 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from '@astrojs/starlight/components';
+import type { ComicImage } from '../lib/comics';
+
+interface Props { images: ComicImage[]; title?: string; }
+const { images, title = '漫画' } = Astro.props;
+const sizes = '(max-width: 50em) calc(100vw - 2rem), (max-width: 75em) 90vw, 1080px';
+---
+
+{images.length > 0 ? (
+	<comic-reader tabindex="0" role="region" aria-label={`${title} 阅读器`} data-total={images.length}>
+		<div class="reader-stage" data-stage>
+			{images.map(({ src, name }, index) => index === 0 ? (
+				<div class="reader-slide is-current" data-slide={index} aria-hidden="false">
+					<Image src={src} alt={`${title} - 第 ${index + 1} 页 (${name})`} widths={[640, 1080, 1600]} sizes={sizes} loading="eager" fetchpriority="high" draggable="false" />
+				</div>
+			) : (
+				<template data-page={index}>
+					<div class="reader-slide" data-slide={index} aria-hidden="true">
+						<Image src={src} alt={`${title} - 第 ${index + 1} 页 (${name})`} widths={[640, 1080, 1600]} sizes={sizes} loading="lazy" draggable="false" />
+					</div>
+				</template>
+			))}
+			<button class="reader-nav previous" type="button" data-previous aria-label="上一张" title="上一张" disabled><Icon name="left-arrow" size="1.5rem" /></button>
+			<button class="reader-nav next" type="button" data-next aria-label="下一张" title="下一张" disabled={images.length < 2}><Icon name="right-arrow" size="1.5rem" /></button>
+		</div>
+		<dialog class="zoom-dialog" data-zoom-dialog aria-label={`${title} 图片放大预览`}>
+			<button class="zoom-close" type="button" data-zoom-close aria-label="关闭图片预览" title="关闭图片预览" autofocus><Icon name="close" size="1.5rem" /></button>
+			<img class="zoom-image" data-zoom-image alt="" />
+		</dialog>
+		<div class="reader-footer">
+			<span class="reader-filename" data-filename>{images[0].name}</span>
+			<span class="reader-counter" data-counter role="status" aria-live="polite" aria-atomic="true">第 1 / {images.length} 页</span>
+		</div>
+		<progress max={images.length} value={1} aria-label="阅读进度" />
+		<noscript><p>请启用 JavaScript 以浏览其余页面。</p></noscript>
+	</comic-reader>
+) : <p>暂无图片</p>}
+
+<script>
+	class ComicReader extends HTMLElement {
+		private controller?: AbortController;
+		private currentIndex = 0;
+		private targetIndex = 0;
+		private totalImages = 0;
+		private requestId = 0;
+		private touch?: { x: number; y: number; deltaX: number; horizontal: boolean | null };
+		private stage!: HTMLElement;
+		private previous!: HTMLButtonElement;
+		private next!: HTMLButtonElement;
+		private counter!: HTMLElement;
+		private filename!: HTMLElement;
+		private progress!: HTMLProgressElement;
+		private zoomDialog!: HTMLDialogElement;
+		private zoomImage!: HTMLImageElement;
+		private zoomClose!: HTMLButtonElement;
+
+		connectedCallback() {
+			this.controller?.abort();
+			this.controller = new AbortController();
+			const { signal } = this.controller;
+			this.totalImages = Number(this.dataset.total);
+			this.stage = this.querySelector<HTMLElement>('[data-stage]')!;
+			this.previous = this.querySelector<HTMLButtonElement>('[data-previous]')!;
+			this.next = this.querySelector<HTMLButtonElement>('[data-next]')!;
+			this.counter = this.querySelector<HTMLElement>('[data-counter]')!;
+			this.filename = this.querySelector<HTMLElement>('[data-filename]')!;
+			this.progress = this.querySelector<HTMLProgressElement>('progress')!;
+			this.zoomDialog = this.querySelector<HTMLDialogElement>('[data-zoom-dialog]')!;
+			this.zoomImage = this.querySelector<HTMLImageElement>('[data-zoom-image]')!;
+			this.zoomClose = this.querySelector<HTMLButtonElement>('[data-zoom-close]')!;
+			this.previous.addEventListener('click', () => void this.move(-1), { signal });
+			this.next.addEventListener('click', () => void this.move(1), { signal });
+			this.stage.addEventListener('click', (event) => {
+				if (event.target instanceof HTMLImageElement) this.openZoom(event.target);
+			}, { signal });
+			this.zoomClose.addEventListener('click', () => this.zoomDialog.close(), { signal });
+			this.zoomDialog.addEventListener('click', (event) => {
+				if (event.target === this.zoomDialog) this.zoomDialog.close();
+			}, { signal });
+			document.addEventListener('keydown', (event) => {
+				const target = event.target;
+				if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+				if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable], dialog, [role="dialog"]')) return;
+				const focusedReader = target instanceof HTMLElement ? target.closest('comic-reader') : null;
+				if (focusedReader ? focusedReader !== this : document.querySelector('comic-reader') !== this) return;
+				if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+				event.preventDefault();
+				void this.move(event.key === 'ArrowLeft' ? -1 : 1);
+			}, { signal });
+			this.stage.addEventListener('touchstart', (event) => {
+				if (event.touches.length !== 1) { this.touch = undefined; return; }
+				this.touch = { x: event.touches[0].clientX, y: event.touches[0].clientY, deltaX: 0, horizontal: null };
+			}, { passive: true, signal });
+			this.stage.addEventListener('touchmove', (event) => {
+				if (!this.touch || event.touches.length !== 1) { this.touch = undefined; return; }
+				const deltaX = event.touches[0].clientX - this.touch.x;
+				const deltaY = event.touches[0].clientY - this.touch.y;
+				if (this.touch.horizontal === null && Math.max(Math.abs(deltaX), Math.abs(deltaY)) > 10) {
+					this.touch.horizontal = Math.abs(deltaX) > Math.abs(deltaY);
+				}
+				this.touch.deltaX = deltaX;
+				if (this.touch.horizontal && event.cancelable) event.preventDefault();
+			}, { passive: false, signal });
+			this.stage.addEventListener('touchend', (event) => {
+				const touch = this.touch;
+				this.touch = undefined;
+				if (!touch || event.touches.length > 0 || !touch.horizontal) return;
+				const endedTouch = event.changedTouches[0];
+				if (!endedTouch) return;
+				const deltaX = endedTouch.clientX - touch.x;
+				if (Math.abs(deltaX) >= 50) void this.move(deltaX < 0 ? 1 : -1);
+			}, { passive: true, signal });
+			this.stage.addEventListener('touchcancel', () => { this.touch = undefined; }, { signal });
+			this.preloadNeighbors();
+		}
+
+		disconnectedCallback() {
+			this.controller?.abort();
+			if (this.zoomDialog?.open) this.zoomDialog.close();
+			this.requestId++;
+			this.touch = undefined;
+		}
+
+		private openZoom(image: HTMLImageElement) {
+			this.updateZoomImage(image);
+			if (!this.zoomDialog.open) this.zoomDialog.showModal();
+			this.zoomClose.focus();
+		}
+
+		private updateZoomImage(image: HTMLImageElement) {
+			this.zoomImage.alt = image.alt;
+			this.zoomImage.sizes = '100vw';
+			if (image.srcset) this.zoomImage.srcset = image.srcset;
+			else this.zoomImage.removeAttribute('srcset');
+			this.zoomImage.src = image.src;
+		}
+
+		private getSlide(index: number): HTMLElement {
+			const existing = this.stage.querySelector<HTMLElement>(`[data-slide="${index}"]`);
+			if (existing) return existing;
+			const template = this.stage.querySelector<HTMLTemplateElement>(`template[data-page="${index}"]`)!;
+			const slide = template.content.firstElementChild!.cloneNode(true) as HTMLElement;
+			slide.querySelector('img')!.loading = 'eager';
+			this.stage.append(slide);
+			return slide;
+		}
+
+		private preloadNeighbors() {
+			for (const index of [this.currentIndex - 1, this.currentIndex + 1]) {
+				if (index >= 0 && index < this.totalImages) this.getSlide(index);
+			}
+		}
+
+		private async move(delta: number) {
+			const index = Math.max(0, Math.min(this.totalImages - 1, this.targetIndex + delta));
+			if (index === this.targetIndex) return;
+			this.targetIndex = index;
+			const requestId = ++this.requestId;
+			const slide = this.getSlide(index);
+			const image = slide.querySelector('img')!;
+			this.setAttribute('aria-busy', 'true');
+			this.counter.textContent = `正在加载第 ${index + 1} 页`;
+			let failed = false;
+			try { await image.decode(); } catch { failed = true; }
+			if (!this.isConnected || requestId !== this.requestId) return;
+			if (failed) {
+				this.targetIndex = this.currentIndex;
+				this.removeAttribute('aria-busy');
+				this.counter.textContent = `第 ${index + 1} 页加载失败，请重试`;
+				return;
+			}
+			const oldSlide = this.getSlide(this.currentIndex);
+			oldSlide.classList.remove('is-current');
+			oldSlide.setAttribute('aria-hidden', 'true');
+			slide.classList.add('is-current');
+			slide.setAttribute('aria-hidden', 'false');
+			this.currentIndex = index;
+			this.previous.disabled = index === 0;
+			this.next.disabled = index === this.totalImages - 1;
+			// Keep keyboard focus in the reader when the focused edge button becomes disabled.
+			if ((document.activeElement === this.previous && this.previous.disabled) || (document.activeElement === this.next && this.next.disabled)) this.focus({ preventScroll: true });
+			this.counter.textContent = `第 ${index + 1} / ${this.totalImages} 页`;
+			this.filename.textContent = image.alt.slice(image.alt.lastIndexOf('(') + 1, -1);
+			this.progress.value = index + 1;
+			if (this.zoomDialog.open) this.updateZoomImage(image);
+			this.removeAttribute('aria-busy');
+			this.preloadNeighbors();
+		}
+	}
+	if (!customElements.get('comic-reader')) customElements.define('comic-reader', ComicReader);
+</script>
+
+<style>
+	comic-reader { display: block; width: 100%; margin: 0; }
+	.reader-stage { position: relative; isolation: isolate; height: min(72svh, 960px); min-height: 280px; overflow: hidden; background: var(--sl-color-gray-6); touch-action: pan-y pinch-zoom; }
+	.reader-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transform: translate3d(12px, 0, 0); pointer-events: none; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
+	.reader-slide.is-current { opacity: 1; transform: translate3d(0, 0, 0); }
+	.reader-slide :global(img) { width: 100%; height: 100%; max-width: 100%; margin: 0; object-fit: contain; user-select: none; }
+	.reader-slide.is-current :global(img) { cursor: zoom-in; }
+	.reader-nav { position: absolute; z-index: 2; top: calc(50% - 24px); display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid var(--sl-color-gray-4); border-radius: 6px; color: var(--sl-color-text); background: color-mix(in srgb, var(--sl-color-bg) 85%, transparent); cursor: pointer; transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease; }
+	.previous { left: 12px; }
+	.next { right: 12px; }
+	.reader-nav:hover:not(:disabled) { background: var(--sl-color-accent-low); color: var(--sl-color-accent-high); transform: scale(1.05); }
+	.reader-nav:active:not(:disabled) { transform: scale(0.95); }
+	.reader-nav:disabled { opacity: 0.3; cursor: default; }
+	.reader-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; margin: 0; padding: 0.75rem 0; font-size: 0.8125rem; color: var(--sl-color-gray-2); }
+	.reader-filename { min-width: 0; overflow-wrap: anywhere; }
+	.reader-counter { flex-shrink: 0; font-variant-numeric: tabular-nums; }
+	.zoom-dialog { position: fixed; inset: 0; display: grid; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 1rem; place-items: center; overflow: hidden; border: 0; color: var(--sl-color-text); background: transparent; }
+	.zoom-dialog:not([open]) { display: none; }
+	.zoom-dialog::backdrop { background: rgb(10 12 16 / 0.94); backdrop-filter: blur(8px); }
+	.zoom-image { display: block; width: 100%; height: 100%; max-width: 100%; max-height: 100%; margin: 0; object-fit: contain; }
+	.zoom-close { position: absolute; z-index: 1; top: max(1rem, env(safe-area-inset-top)); right: max(1rem, env(safe-area-inset-right)); display: grid; width: 48px; height: 48px; padding: 0; place-items: center; border: 1px solid rgb(255 255 255 / 0.3); border-radius: 6px; color: white; background: rgb(20 22 27 / 0.7); cursor: pointer; transition: background-color 0.2s ease, transform 0.2s ease; }
+	.zoom-close:hover { background: rgb(72 76 85 / 0.85); transform: scale(1.05); }
+	.zoom-close:active { transform: scale(0.95); }
+	progress { display: block; width: 100%; height: 3px; margin: 0; border: 0; appearance: none; background: var(--sl-color-gray-5); color: var(--sl-color-accent); }
+	progress::-webkit-progress-bar { background: var(--sl-color-gray-5); }
+	progress::-webkit-progress-value { background: var(--sl-color-accent); transition: width 0.3s ease; }
+	progress::-moz-progress-bar { background: var(--sl-color-accent); }
+	@media (max-width: 30em) { .reader-nav { width: 44px; height: 44px; top: calc(50% - 22px); } .previous { left: 4px; } .next { right: 4px; } }
+</style>
