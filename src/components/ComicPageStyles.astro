@@ -1,0 +1,21 @@
+<style is:global>
+	@view-transition { navigation: auto; }
+	.comic-page {
+		letter-spacing: 0;
+		animation: comic-enter 0.3s ease-out both;
+	}
+	.comic-page a:focus-visible,
+	.comic-page button:focus-visible,
+	comic-reader:focus-visible {
+		outline: 3px solid var(--sl-color-accent-high);
+		outline-offset: 4px;
+	}
+	@keyframes comic-enter {
+		from { opacity: 0; transform: translateY(6px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.comic-page, .comic-page * { animation: none !important; transition: none !important; }
+		::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+	}
+</style>
