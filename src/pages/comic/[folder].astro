@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from 'astro';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { Icon } from '@astrojs/starlight/components';
+import ComicReader from '../../components/ComicReader.astro';
+import ComicPageStyles from '../../components/ComicPageStyles.astro';
+import { comicAlbums, comicUrl, type ComicAlbum } from '../../lib/comics';
+
+export const getStaticPaths = (() => comicAlbums.map((album) => ({
+	params: { folder: album.folder },
+	props: { album },
+}))) satisfies GetStaticPaths;
+
+interface Props { album: ComicAlbum; }
+const { album } = Astro.props;
+---
+
+<StarlightPage frontmatter={{ title: album.folder, template: 'splash', tableOfContents: false, prev: false, next: false }}>
+	<ComicPageStyles />
+	<div class="comic-page">
+		<a class="back-link" href={comicUrl()}><Icon name="left-arrow" size="1.25rem" />图集列表</a>
+		<ComicReader images={album.images} title={album.folder} />
+	</div>
+</StarlightPage>
+
+<style>
+	.back-link { display: inline-flex; min-height: 44px; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; text-decoration: none; color: var(--sl-color-gray-2); transition: color 0.2s ease, transform 0.2s ease; }
+	.back-link:hover { color: var(--sl-color-accent-high); transform: translateX(-2px); }
+</style>
