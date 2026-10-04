@@ -7,6 +7,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'QUSTMC',
+			favicon: '/icon.ico',
 			components: {
 				Sidebar: './src/components/Sidebar.astro',
 			},
