@@ -26,7 +26,7 @@ sidebar:
 ## 服务器常用插件使用指南
 
 :::tip
-本章节为简单使用指南，详细文档请移步[**服务器mod文档目录**](./mcdr命令与插件/)
+本章节为简单使用指南，详细文档请移步[**服务器插件文档目录**](./mcdr命令与插件/)
 
 下面这些指令都在游戏聊天栏里输入。开头的 `!!` 不能省略。
 :::
@@ -155,6 +155,8 @@ sidebar:
 
 - `Very Many Players` 多人在线优化
 
+- `MsptMap` 以地图形式可视化 MSPT（每刻平均耗时），直观定位卡顿区域
+
 
 ### 3. 服务端管理、网络与版本兼容
 
@@ -192,6 +194,8 @@ sidebar:
 
 - `gugle-carpet-addition`
 
+- `carpet-rof-addition` 
+
 ### 6. 界面、社交与实用辅助
 
 - `TAB` 自定义 Tab 菜单与信息显示
@@ -199,6 +203,8 @@ sidebar:
 - `SkinsRestorer` 皮肤恢复与设置
 
 - `LetMeClickAndSendForServer` 允许玩家在聊天栏特定组件点击发送文字(给where2go用的)
+
+- `Quick Shulker Multi` 在背包内直接预览和操作潜影盒，无需放置
 
 ---
 有问题就在群里问，或者找管理员帮忙。
