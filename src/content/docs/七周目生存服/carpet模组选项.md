@@ -10,6 +10,8 @@ description: 简介
 |Carpet 扩展|[link](https://www.mcmod.cn/class/3325.html)|[link](https://github.com/gnembon/carpet-extra)|[link](https://github.com/gnembon/carpet-extra)|❌|
 |Carpet TIS Addition|[link](https://www.mcmod.cn/class/5664.html)|[link](https://github.com/TISUnion/Carpet-TIS-Addition)|[link](https://carpet.tis.world/zh-Hans/docs/rules)|✅|
 |[GCA]Gugle的Carpet附加包|[link](https://www.mcmod.cn/class/7305.html)|[link](https://github.com/Gu-ZT/gugle-carpet-addition)|[link](https://github.com/Gu-ZT/gugle-carpet-addition)|✅|
+|[ROF]Carpet Rof Addition|[link](https://www.mcmod.cn/class/27271.html)|[link](https://github.com/Melationin/ROF-Carpet-Addition)|[link](https://github.com/Melationin/ROF-Carpet-Addition/blob/MCP/docs/zh_cn/rules.md)|✅|
+|[DDS]Carpet DDS Addition|[link](https://www.mcmod.cn/class/29799.html)|[link](https://github.com/x-oOvOo-x/Carpet-DDS-Addition)|[link](https://github.com/x-oOvOo-x/Carpet-DDS-Addition/blob/main/docs/rules-zh_cn.md)|❌|
 |Essential Addons|[link](https://www.mcmod.cn/class/4975.html)|[link](https://github.com/Gu-ZT/gugle-carpet-addition)|[link](https://github.com/Super-Santa/EssentialAddons)|❌|
 
 ---
