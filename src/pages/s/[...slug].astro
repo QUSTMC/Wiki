@@ -1,0 +1,66 @@
+---
+import type { GetStaticPaths } from 'astro';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import { getCollection, getEntry, render } from 'astro:content';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { secretRouteParam, scanSecretPages, validateSecretRoutes } from '../../lib/secret-pages.mjs';
+
+export const getStaticPaths = (async () => {
+	const pages = await scanSecretPages(resolve('src/secretpages'));
+	const docs = await getCollection('docs', ({ data }) => import.meta.env.MODE !== 'production' || !data.draft);
+	validateSecretRoutes(pages, docs);
+	return pages.map((page) => ({
+		params: { slug: page.slug ? (import.meta.env.DEV ? page.slug.normalize() : secretRouteParam(page.slug)) : undefined },
+		props: page,
+	}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	filePath: string;
+	relativePath: string;
+	fileType: 'md' | 'mdx' | 'html' | 'astro';
+	slug: string;
+}
+
+const { filePath, relativePath, fileType } = Astro.props;
+if (fileType === 'html') {
+	return new Response(await readFile(filePath, 'utf8'), {
+		headers: { 'Content-Type': 'text/html; charset=utf-8' },
+	});
+}
+
+const astroPages = import.meta.glob<{ default: AstroComponentFactory }>([
+	'/src/secretpages/**/*.astro',
+	'!/src/secretpages/**/_*/**', '!/src/secretpages/**/_*',
+	'!/src/secretpages/**/.*/**', '!/src/secretpages/**/.*',
+]);
+const entry = fileType === 'md' || fileType === 'mdx' ? await getEntry('secret', relativePath) : undefined;
+if ((fileType === 'md' || fileType === 'mdx') && !entry) {
+	throw new Error(`无法读取 Secret 内容集合文件：${filePath}`);
+}
+const markdown = entry ? await render(entry) : undefined;
+const Content = markdown?.Content;
+const OriginalPage = fileType === 'astro'
+	? (await astroPages[`/src/secretpages/${relativePath}`]()).default
+	: undefined;
+const title = entry?.data.title?.trim() || relativePath.split('/').at(-1)!.replace(/\.[^.]+$/, '');
+---
+
+{OriginalPage ? <OriginalPage /> : Content && (
+	<StarlightPage
+		hasSidebar={false}
+		frontmatter={{
+			title,
+			template: 'splash',
+			pagefind: false,
+			prev: false,
+			next: false,
+			tableOfContents: false,
+			head: [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } }],
+		}}
+	>
+		<Content />
+	</StarlightPage>
+)}
