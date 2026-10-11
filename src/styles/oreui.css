@@ -1,0 +1,178 @@
+/* OreUI → Starlight adapter. Upstream colors and bevels: Spectrollay (MIT).
+ * See vendor/oreui/LICENSE and README.md for attribution and update details. */
+@import './vendor/oreui/colors.css';
+
+:root {
+	--sl-color-white: var(--white);
+	--sl-color-gray-1: var(--gray-20);
+	--sl-color-gray-2: var(--gray-30);
+	--sl-color-gray-3: var(--gray-40);
+	--sl-color-gray-4: var(--gray-60);
+	--sl-color-gray-5: var(--gray-70);
+	--sl-color-gray-6: var(--gray-80);
+	--sl-color-black: var(--gray-90);
+	--sl-color-accent-low: var(--green-80);
+	--sl-color-accent: var(--green-50);
+	--sl-color-accent-high: var(--green-10);
+	--sl-color-text: var(--gray-20);
+	--sl-color-text-invert: var(--gray-100);
+	--sl-color-bg-nav: var(--gray-70);
+	--sl-color-bg-sidebar: var(--gray-80);
+	--sl-color-hairline: var(--gray-70);
+	--sl-color-hairline-light: var(--gray-60);
+	--ore-panel: var(--gray-80);
+	--ore-panel-hover: var(--gray-70);
+	--ore-edge: var(--gray-100);
+	--ore-bevel: inset 2px 2px var(--white-opacity-20), inset -2px -2px var(--black-opacity-20);
+	--ore-focus: var(--green-10);
+}
+
+:root[data-theme='light'] {
+	--sl-color-white: var(--gray-100);
+	--sl-color-gray-1: var(--gray-90);
+	--sl-color-gray-2: var(--gray-80);
+	--sl-color-gray-3: var(--gray-60);
+	--sl-color-gray-4: var(--gray-50);
+	--sl-color-gray-5: var(--gray-40);
+	--sl-color-gray-6: var(--gray-20);
+	--sl-color-gray-7: var(--gray-10);
+	--sl-color-black: var(--gray-10);
+	--sl-color-accent-low: var(--green-10);
+	--sl-color-accent: var(--green-50);
+	--sl-color-accent-high: var(--green-70);
+	--sl-color-text: var(--gray-80);
+	--sl-color-text-invert: var(--white);
+	--sl-color-bg-nav: var(--gray-30);
+	--sl-color-bg-sidebar: var(--gray-20);
+	--sl-color-hairline: var(--gray-40);
+	--sl-color-hairline-light: var(--gray-40);
+	--ore-panel: var(--gray-20);
+	--ore-panel-hover: var(--gray-30);
+	--ore-edge: var(--gray-60);
+	--ore-bevel: inset 2px 2px var(--white-opacity-80), inset -2px -2px var(--black-opacity-20);
+	--ore-focus: var(--green-70);
+}
+
+/* Preserve Starlight's responsive layout and component behavior. */
+header.header {
+	border-bottom: 2px solid var(--ore-edge);
+	box-shadow: inset 0 2px var(--white-opacity-20), 0 4px var(--black-opacity-20);
+}
+
+.site-title { color: var(--sl-color-white); font-weight: 800; }
+.sidebar-pane { border-inline-end: 2px solid var(--ore-edge); }
+.content-panel + .content-panel { border-top: 2px solid var(--sl-color-hairline); }
+
+.hero {
+	padding: clamp(1.5rem, 4vw, 3rem);
+	border: 2px solid var(--ore-edge);
+	background: var(--ore-panel);
+	box-shadow: var(--ore-bevel), 0 6px var(--ore-edge);
+}
+.hero h1 { font-weight: 800; }
+
+.sl-link-button,
+site-search > button,
+starlight-theme-select select,
+.sl-menu-button,
+.comic-page .reader-nav {
+	border: 2px solid var(--secondary-border);
+	border-radius: 0;
+	background: var(--secondary-background);
+	color: var(--secondary-text);
+	box-shadow: inset 0 -4px var(--secondary-shadow), inset 3px 3px var(--white-opacity-60), inset -3px -7px var(--white-opacity-40);
+	font-weight: 700;
+	transition: background-color 100ms, box-shadow 100ms;
+}
+.sl-link-button { padding: 0.85rem 1.25rem 1rem; }
+.sl-link-button.primary {
+	background: var(--primary-background);
+	color: var(--primary-text);
+	box-shadow: inset 0 -4px var(--primary-shadow), inset 3px 3px var(--white-opacity-20), inset -3px -7px var(--white-opacity-10);
+}
+.sl-link-button:hover,
+site-search > button:hover,
+starlight-theme-select select:hover,
+.sl-menu-button:hover,
+.comic-page .reader-nav:hover:not(:disabled) {
+	background: var(--secondary-background-hovered);
+	color: var(--secondary-text);
+}
+.sl-link-button.primary:hover { background: var(--primary-background-hovered); color: var(--primary-text); }
+.sl-link-button:active,
+site-search > button:active,
+.sl-menu-button:active,
+.comic-page .reader-nav:active:not(:disabled) {
+	box-shadow: inset 3px 3px var(--white-opacity-20), inset -3px -3px var(--white-opacity-10);
+	transform: translateY(2px);
+}
+starlight-theme-select { color: var(--secondary-text); }
+starlight-theme-select select { padding-block: 0.5rem 0.75rem; }
+
+:root[data-theme='dark'] site-search > button kbd {
+	color: var(--white);
+}
+
+.sidebar-content a,
+.sidebar-content summary,
+starlight-toc a,
+starlight-toc summary { border-radius: 0; }
+.sidebar-content a { padding-block: 0.45em; }
+.sidebar-content a:hover { background: var(--ore-panel-hover); }
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover {
+	color: var(--primary-text);
+	background: var(--primary-background);
+	box-shadow: inset 3px 0 var(--green-10), inset 0 -2px var(--primary-shadow);
+}
+
+.card,
+.sl-markdown-content .sl-link-card,
+.pagination-links a,
+.comic-page .comic-card {
+	border: 2px solid var(--ore-edge);
+	border-radius: 0;
+	background: var(--ore-panel);
+	box-shadow: var(--ore-bevel), 0 4px var(--ore-edge);
+}
+.card .icon {
+	border: 2px solid var(--primary-shadow);
+	border-radius: 0;
+	background: var(--primary-background);
+	color: var(--primary-text);
+}
+.pagination-links a:hover,
+.sl-markdown-content .sl-link-card:hover,
+.comic-page .comic-card:hover {
+	border-color: var(--sl-color-accent-high);
+	background: var(--ore-panel-hover);
+	box-shadow: var(--ore-bevel), 0 4px var(--ore-edge);
+	transform: none;
+}
+
+site-search dialog,
+.pagefind-ui__search-input,
+.pagefind-ui__button,
+.sl-markdown-content :is(code, pre, blockquote, .starlight-aside),
+.expressive-code .frame { border-radius: 0; }
+site-search dialog { border: 2px solid var(--ore-edge); box-shadow: var(--ore-bevel), 0 6px var(--ore-edge); }
+.sl-markdown-content blockquote { border-inline-start: 4px solid var(--primary-background); }
+
+.comic-page comic-reader { border: 2px solid var(--ore-edge); border-radius: 0; }
+.comic-page .reader-nav:hover:not(:disabled) { transform: none; }
+.comic-page .reader-footer { background: var(--ore-panel); box-shadow: var(--ore-bevel); }
+.comic-page progress { height: 6px; }
+
+:where(a, button, select, input, summary):focus-visible {
+	outline: 3px solid var(--ore-focus);
+	outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sl-link-button, site-search > button, starlight-theme-select select, .sl-menu-button { transition: none; }
+}
+
+@media print {
+	.hero, .card, .sl-link-button, .pagination-links a, .comic-page .comic-card { box-shadow: none; }
+}
+
