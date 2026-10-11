@@ -12,7 +12,7 @@ export default defineConfig({
 			components: {
 				Sidebar: './src/components/Sidebar.astro',
 			},
-			//customCss: ['./src/styles/custom.css'],
+			customCss: ['./src/styles/oreui.css', './src/styles/custom.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/QUSTMC/QUST_Wiki' }],
 			
 		}),
