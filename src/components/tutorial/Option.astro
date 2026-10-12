@@ -1,0 +1,24 @@
+---
+import './tutorial.css';
+
+export interface Props {
+	isCorrect?: boolean;
+}
+
+const { isCorrect } = Astro.props;
+---
+
+<li>
+	<label>
+		<input type="radio" disabled data-is-correct={isCorrect} /><span><slot /></span>
+		{
+			Astro.slots.has('feedback') && (
+				<template>
+					<slot name="feedback" />
+				</template>
+			)
+		}
+	</label>
+</li>
+
+

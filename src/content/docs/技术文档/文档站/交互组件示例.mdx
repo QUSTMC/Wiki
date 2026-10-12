@@ -1,0 +1,67 @@
+---
+title: 交互组件示例
+description: 基于 Astro 官方教程源码的 OreUI 选择题和任务清单。
+---
+
+import MultipleChoice from '../../../../components/tutorial/MultipleChoice.astro';
+import Option from '../../../../components/tutorial/Option.astro';
+import Checklist from '../../../../components/tutorial/Checklist.astro';
+import Box from '../../../../components/tutorial/Box.astro';
+
+这些组件沿用 [Astro 官方教程组件](https://github.com/withastro/docs/tree/main/src/components/tutorial)的交互逻辑，并使用本站 OreUI 样式。用法见[编辑文档](../编辑文档/)。
+
+<Box icon="question-mark">
+
+## 选择题
+
+要在文档正文中导入 Astro 组件，应该使用哪个文件后缀？
+
+<MultipleChoice>
+  <Option>
+    <span>.md</span>
+    <span slot="feedback">还不正确。普通 Markdown 页面不能直接导入 Astro 组件。</span>
+  </Option>
+  <Option isCorrect>
+    <span>.mdx</span>
+    <span slot="feedback">回答正确！MDX 支持在 Markdown 正文中导入和使用组件。</span>
+  </Option>
+  <Option><span>.css</span></Option>
+</MultipleChoice>
+
+</Box>
+
+<Box icon="check-list">
+
+## 写作任务清单
+
+勾选状态保存在当前浏览器中，刷新后仍会保留。
+
+<Checklist key="authoring-basics">
+
+- [ ] 已设置页面标题。
+- [ ] 已检查链接和图片。
+- [ ] 已在本地预览页面。
+
+</Checklist>
+
+</Box>
+
+<Box icon="puzzle-piece">
+
+## 两种完成方式
+
+完成任意一组任务即可。每组的勾选状态独立保存。
+
+<Checklist key="authoring-review">
+
+- [ ] 已自行预览并检查文档。
+
+<div slot="alternative">
+
+- [ ] 已请其他维护者协助检查。
+
+</div>
+
+</Checklist>
+
+</Box>

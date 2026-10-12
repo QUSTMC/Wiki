@@ -1,0 +1,110 @@
+/* OreUI skin for the Astro Docs tutorial components. See LICENSE and README.md. */
+.tutorial-box {
+	position: relative;
+	margin-block: 2rem;
+	padding: 1.5rem;
+	border: 2px solid var(--ore-edge);
+	background: var(--ore-panel);
+	box-shadow: var(--ore-bevel), 0 4px var(--ore-edge);
+}
+.tutorial-box-icon {
+	display: grid;
+	place-items: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin-bottom: 1rem;
+	border: 2px solid var(--primary-shadow);
+	background: var(--primary-background);
+	color: var(--primary-text);
+	box-shadow: inset 2px 2px var(--white-opacity-20);
+}
+multiple-choice, check-list { display: block; color: var(--sl-color-text); }
+multiple-choice .opt-list, check-list .checklist ul {
+	list-style: none;
+	padding: 0;
+	margin: 1rem 0;
+}
+multiple-choice .opt-list > li, check-list .checklist ul > li { margin-block: 0.5rem; }
+multiple-choice label, check-list label {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	padding: 0.8rem;
+	border: 2px solid var(--ore-edge);
+	background: var(--ore-panel);
+	box-shadow: var(--ore-bevel);
+	cursor: pointer;
+	overflow-wrap: anywhere;
+}
+multiple-choice label:hover, check-list label:hover { background: var(--ore-panel-hover); }
+multiple-choice label:has(input:checked), check-list label:has(input:checked) {
+	border-color: var(--sl-color-accent-high);
+	background: var(--sl-color-accent-low);
+}
+multiple-choice input[type='radio'], check-list input[type='checkbox'] {
+	appearance: none;
+	flex: 0 0 1.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin: 0;
+	border: 2px solid var(--neutral-border);
+	border-radius: 0;
+	background: var(--neutral-50-background);
+	box-shadow: inset 2px 2px var(--white-opacity-40), inset -2px -2px var(--black-opacity-20);
+	cursor: pointer;
+}
+multiple-choice input:checked, check-list input:checked { background: var(--primary-background); }
+multiple-choice input:checked::after {
+	content: '';
+	display: block;
+	width: 0.6rem;
+	height: 0.6rem;
+	margin: 0.325rem;
+	background: var(--white);
+}
+check-list input:checked::after {
+	content: '';
+	display: block;
+	width: 0.45rem;
+	height: 0.8rem;
+	margin: 0.1rem 0.35rem;
+	border: solid var(--white);
+	border-width: 0 3px 3px 0;
+	transform: rotate(45deg);
+}
+multiple-choice input:focus-visible, check-list input:focus-visible, multiple-choice .submit:focus-visible {
+	outline: 3px solid var(--ore-focus);
+	outline-offset: 3px;
+}
+multiple-choice .footer { display: grid; gap: 1rem; margin-top: 1rem; }
+multiple-choice .submit {
+	justify-self: start;
+	padding: 0.75rem 1.5rem 1rem;
+	border: 2px solid var(--primary-border);
+	border-radius: 0;
+	background: var(--primary-background);
+	color: var(--primary-text);
+	font: inherit;
+	font-weight: 700;
+	box-shadow: inset 0 -4px var(--primary-shadow), inset 3px 3px var(--white-opacity-20), inset -3px -7px var(--white-opacity-10);
+	cursor: pointer;
+}
+multiple-choice .submit:hover:not(:disabled) { background: var(--primary-background-hovered); }
+multiple-choice .submit:active:not(:disabled) { box-shadow: var(--ore-bevel); }
+multiple-choice .submit:disabled {
+	background: var(--neutral-background-disabled);
+	color: var(--neutral-text-disabled);
+	border-color: var(--neutral-border-disabled);
+	box-shadow: inset 0 -4px var(--neutral-shadow-disabled);
+	cursor: not-allowed;
+}
+multiple-choice .answer:not(.sr-only) { padding: 1rem; border: 2px solid var(--ore-edge); box-shadow: var(--ore-bevel); }
+multiple-choice .answer.correct { background: var(--success-tint-background); color: var(--success-tint-text); }
+multiple-choice .answer.wrong { background: var(--destructive-tint-background); color: var(--destructive-tint-text); }
+multiple-choice .answer > :first-child { margin-top: 0; }
+multiple-choice .answer > :last-child { margin-bottom: 0; }
+check-list .or { margin-block: 1rem; text-align: center; font-weight: 700; }
+@media (forced-colors: active) {
+	multiple-choice input:checked::after { background: Highlight; }
+	check-list input:checked::after { border-color: Highlight; }
+}

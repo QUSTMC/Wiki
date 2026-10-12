@@ -1,0 +1,16 @@
+---
+// Adapted from withastro/docs src/components/tutorial/Box.astro (MIT).
+import { Icon } from '@astrojs/starlight/components';
+import './tutorial.css';
+
+interface Props {
+	icon?: 'puzzle-piece' | 'question-mark' | 'check-list';
+}
+const { icon = 'question-mark' } = Astro.props;
+const icons = { 'puzzle-piece': 'puzzle', 'question-mark': 'question-circle', 'check-list': 'approve-check' } as const;
+---
+
+<div class:list={['tutorial-box', icon]}>
+	<div class="tutorial-box-icon" aria-hidden="true"><Icon name={icons[icon]} size="1.5rem" /></div>
+	<section><slot /></section>
+</div>
