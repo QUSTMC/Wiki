@@ -1,0 +1,74 @@
+---
+import './tutorial.css';
+
+export interface Props {
+	key?: string;
+}
+
+const { key = 'default' } = Astro.props;
+---
+
+<check-list data-key={key}>
+	<div class="checklist"><slot /></div>
+	{
+		Astro.slots.has('alternative') && (
+			<>
+				<p class="or">{'或者'}</p>
+				<div class="checklist alternative">
+					<slot name="alternative" />
+				</div>
+			</>
+		)
+	}
+</check-list>
+
+
+
+<script>
+	import { ProgressStore, type SubListType } from './ProgressStore';
+
+	class CheckList extends HTMLElement {
+		private readonly key: string;
+
+		constructor() {
+			super();
+			this.key = this.dataset['key']!;
+			ProgressStore.initialiseList(this.key);
+			this.upgradeSubList(this.querySelector('.checklist ul'), 'primary');
+			this.upgradeSubList(this.querySelector('.checklist.alternative ul'), 'secondary');
+		}
+
+		/** Upgrade the primary or secondary check lists. */
+		upgradeSubList(ul: Element | null, type: SubListType) {
+			if (!ul) return;
+			const items = Array.from(ul.children);
+			ProgressStore.initialiseSubList(this.key, type, items.length);
+			items.forEach((li, index) => this.upgradeTaskItem(li, type, index));
+		}
+
+		/** Upgrade an item in a GitHub-Flavoured Markdown task list. */
+		upgradeTaskItem(li: Element, type: SubListType, index: number) {
+			// Re-enable checkboxes, hydrate state & listen for changes.
+			const checkbox = li.querySelector('input[type="checkbox"]') as HTMLInputElement;
+			if (!checkbox) return;
+			// Astro Docs wraps GFM items with a site-specific plugin; adapt ordinary MDX here.
+			if (!checkbox.closest('label')) {
+				const label = document.createElement('label');
+				const text = document.createElement('span');
+				checkbox.remove();
+				text.append(...li.childNodes);
+				label.append(checkbox, text);
+				li.append(label);
+			}
+			checkbox.removeAttribute('disabled');
+			checkbox.checked = ProgressStore.getSubListItem(this.key, type, index);
+			checkbox.addEventListener('change', (e) => {
+				const input = e.currentTarget as HTMLInputElement;
+				const { checked } = input;
+				ProgressStore.setSubListItem(this.key, type, index, checked);
+			});
+		}
+	}
+
+	customElements.define('check-list', CheckList);
+</script>
