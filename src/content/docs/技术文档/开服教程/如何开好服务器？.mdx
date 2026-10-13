@@ -290,6 +290,27 @@ pause
 
 </Box>
 
+<Box icon="question-mark">
+
+**为社团开服时，应该如何确定 server-port 的值？**
+
+<MultipleChoice>
+  <Option>
+    <span>直接使用默认的 25565，不必确认。</span>
+    <span slot="feedback">25565 是默认值，但社团服务器可能使用其他端口，应先向管理员确认。</span>
+  </Option>
+  <Option isCorrect>
+    <span>向社团管理员确认具体端口，再填写配置。</span>
+    <span slot="feedback">正确！默认端口不一定适用于社团的部署环境，应使用管理员确认的端口。</span>
+  </Option>
+  <Option>
+    <span>填写 MCSM 管理面板的 23333 端口。</span>
+    <span slot="feedback">23333 是后文用于访问 MCSM 管理面板的端口，不应直接当作 Minecraft 服务器端口。</span>
+  </Option>
+</MultipleChoice>
+
+</Box>
+
 ### 3.2 启动！
 
 配置完成后，双击启动脚本，或在命令行中运行它。如果窗口自动关闭，请在启动命令下一行添加 `pause`，方便查看输出。
@@ -348,6 +369,27 @@ eula=false
 进入MCSM的主页面，你会看到一个类似于下图的界面：
 ![MCSM主界面](../../../../assets/server/mcsm_main.webp)
 
+<Box icon="question-mark">
+
+**已按官方教程完成 MCSM 的安装与配置，在本机运行 start.bat 后，应如何进入管理面板？**
+
+<MultipleChoice>
+  <Option>
+    <span>在 Minecraft 的多人游戏界面连接 localhost:23333。</span>
+    <span slot="feedback">这是 Web 管理面板的地址，应通过浏览器访问，而不是通过 Minecraft 客户端连接。</span>
+  </Option>
+  <Option>
+    <span>将 server.properties 中的 server-port 改为 23333。</span>
+    <span slot="feedback">server-port 控制 Minecraft 服务器的端口，修改它不能代替访问 MCSM 管理面板。</span>
+  </Option>
+  <Option isCorrect>
+    <span>在本机浏览器中访问 http://localhost:23333/。</span>
+    <span slot="feedback">正确！本节通过 start.bat 启动 MCSM，再在浏览器中打开本机管理面板。</span>
+  </Option>
+</MultipleChoice>
+
+</Box>
+
 ### 4.2 添加服务器实例
 
 要新建实例，点击右上角“新建应用”添加一个实例：
@@ -366,6 +408,27 @@ eula=false
 
 > 注意：启动命令可以填写你之前写好的启动脚本，或者直接写命令即可
 
+<Box icon="question-mark">
+
+**准备通过压缩包导入服务器实例，下面哪种做法符合本节要求？**
+
+<MultipleChoice>
+  <Option isCorrect>
+    <span>全选服务器文件后压缩为 ZIP，让文件直接位于压缩包根目录；创建实例时填写服务器信息、启动命令和存储路径。</span>
+    <span slot="feedback">正确！压缩包不要多套一层文件夹；启动命令可以填写已有启动脚本，也可以直接填写命令。</span>
+  </Option>
+  <Option>
+    <span>将整个服务器文件夹压缩，让启动脚本和服务器文件都放在压缩包内的下一层目录。</span>
+    <span slot="feedback">本节要求不要嵌套文件夹。应进入服务器目录，全选其中的文件后再压缩。</span>
+  </Option>
+  <Option>
+    <span>只压缩启动脚本，其他服务器文件不必导入。</span>
+    <span slot="feedback">实例需要服务器文件，启动脚本只负责执行启动命令，不能替代完整的服务端文件。</span>
+  </Option>
+</MultipleChoice>
+
+</Box>
+
 ### 4.3 启动服务器
 
 等待导入完成后，它会自动跳转到服务器管理页面。点击“启动”按钮即可启动服务器：
@@ -376,3 +439,26 @@ eula=false
 如果服务器在你的电脑上可以运行而在社团或其他地方无法运行，请你检查Java路径是否正确，你可以在 [这里](#21-安装java) 看到我们社团服务器的Java路径
 
 如果还是不行，可以向我求助（中德Aure）
+
+:::
+
+<Box icon="question-mark">
+
+**服务器在自己的电脑上能启动，导入社团的 MCSM 后却无法启动，应优先检查什么？**
+
+<MultipleChoice>
+  <Option>
+    <span>先增大 max-players，让服务器支持更多玩家。</span>
+    <span slot="feedback">max-players 控制在线人数上限，不能解决启动命令中的 Java 路径问题。</span>
+  </Option>
+  <Option isCorrect>
+    <span>检查启动命令中的 Java 路径是否适用于社团服务器，并对照前文的路径表。</span>
+    <span slot="feedback">正确！不同机器上的 Java 安装路径可能不同，应先检查路径，并选择与游戏及模组要求匹配的版本；仍无法启动时可联系中德Aure。</span>
+  </Option>
+  <Option>
+    <span>反复点击“启动”，不必检查配置。</span>
+    <span slot="feedback">重复启动不会修正错误的路径。本节建议先检查 Java 路径，仍有问题再寻求帮助。</span>
+  </Option>
+</MultipleChoice>
+
+</Box>
