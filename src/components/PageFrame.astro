@@ -1,0 +1,11 @@
+---
+import DefaultPageFrame from '@astrojs/starlight/components/PageFrame.astro';
+import PageLoading from './PageLoading.astro';
+---
+
+<PageLoading />
+<DefaultPageFrame>
+	<slot name="header" slot="header" />
+	<slot name="sidebar" slot="sidebar" />
+	<slot />
+</DefaultPageFrame>

@@ -1,0 +1,56 @@
+/* Extracted unchanged from oreui-web@0.1.0-beta.1 dist/styles.css.
+ * Source: katorlys/OreUI src/components/progress-bar/progress-bar.css.
+ * SPDX-License-Identifier: MPL-2.0. See LICENSE-katorlys and README.md.
+ */
+:where(progress.ore-progress-bar) {
+  --ore-progress-bar-unit: var(--ore-size-unit);
+  --ore-progress-bar-frame: currentColor;
+  --ore-progress-bar-fill: currentColor;
+
+  appearance: none;
+  display: block;
+  box-sizing: border-box;
+  width: min(100%, calc(var(--ore-progress-bar-unit) * 220));
+  height: calc(var(--ore-progress-bar-unit) * 8);
+  border: var(--ore-progress-bar-unit) solid var(--ore-progress-bar-frame);
+  padding: var(--ore-progress-bar-unit);
+  background: transparent;
+  color: var(--ore-progress-bar-fill);
+}
+
+:where(progress.ore-progress-bar)::-webkit-progress-bar {
+  background: transparent;
+}
+
+:where(progress.ore-progress-bar)::-webkit-progress-value {
+  background: var(--ore-progress-bar-fill);
+}
+
+:where(progress.ore-progress-bar)::-moz-progress-bar {
+  background: var(--ore-progress-bar-fill);
+}
+
+:where(.ore-progress-bar-label) {
+  display: block;
+  box-sizing: border-box;
+  width: min(
+    100%,
+    calc(var(--ore-progress-bar-unit, var(--ore-size-unit)) * 220)
+  );
+  margin-block: calc(var(--ore-progress-bar-unit, var(--ore-size-unit)) * 2);
+  color: var(--ore-progress-bar-label, currentColor);
+  font-family: var(--ore-font-body);
+  font-size: calc(var(--ore-progress-bar-unit, var(--ore-size-unit)) * 6);
+  line-height: calc(var(--ore-progress-bar-unit, var(--ore-size-unit)) * 7);
+  text-align: center;
+  white-space: nowrap;
+}
+
+:where(.ore-progress-bar-label[data-align="start"]) {
+  text-align: start;
+}
+
+:where(.ore-progress-bar-label[data-align="end"]) {
+  text-align: end;
+}
+

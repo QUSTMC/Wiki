@@ -1,0 +1,283 @@
+---
+import '../styles/vendor/oreui/progress-bar.css';
+---
+
+<div id="page-loading" hidden role="status" aria-label="页面加载中">
+	<div class="loading-content">
+		<span class="ore-progress-bar-label" aria-hidden="true">LOADING</span>
+		<progress class="ore-progress-bar" max="100" value="0" aria-label="页面加载中" />
+	</div>
+</div>
+
+<script is:inline>
+	(() => {
+		const overlay = document.getElementById('page-loading');
+		const bar = overlay.querySelector('progress');
+		const loadingFont = '48px "Minecrafter Loading"';
+		overlay.dataset.fontState = document.fonts.check(loadingFont, 'LOADING') ? 'ready' : 'loading';
+		// Cached bytes still need a usable FontFace in each new document.
+		const fontReady = document.fonts.load(loadingFont, 'LOADING').then((faces) => {
+			overlay.dataset.fontState = faces.length ? 'ready' : 'failed';
+		}, () => {
+			// A missing font may use the fallback once, without blocking navigation.
+			overlay.dataset.fontState = 'failed';
+		});
+		let ticker;
+		let watchdog;
+		let dismissal;
+		let navigation;
+		let amount = 0;
+		let loadingRun = 0;
+		const navigationKey = 'oreui-page-navigation';
+		const fadeInDuration = 180;
+		const fadeOutDuration = 240;
+		const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+		const nativeTransitions = typeof ViewTransition !== 'undefined'
+			&& 'waitUntil' in ViewTransition.prototype
+			&& 'onpagereveal' in window && !reducedMotion.matches
+			&& document.documentElement.dataset.oreuiLoadingDiagnostic !== 'no-native';
+		let nativeTransitionFinished = Promise.resolve();
+		const pageLoaded = document.readyState === 'complete' ? Promise.resolve()
+			: new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
+		let arrivalAmount = 8;
+		let destination;
+		let arrivalMode = 'initial';
+		try {
+			const pending = JSON.parse(sessionStorage.getItem(navigationKey) || 'null');
+			sessionStorage.removeItem(navigationKey);
+			if (pending?.url === location.href && Date.now() - pending.time < 30000) {
+				arrivalMode = 'navigation';
+				if (Number.isFinite(pending.amount)) arrivalAmount = Math.min(90, Math.max(8, pending.amount));
+			}
+		} catch { /* Loading still works when browser storage is unavailable. */ }
+
+		// The head script opts in before the browser reveals the incoming document.
+		window.addEventListener('pagereveal', (event) => {
+			if (!event.viewTransition) return;
+			// Skipping (for example on Back) rejects ready; consume that expected result.
+			event.viewTransition.ready.catch(() => {});
+			nativeTransitionFinished = event.viewTransition.finished.catch(() => {});
+			if (!nativeTransitions || arrivalMode !== 'navigation' || overlay.hidden) {
+				event.viewTransition.skipTransition();
+				return;
+			}
+			// Keep the old loader snapshot until the new document can paint its font.
+			try {
+				const run = loadingRun;
+				const transition = event.viewTransition;
+				const snapshotFade = Promise.all([fontReady, pageLoaded, transition.ready]).then(async () => {
+					if (overlay.hidden || run !== loadingRun) return;
+					clearInterval(ticker);
+					amount = 100;
+					bar.value = amount;
+					bar.setAttribute('aria-valuetext', '加载完成');
+					window.dispatchEvent(new CustomEvent('oreui:snapshot-fade', { detail: { phase: 'snapshot-fade-start' } }));
+					// Fade the visible snapshot itself, without handing opacity to the captured element.
+					const animations = ['::view-transition-old(oreui-page-loading)', '::view-transition-new(oreui-page-progress)'].map((pseudoElement) =>
+						document.documentElement.animate([{ opacity: 1 }, { opacity: 0 }], {
+							duration: fadeOutDuration, easing: 'ease-out', fill: 'forwards', pseudoElement,
+						})
+					);
+					setTimeout(() => window.dispatchEvent(new CustomEvent('oreui:snapshot-fade', {
+						detail: { phase: 'snapshot-fade-at-80ms', opacity: getComputedStyle(document.documentElement, '::view-transition-old(oreui-page-loading)').opacity },
+					})), 80);
+					await Promise.all(animations.map((animation) => animation.finished));
+					if (run !== loadingRun) return;
+					overlay.hidden = true;
+					window.dispatchEvent(new CustomEvent('oreui:snapshot-fade', { detail: { phase: 'snapshot-fade-end' } }));
+				}).catch(() => transition.skipTransition());
+				transition.waitUntil(snapshotFade);
+			} catch {
+				event.viewTransition.skipTransition();
+			}
+		});
+		function rememberNavigation() {
+			if (!destination) return;
+			try {
+				sessionStorage.setItem(navigationKey, JSON.stringify({ url: destination, time: Date.now(), amount }));
+			} catch { /* Navigation must also work with storage disabled. */ }
+		}
+		window.addEventListener('pageswap', rememberNavigation);
+
+		function reset() {
+			loadingRun++;
+			clearInterval(ticker);
+			clearTimeout(watchdog);
+			clearTimeout(dismissal);
+			clearTimeout(navigation);
+			overlay.hidden = true;
+			overlay.style.removeProperty('opacity');
+			overlay.style.removeProperty('transition');
+			delete overlay.dataset.state;
+			delete document.documentElement.dataset.oreuiLoadingTransition;
+			overlay.style.removeProperty('view-transition-name');
+			bar.style.removeProperty('view-transition-name');
+		}
+
+		function start(mode, fadeIn = false, initialAmount = 8) {
+			reset();
+			overlay.dataset.mode = mode;
+			amount = initialAmount;
+			if (nativeTransitions && mode === 'navigation') {
+				document.documentElement.dataset.oreuiLoadingTransition = '';
+				overlay.style.viewTransitionName = 'oreui-page-loading';
+				bar.style.viewTransitionName = 'oreui-page-progress';
+			}
+			bar.value = amount;
+			// This is a navigation indicator, not a measurement of bytes downloaded.
+			bar.removeAttribute('aria-valuenow');
+			bar.setAttribute('aria-valuetext', '正在加载');
+			overlay.hidden = false;
+			if (fadeIn && !reducedMotion.matches) {
+				overlay.dataset.state = 'entering';
+				// Establish the transparent frame before starting the CSS transition.
+				void overlay.offsetWidth;
+			}
+			overlay.dataset.state = 'visible';
+			if (!reducedMotion.matches) {
+				ticker = setInterval(() => {
+					amount += (90 - amount) * 0.12;
+					bar.value = amount;
+				}, 160);
+			}
+			// A failed or cancelled navigation must never leave the page covered.
+			watchdog = setTimeout(reset, 12000);
+		}
+
+		async function finish() {
+			const currentRun = loadingRun;
+			await fontReady;
+			await nativeTransitionFinished;
+			if (overlay.hidden && currentRun === loadingRun) { reset(); return; }
+			if (overlay.hidden || currentRun !== loadingRun) return;
+			if (nativeTransitions && arrivalMode === 'navigation' && !reducedMotion.matches) {
+				// A snapshot is not a painted starting style for the live element's fade.
+				// Release capture, commit opacity: 1, then allow a live frame before fading.
+				overlay.style.removeProperty('view-transition-name');
+				void overlay.offsetWidth;
+				await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+				if (overlay.hidden || currentRun !== loadingRun) return;
+			}
+			clearInterval(ticker);
+			clearTimeout(watchdog);
+			bar.value = 100;
+			bar.setAttribute('aria-valuetext', '加载完成');
+			overlay.dataset.state = 'leaving';
+			dismissal = setTimeout(reset, reducedMotion.matches ? 0 : fadeOutDuration);
+		}
+
+		if (document.readyState !== 'complete') {
+			start(arrivalMode, false, arrivalAmount);
+			window.addEventListener('load', finish, { once: true });
+		}
+		window.addEventListener('pageshow', (event) => {
+			if (event.persisted) reset();
+		});
+		window.addEventListener('pagehide', () => {
+			// Native navigation needs the visible loader in the outgoing snapshot.
+			if (!nativeTransitions) reset();
+		});
+		document.addEventListener('click', (event) => {
+			if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+			const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+			if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+			const url = new URL(link.href, location.href);
+			if (url.origin !== location.origin || !['http:', 'https:'].includes(url.protocol)) return;
+			if (url.pathname === location.pathname && url.search === location.search) return;
+			// Static files and media open directly, without a page loading overlay.
+			if (/\.[a-z0-9]+$/i.test(url.pathname) && !/\.html?$/i.test(url.pathname)) return;
+			event.preventDefault();
+			destination = url.href;
+			start('navigation', true);
+			// Let the outgoing overlay fade in before replacing the document.
+			navigation = setTimeout(() => {
+				rememberNavigation();
+				location.assign(url.href);
+			}, reducedMotion.matches ? 0 : fadeInDuration);
+		});
+	})();
+</script>
+
+<style>
+	@font-face {
+		font-family: 'Minecrafter Loading';
+		src: url('/B_Minecrafter.Reg(主标题).ttf') format('truetype');
+		font-weight: 400;
+		font-style: normal;
+		font-display: block;
+	}
+
+	#page-loading[hidden] { display: none; }
+	#page-loading {
+		position: fixed;
+		inset: 0;
+		z-index: 10000;
+		display: grid;
+		place-items: center;
+		padding: 1.5rem;
+		background: var(--sl-color-black);
+		color: var(--sl-color-white);
+		pointer-events: none;
+		opacity: 1;
+		transition: opacity 180ms ease-out;
+	}
+	#page-loading[data-mode='navigation'] {
+		/* Only the backdrop is translucent; text and progress retain their color. */
+		background: color-mix(in srgb, var(--sl-color-black) 65%, transparent);
+	}
+	#page-loading[data-state='entering'],
+	#page-loading[data-state='leaving'] { opacity: 0; }
+	#page-loading[data-state='leaving'] { transition-duration: 240ms; }
+	.loading-content {
+		--ore-size-unit: 2px;
+		--ore-font-body: 'Minecrafter Loading', sans-serif;
+		width: min(100%, 27.5rem);
+	}
+	.ore-progress-bar-label {
+		margin-block: 0 1.5rem;
+		font-family: 'Minecrafter Loading', sans-serif;
+		font-size: clamp(2rem, 8vw, 3rem);
+		line-height: 1.3;
+	}
+	/* Reserve the title's space, but never paint it in a temporary fallback font. */
+	#page-loading:not([data-font-state='ready']):not([data-font-state='failed']) .ore-progress-bar-label {
+		visibility: hidden;
+	}
+	@media print { #page-loading { display: none; } }
+	@media (prefers-reduced-motion: reduce) {
+		#page-loading { transition: none; }
+	}
+</style>
+
+<style is:global>
+	/* Only loader navigations override the browser's snapshot animation. */
+	:root[data-oreui-loading-transition]::view-transition-group(root),
+	:root[data-oreui-loading-transition]::view-transition-group(oreui-page-loading),
+	:root[data-oreui-loading-transition]::view-transition-group(oreui-page-progress) {
+		animation-duration: 0s;
+	}
+	:root[data-oreui-loading-transition]::view-transition-old(root) { display: none; }
+	:root[data-oreui-loading-transition]::view-transition-new(root) {
+		animation: none;
+		mix-blend-mode: normal;
+	}
+	:root[data-oreui-loading-transition]::view-transition-old(oreui-page-loading) {
+		animation: none;
+		opacity: 1;
+		mix-blend-mode: normal;
+	}
+	:root[data-oreui-loading-transition]::view-transition-new(oreui-page-loading) {
+		animation: none;
+		opacity: 0;
+	}
+	:root[data-oreui-loading-transition]::view-transition-old(oreui-page-progress) {
+		animation: none;
+		opacity: 0;
+	}
+	:root[data-oreui-loading-transition]::view-transition-new(oreui-page-progress) {
+		animation: none;
+		opacity: 1;
+		mix-blend-mode: normal;
+	}
+</style>
+
