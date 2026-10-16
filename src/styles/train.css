@@ -50,6 +50,8 @@
 .train-page .train-advanced-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; padding: 1.25rem; }
 .train-advanced-fields > label { display: grid; gap: 0.35rem; min-width: 0; font-size: 0.8125rem; }
 .train-advanced-wide, .train-advanced-fields > .ore-modal-description { grid-column: 1 / -1; }
+/* Keep Starlight's reset layer from overriding OreUI's modal auto margins. */
+.train-page dialog.ore-modal { margin: auto; }
 .train-page .ore-modal-title { margin: 0; }
 .train-page .train-advanced-actions { display: flex; flex-wrap: wrap; justify-content: end; gap: 0.75rem; padding: 1rem 1.25rem; }
 .train-page .ore-table { margin: 1rem 0; overflow-x: visible; }
