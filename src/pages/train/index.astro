@@ -1,0 +1,7 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import TrainStats from '../../components/TrainStats.astro';
+---
+<StarlightPage hasSidebar={false} frontmatter={{ title: 'StarRail Express 战绩', description: '列车游戏排行榜与玩家战绩查询', tableOfContents: false, prev: false, next: false }}>
+	<TrainStats />
+</StarlightPage>

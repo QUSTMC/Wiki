@@ -1,0 +1,76 @@
+---
+import 'oreui-web/styles.css';
+import '../styles/train.css';
+import TrainPlayerInput from './TrainPlayerInput.astro';
+const { player = false } = Astro.props;
+const root = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/train/`;
+---
+<section class="train-page not-content" data-player={String(player)} data-root={root} aria-label="列车战绩">
+	{player ? <a class="train-back" href={root} data-back>← 返回排行榜</a> : <p class="train-intro">查看列车排名，或查找你的战绩。</p>}
+	<form class="train-search" action={`${root}player/`} method="get" role="search" aria-label="查询玩家战绩">
+		<TrainPlayerInput id="train-player-name" name="name" required />
+		<button class="ore-button" type="submit">查询战绩</button>
+	</form>
+	{player && <>
+		<section data-overview hidden aria-label="累计总览">
+			<div class="train-player-heading"><h2 data-name></h2><label data-account-label hidden>选择账号<select class="ore-select" data-account aria-label="选择账号"></select></label></div>
+			<p class="train-muted train-uuid" data-uuid></p>
+			<p class="train-muted" data-merged hidden>排行榜与日统计按玩家名合并同名账号；下方累计详情按账号展示。</p>
+			<dl class="ore-container train-overview" data-summary aria-label="累计总览数据"></dl>
+		</section>
+	</>}
+	<div class="train-tabs" role="tablist" aria-label={player ? '玩家战绩范围' : '排行榜范围'}>
+		<button class="ore-tab-button" type="button" id="train-tab-total" role="tab" aria-controls="train-panel" aria-selected="true" data-view="total">{player ? '累计战绩' : '累计排行榜'}</button>
+		<button class="ore-tab-button" type="button" id="train-tab-daily" role="tab" aria-controls="train-panel" aria-selected="false" tabindex="-1" data-view="daily">日统计</button>
+	</div>
+	<div class="train-toolbar">
+		{!player && <label class="train-metric-label">排行指标<select class="ore-select" data-metric></select></label>}
+		<label class="ore-textfield" data-daily-control hidden><span class="ore-textfield-label">统计日期</span><span class="ore-textfield-control"><input class="ore-textfield-input train-date" type="date" data-date aria-describedby="train-day-note" /></span></label>
+		{!player && <label>显示人数<select class="ore-select" data-limit><option value="10">每页 10 人</option><option value="20">每页 20 人</option><option value="50">每页 50 人</option></select></label>}
+		{!player && <label data-total-control>最低参赛<select class="ore-select" data-min-games><option value="2">2 局</option><option value="5">5 局</option><option value="10">10 局</option></select></label>}
+		{!player && <button class="ore-button" data-color="secondary" type="button" data-modal-target="train-advanced" aria-haspopup="dialog" aria-controls="train-advanced" data-advanced-open>高级查询</button>}
+		<button class="ore-button train-refresh" data-color="secondary" type="button" data-refresh>刷新</button>
+	</div>
+	{!player && <dialog class="ore-modal" id="train-advanced" aria-labelledby="train-advanced-title" aria-describedby="train-advanced-description">
+		<form class="ore-modal-content" data-advanced-form>
+			<header class="ore-modal-header">
+				<span aria-hidden="true"></span>
+				<h2 class="ore-modal-title" id="train-advanced-title">高级查询</h2>
+				<button class="ore-modal-header-button" type="button" data-modal-close="cancel" aria-label="关闭高级查询">×</button>
+			</header>
+			<div class="ore-container modal-form-body train-advanced-fields" data-variant="dark">
+				<p class="ore-modal-description" id="train-advanced-description">留空玩家名查询排行榜；填写完整玩家名查询个人战绩。</p>
+				<TrainPlayerInput id="train-advanced-player" name="player" label="玩家名（可选）" wide autofocus />
+				<label>统计范围<select class="ore-select" name="view"><option value="total">累计统计</option><option value="daily">日统计</option></select></label>
+				<label data-advanced-board>排行指标<select class="ore-select" name="metric"></select></label>
+				<label class="ore-textfield" data-advanced-daily hidden><span class="ore-textfield-label">统计日期（可选）</span><span class="ore-textfield-control"><input class="ore-textfield-input train-date" type="date" name="date" aria-describedby="train-advanced-day-note" /></span></label>
+				<label class="ore-textfield" data-advanced-board><span class="ore-textfield-label">显示人数（每页）</span><span class="ore-textfield-control"><input class="ore-textfield-input" type="number" name="limit" min="1" max="100" step="1" required inputmode="numeric" /></span></label>
+				<label class="ore-textfield" data-advanced-total data-advanced-board><span class="ore-textfield-label">最低参赛</span><span class="ore-textfield-control"><input class="ore-textfield-input" type="number" name="minGames" min="1" max="1000" step="1" required inputmode="numeric" /></span></label>
+				<p class="train-muted train-advanced-wide" id="train-advanced-day-note" data-advanced-daily hidden>每日 04:00 划分统计日；日期留空时使用当前统计日。</p>
+				<p class="train-muted train-advanced-wide" data-advanced-playtime hidden>游玩时长排行不设最低参赛门槛。</p>
+			</div>
+			<footer class="ore-container train-advanced-actions" data-variant="light">
+				<button class="ore-button" data-color="secondary" type="reset">重置</button>
+				<button class="ore-button" data-color="secondary" type="button" data-modal-close="cancel">取消</button>
+				<button class="ore-button" type="submit">查询</button>
+			</footer>
+		</form>
+	</dialog>}
+	<p class="train-muted" id="train-day-note" data-daily-control hidden>每日 04:00 划分统计日。</p>
+	<div class="train-status-line"><p data-status role="status" aria-live="polite">加载中…</p><p class="train-muted" data-updated></p></div>
+	<section id="train-panel" role="tabpanel" aria-labelledby="train-tab-total" tabindex="0" aria-busy="true">
+		<div data-results></div>
+		{!player && <nav class="train-pagination" aria-label="排行榜分页" data-pagination hidden>
+			<button class="ore-button" data-color="secondary" type="button" data-page-prev disabled>上一页</button>
+			<span data-page-label aria-live="polite" aria-atomic="true"></span>
+			<button class="ore-button" data-color="secondary" type="button" data-page-next disabled>下一页</button>
+		</nav>}
+	</section>
+	<noscript><p>请启用 JavaScript，以加载战绩和查询玩家。</p></noscript>
+</section>
+<script>
+	import 'oreui-web/tab-button';
+	import 'oreui-web/modal';
+	import { initTrainPage } from '../lib/train-page';
+	initTrainPage();
+</script>

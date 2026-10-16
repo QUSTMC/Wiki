@@ -1,0 +1,8 @@
+---
+const { id, name, label = '玩家名', required = false, autofocus = false, wide = false } = Astro.props;
+---
+<div class:list={['ore-textfield ore-dropdown train-player-input', { 'train-advanced-wide': wide }]} data-variant="bordered" data-player-input>
+	<label class="ore-textfield-label" for={id}>{label}</label>
+	<div class="ore-textfield-control"><input class="ore-textfield-input" id={id} name={name} placeholder="输入玩家名，可模糊匹配" required={required} maxlength="128" autocomplete="off" spellcheck="false" autofocus={autofocus} role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls={`${id}-suggestions`} /></div>
+	<div class="ore-dropdown-menu ore-scrollbar" id={`${id}-suggestions`} popover="manual" role="listbox" aria-label="玩家名候选"></div>
+</div>
