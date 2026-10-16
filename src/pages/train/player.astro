@@ -1,0 +1,7 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import TrainStats from '../../components/TrainStats.astro';
+---
+<StarlightPage hasSidebar={false} frontmatter={{ title: '玩家战绩', description: '查看列车玩家的累计战绩、职业表现与日统计', tableOfContents: false, prev: false, next: false }}>
+	<TrainStats player />
+</StarlightPage>
