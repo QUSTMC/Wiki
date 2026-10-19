@@ -1,0 +1,11 @@
+# Add inside an existing HTTPS server {} block. The TLS certificate and domain
+# are configured by the existing website; do not paste a second server blindly.
+location ~ ^/bili/([1-9][0-9]{0,19})\.json$ {
+    alias /var/lib/qust-bili/$1.json;
+    default_type application/json;
+    add_header Cache-Control "public, max-age=60";
+    add_header X-Content-Type-Options nosniff;
+}
+location /bili/ {
+    return 404;
+}

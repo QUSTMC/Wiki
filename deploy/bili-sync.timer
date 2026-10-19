@@ -1,0 +1,10 @@
+[Unit]
+Description=Update public Bilibili dynamic snapshots every 10 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=10min
+Unit=bili-sync.service
+
+[Install]
+WantedBy=timers.target

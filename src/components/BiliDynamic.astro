@@ -3,6 +3,7 @@ import 'oreui-web/styles.css';
 import '../styles/bili.css';
 import { biliOptions, type BiliType, type BiliFeed } from '../lib/bili-data';
 import { getBiliFeed } from '../lib/bili-service';
+import { getBiliSnapshot } from '../lib/bili-snapshot';
 import { renderBiliList } from '../lib/bili-render';
 
 interface Props {
@@ -31,7 +32,9 @@ if (import.meta.env.BILI_API_BASE) {
 	} catch { /* First deploy or temporarily unavailable proxy. */ }
 }
 if (!feed) {
-	try { feed = await getBiliFeed(options, import.meta.env.BILI_COOKIE || process.env.BILI_COOKIE || ''); }
+	try { feed = import.meta.env.BILI_SNAPSHOT_BASE
+		? await getBiliSnapshot(options, import.meta.env.BILI_SNAPSHOT_BASE)
+		: await getBiliFeed(options, import.meta.env.BILI_COOKIE || process.env.BILI_COOKIE || ''); }
 	catch { console.warn(`[BiliDynamic] UID ${options.uid}: build-time fetch unavailable; using static link fallback.`); }
 }
 const items = feed?.items || [];
@@ -54,7 +57,8 @@ const items = feed?.items || [];
 				const response = await fetch(root.dataset.endpoint!, { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20000)]), credentials: 'same-origin' });
 				if (!response.ok) { console.warn(`[BiliDynamic] Refresh failed (HTTP ${response.status}); keeping existing content.`); return; }
 				const data = await response.json();
-				if (!data.success || !Array.isArray(data.items) || data.stale) return;
+				if (!data.success || !Array.isArray(data.items)) return;
+				if (data.stale && JSON.parse(root.dataset.items || '[]').length) return;
 				const items = data.items as BiliItem[];
 				if (!items.length && JSON.parse(root.dataset.items || '[]').length) {
 					console.warn('[BiliDynamic] Empty refresh result; keeping existing dynamics.');

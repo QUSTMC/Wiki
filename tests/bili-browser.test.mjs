@@ -15,7 +15,7 @@ test('Bili static fallback and silent refresh preserve stable DOM and handle cha
 	assert.match(await staticPage.locator('.bili-heading a').getAttribute('href'), /1933142349/);
 	assert.ok((await staticPage.locator('[data-bili-list]').innerHTML()).length > 0);
 	await staticPage.close();
-	for (const mode of ['same', 'changed', 'failed', 'empty']) {
+	for (const mode of ['same', 'changed', 'failed', 'empty', 'stale']) {
 		const page = await browser.newPage();
 		const errors = []; page.on('pageerror', error => errors.push(error.message));
 		let release;
@@ -29,10 +29,15 @@ test('Bili static fallback and silent refresh preserve stable DOM and handle cha
 			return route.fulfill({ json: { success: true, items: mode === 'empty' ? [] : mode === 'same' ? original : [{
 				id: '123456789012345', publishedAt: 1792400000, type: 'DYNAMIC_TYPE_AV', title: '测试视频',
 				text: '<script>unsafe()</script> 测试动态', images: [], url: 'javascript:unsafe()',
-			}], fetchedAt: Date.now() } });
+			}], fetchedAt: Date.now(), stale: mode === 'stale' } });
 		});
 		await page.goto(origin, { waitUntil: 'domcontentloaded' }); await requested;
 		original = JSON.parse(await page.locator('[data-bili-dynamic]').getAttribute('data-items'));
+		if (mode === 'stale') await page.evaluate(() => {
+			const root = document.querySelector('[data-bili-dynamic]');
+			root.dataset.items = '[]'; root.dataset.ready = 'false';
+			root.querySelector('[data-bili-list]').innerHTML = '<p>构建时未获取到动态</p>';
+		});
 		if (mode === 'empty') await page.evaluate(() => {
 			const root = document.querySelector('[data-bili-dynamic]');
 			root.dataset.items = JSON.stringify([{ id: '123456789012345' }]);
@@ -44,7 +49,7 @@ test('Bili static fallback and silent refresh preserve stable DOM and handle cha
 			new MutationObserver(records => { window.biliChanges += records.length; }).observe(document.querySelector('[data-bili-list]'), { childList: true, subtree: true, attributes: true, characterData: true });
 		});
 		release();
-		if (mode === 'changed') {
+		if (mode === 'changed' || mode === 'stale') {
 			await page.locator('[data-dynamic-id="123456789012345"]').waitFor();
 			assert.equal(await page.locator('[data-bili-list] script').count(), 0);
 			assert.equal(await page.locator('.bili-detail').getAttribute('href'), 'https://t.bilibili.com/123456789012345');
