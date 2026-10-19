@@ -1,0 +1,41 @@
+/* Component faces are OreUI Card; these rules only arrange content and bridge themes. */
+.bili-dynamic {
+	--ore-font-body: var(--sl-font);
+	--ore-color-foreground: var(--sl-color-text);
+	--ore-color-border: var(--ore-edge);
+	--ore-color-neutral-surface: var(--ore-panel);
+	--ore-color-focus-ring: var(--ore-focus);
+	color: var(--sl-color-text);
+	margin-block: 2.5rem 1rem;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	width: var(--bili-width, 100%);
+	max-width: min(100%, var(--bili-max-width, 100%));
+	height: var(--bili-height, auto);
+	max-height: var(--bili-max-height, none);
+	container-type: inline-size;
+}
+.bili-dynamic *, .bili-dynamic *::before, .bili-dynamic *::after { box-sizing: border-box; }
+.bili-heading { display: flex; flex: 0 0 auto; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.bili-dynamic .bili-heading h2 { margin: 0; font-size: 1.5rem; }
+.bili-dynamic a { color: var(--sl-color-text-accent); text-underline-offset: 0.2em; overflow-wrap: anywhere; }
+.bili-dynamic a:focus-visible { outline: 2px solid var(--ore-focus); outline-offset: 3px; }
+.bili-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; align-content: start; gap: 1rem; min-height: 0; }
+.bili-dynamic[data-scrollable] .bili-list { overflow-y: auto; padding: 4px; scrollbar-gutter: stable; }
+.bili-list:focus-visible { outline: 2px solid var(--ore-focus); outline-offset: 2px; }
+.bili-dynamic article.ore-card { width: 100%; min-width: 0; }
+.bili-dynamic .ore-card-body { display: flex; flex: 1; min-width: 0; }
+.bili-dynamic .bili-caption { display: flex; flex: 1; flex-direction: column; width: 100%; gap: 0.75rem; padding: 1rem; min-width: 0; }
+.bili-dynamic .bili-detail { margin-top: auto; align-self: flex-start; }
+.bili-meta { display: flex; justify-content: space-between; gap: 0.75rem; color: var(--sl-color-gray-2); font-size: 0.8125rem; }
+.bili-dynamic .bili-title { margin: 0; font-size: 1.0625rem; line-height: 1.5; overflow-wrap: anywhere; }
+.bili-dynamic .bili-text { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; font-size: 0.9375rem; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.bili-images { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.35rem; }
+.bili-images[data-count='1'] { grid-template-columns: minmax(0, 1fr); }
+.bili-images a { display: block; min-width: 0; }
+.bili-dynamic .bili-images img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin: 0; }
+.bili-detail, .bili-heading > a { font-size: 0.875rem; }
+.bili-empty { grid-column: 1 / -1; color: var(--sl-color-gray-2); margin: 0; }
+@media (max-width: 40rem) { .bili-list { grid-template-columns: minmax(0, 1fr); } }
+@container (max-width: 32rem) { .bili-list { grid-template-columns: minmax(0, 1fr); } }

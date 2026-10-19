@@ -1,7 +1,14 @@
 {
   "name": "qust-wiki",
   "compatibility_date": "2026-09-21",
+  "main": "worker/index.ts",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "BILI_ALLOWED_UIDS": "1933142349"
+  },
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/bili"]
   }
 }

@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import secretPagesIntegration from './src/lib/secret-integration.mjs';
 import loadingDiagnostics from './src/lib/loading-diagnostics.mjs';
+import biliDevIntegration from './src/lib/bili-dev-integration.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -39,5 +40,6 @@ export default defineConfig({
 			
 		}),
 		secretPagesIntegration(),
+		biliDevIntegration(),
 	],
 });
