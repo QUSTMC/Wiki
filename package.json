@@ -7,6 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "preview:worker": "wrangler dev --local",
     "astro": "astro"
   },
   "dependencies": {
@@ -17,5 +18,8 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.2"
   }
 }
