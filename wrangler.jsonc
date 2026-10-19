@@ -7,13 +7,11 @@
     "BILI_ALLOWED_UIDS": "1933142349",
     "BILI_SNAPSHOT_BASE": "http://47.105.123.24:20003/bili"
   },
-  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
     "run_worker_first": ["/api/bili"]
   },
-  
   "observability": {
     "logs": {
       "enabled": true,
