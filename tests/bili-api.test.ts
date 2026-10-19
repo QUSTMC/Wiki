@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { biliOptions, biliImage, normalizeBiliItems, filterBiliItems } from '../src/lib/bili-data.ts';
-import { createBiliService, wbiKey, wbiQuery } from '../src/lib/bili-service.ts';
+import { createBiliService, wbiKey, wbiQuery, BiliUpstreamError } from '../src/lib/bili-service.ts';
 import { handleBili } from '../src/lib/bili-handler.ts';
 import { renderBiliList } from '../src/lib/bili-render.ts';
 
@@ -12,6 +12,32 @@ const raw = (id: string, time: number, type = 'DYNAMIC_TYPE_AV') => ({ id_str: i
 } });
 const img = 'https://i0.hdslb.com/bfs/wbi/7cd084941338484aae1ad9425b84077c.png';
 const sub = 'https://i0.hdslb.com/bfs/wbi/4932caff0ff746eab6f01bf08b70ac45.png';
+
+test('risk diagnostics identify the failed stage and cookie usage without exposing secrets', async t => {
+	const logs: unknown[][] = [];
+	t.mock.method(console, 'warn', (...args: unknown[]) => { logs.push(args); });
+	for (const stage of ['visitor', 'wbi', 'feed'] as const) {
+		const cookie = stage === 'visitor' ? '' : 'SESSDATA=private-test-secret';
+		const get = createBiliService((async (url: string | URL | Request) => {
+			const current = String(url).includes('/spi') ? 'visitor' : String(url).includes('/nav') ? 'wbi' : 'feed';
+			if (current === stage) return stage === 'feed'
+				? Response.json({ code: -352, message: 'private-upstream-message' })
+				: new Response('<html>private-challenge</html>', { status: 412 });
+			return Response.json({ code: 0, data: { wbi_img: { img_url: img, sub_url: sub } } });
+		}) as typeof fetch);
+		await assert.rejects(get(biliOptions('12'), cookie), error => {
+			assert.ok(error instanceof BiliUpstreamError);
+			assert.equal(error.code, 'BILI_RISK_CONTROL');
+			assert.deepEqual(error.diagnostics, {
+				stage, cookieSent: Boolean(cookie), httpStatus: stage === 'feed' ? 200 : 412,
+				...(stage === 'feed' ? { upstreamCode: -352 } : {}),
+			});
+			return true;
+		});
+		assert.equal((logs.at(-1)![1] as { cookieConfigured: boolean }).cookieConfigured, Boolean(cookie));
+	}
+	assert.doesNotMatch(JSON.stringify(logs), /private-|SESSDATA|w_rid/);
+});
 
 test('validates bounded parameters and normalizes types, ordering, deduplication and media URLs', () => {
 	assert.deepEqual(biliOptions('1933142349'), { uid: '1933142349', limit: 10, type: 'all' });
