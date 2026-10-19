@@ -10,5 +10,14 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "run_worker_first": ["/api/bili"]
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false
+    }
   }
 }

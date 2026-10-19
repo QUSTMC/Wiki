@@ -14,9 +14,16 @@ export function wbiKey(image: string, sub: string): string {
 	if (original.length !== 64) throw new Error('BILI_WBI_KEY');
 	return MIXIN_TABLE.map(index => original[index]).join('').slice(0, 32);
 }
+interface BiliDiagnostics {
+	stage?: 'visitor' | 'wbi' | 'feed';
+	httpStatus?: number;
+	upstreamCode?: number;
+	cookieSent?: boolean;
+}
 export class BiliUpstreamError extends Error {
 	code: string;
-	constructor(code: string) { super(code); this.code = code; }
+	diagnostics: BiliDiagnostics;
+	constructor(code: string, diagnostics: BiliDiagnostics = {}) { super(code); this.code = code; this.diagnostics = diagnostics; }
 }
 type Identity = { cookie: string; key: string; expires: number };
 type Snapshot = { items: BiliItem[]; fetchedAt: number };
@@ -30,16 +37,22 @@ export function createBiliService(fetcher: typeof fetch = fetch, state = createS
 	// Per-isolate caches are bounded and never sent to clients.
 	const { identities, snapshots, pending, failures } = state;
 	async function json(url: string, cookie = '', signal?: AbortSignal, uid?: string) {
-		const response = await fetcher(url, {
+		const stage = url.includes('/finger/spi') ? 'visitor' : url.includes('/web-interface/nav') ? 'wbi' : 'feed';
+		const diagnostics: BiliDiagnostics = { stage, cookieSent: Boolean(cookie) };
+		let response: Response;
+		try { response = await fetcher(url, {
 			headers: { 'User-Agent': USER_AGENT, Accept: 'application/json, text/plain, */*',
 				Referer: uid ? `https://space.bilibili.com/${uid}/` : 'https://www.bilibili.com/',
 				Origin: 'https://space.bilibili.com', ...(cookie ? { Cookie: cookie } : {}) },
 			signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(8000)]) : AbortSignal.timeout(8000),
-		});
-		if (!response.ok) throw new BiliUpstreamError(response.status === 412 ? 'BILI_RISK_CONTROL' : 'BILI_UPSTREAM_HTTP');
+		}); } catch { throw new BiliUpstreamError('BILI_UPSTREAM_NETWORK', diagnostics); }
+		diagnostics.httpStatus = response.status;
 		let body: any;
-		try { body = await response.json(); } catch { throw new BiliUpstreamError('BILI_INVALID_RESPONSE'); }
-		if (body.code === -412 || body.code === -352) throw new BiliUpstreamError('BILI_RISK_CONTROL');
+		try { body = await response.json(); } catch { /* HTTP errors can return an HTML challenge. */ }
+		if (typeof body?.code === 'number' && Number.isFinite(body.code)) diagnostics.upstreamCode = body.code;
+		if (response.status === 412 || body?.code === -412 || body?.code === -352) throw new BiliUpstreamError('BILI_RISK_CONTROL', diagnostics);
+		if (!response.ok) throw new BiliUpstreamError('BILI_UPSTREAM_HTTP', diagnostics);
+		if (!body || typeof body !== 'object') throw new BiliUpstreamError('BILI_INVALID_RESPONSE', diagnostics);
 		return body;
 	}
 	async function identity(configuredCookie: string): Promise<Identity> {
@@ -56,6 +69,9 @@ export function createBiliService(fetcher: typeof fetch = fetch, state = createS
 					cookie = `buvid3=${visitor.data.b_3}; buvid4=${visitor.data.b_4}`;
 				}
 				const nav = await json(`${API}/x/web-interface/nav`, cookie, signal);
+				if (configuredCookie && nav.data?.isLogin === false) {
+					console.warn('[BiliDynamic] Configured Cookie was sent, but Bilibili nav reports isLogin=false; continuing with available WBI keys.');
+				}
 				// Unauthenticated nav returns -101 but still provides WBI keys.
 				if (!nav.data?.wbi_img?.img_url || !nav.data?.wbi_img?.sub_url) throw new BiliUpstreamError('BILI_WBI_KEY');
 				return { cookie, key: wbiKey(nav.data.wbi_img.img_url, nav.data.wbi_img.sub_url), expires: Date.now() + 60 * 60 * 1000 };
@@ -104,7 +120,12 @@ export function createBiliService(fetcher: typeof fetch = fetch, state = createS
 			snapshots.set(key, snapshot); failures.delete(key);
 			return { success: true, uid: options.uid, items: filterBiliItems(snapshot.items, options), fetchedAt: snapshot.fetchedAt };
 		} catch (error) {
-			console.warn(`[BiliDynamic] UID ${options.uid}: ${error instanceof BiliUpstreamError ? error.code : 'BILI_UNAVAILABLE'}; ${old && Date.now() - old.fetchedAt < 86400000 ? 'retaining cached snapshot' : 'no usable snapshot'}.`);
+			// Only allowlisted scalar diagnostics: never log URLs, cookies, response
+			// bodies or raw exceptions, which may contain credentials or signatures.
+			console.warn(`[BiliDynamic] UID ${options.uid}: ${error instanceof BiliUpstreamError ? error.code : 'BILI_UNAVAILABLE'}; ${old && Date.now() - old.fetchedAt < 86400000 ? 'retaining cached snapshot' : 'no usable snapshot'}.`, {
+				cookieConfigured: Boolean(configuredCookie),
+				...(error instanceof BiliUpstreamError ? error.diagnostics : {}),
+			});
 			if (failures.size >= 64) failures.clear();
 			failures.set(key, Date.now() + 60000);
 			if (error instanceof BiliUpstreamError && error.code === 'BILI_RISK_CONTROL') identities.clear();
