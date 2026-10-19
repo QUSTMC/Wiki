@@ -13,6 +13,22 @@ import { handleBili } from '../src/lib/bili-handler.ts';
 const item = { id: '123', publishedAt: 1700000000, type: 'DYNAMIC_TYPE_AV', title: '视频', text: '介绍', images: ['https://evil.test/p.jpg'], url: 'javascript:bad()' };
 const snapshot = () => ({ success: true, uid: '12', items: [item], fetchedAt: Date.now() });
 
+test('snapshot failures distinguish rejected IP access, timeout and non-JSON responses without logging bodies', async t => {
+	const logs: unknown[][] = [];
+	t.mock.method(console, 'warn', (...args: unknown[]) => logs.push(args));
+	const scenarios = [
+		{ fetcher: async () => new Response('error code: 1003 private-response', { status: 403 }), phase: 'http', httpStatus: 403, cloudflareCode: '1003', timedOut: false },
+		{ fetcher: async () => { throw new DOMException('private-timeout', 'TimeoutError'); }, phase: 'connect', timedOut: true },
+		{ fetcher: async () => new Response('<html>private-response</html>'), phase: 'json', httpStatus: 200, timedOut: false },
+	];
+	for (const scenario of scenarios) {
+		await assert.rejects(getBiliSnapshot(biliOptions('12'), 'http://47.105.123.24:20003/bili', scenario.fetcher as typeof fetch), /BILI_SNAPSHOT_UNAVAILABLE/);
+		const diagnostic = logs.at(-1)![1] as Record<string, unknown>;
+		for (const key of ['phase', 'httpStatus', 'cloudflareCode', 'timedOut']) assert.equal(diagnostic[key], scenario[key]);
+	}
+	assert.doesNotMatch(JSON.stringify(logs), /private-response|private-timeout/);
+});
+
 test('snapshot reader filters and sanitizes public data, rejects invalid or expired snapshots', async () => {
 	const options = biliOptions('12');
 	const read = (data: unknown) => getBiliSnapshot(options, 'https://snapshot.test/bili', (async url => {
