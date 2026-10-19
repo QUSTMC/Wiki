@@ -1,0 +1,19 @@
+[Unit]
+Description=Fetch public Bilibili dynamic snapshots
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=qust-bili
+Group=qust-bili
+WorkingDirectory=/opt/qust-bili
+EnvironmentFile=/etc/qust-bili.env
+ExecStart=/usr/bin/node /opt/qust-bili/scripts/bili-sync.mjs
+TimeoutStartSec=10min
+UMask=0022
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/qust-bili

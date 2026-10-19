@@ -1,0 +1,22 @@
+[Unit]
+Description=Serve public Bilibili snapshots only
+After=network.target
+
+[Service]
+Type=simple
+User=qust-bili
+Group=qust-bili
+WorkingDirectory=/opt/qust-bili
+Environment=BILI_SNAPSHOT_DIR=/var/lib/qust-bili
+Environment=BILI_HTTP_PORT=20003
+ExecStart=/usr/bin/node /opt/qust-bili/scripts/bili-http.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+MemoryMax=128M
+
+[Install]
+WantedBy=multi-user.target

@@ -1,2 +1,3 @@
 # Local wrangler dev only. Copy to .dev.vars and fill a value only when needed.
 BILI_COOKIE=""
+BILI_SNAPSHOT_BASE=""

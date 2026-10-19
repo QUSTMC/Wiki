@@ -13,6 +13,7 @@ export default function biliDevIntegration() {
 						const { handleBili } = await server.ssrLoadModule('/src/lib/bili-handler.ts');
 						const response = await handleBili(new Request(new URL(req.url, 'http://localhost'), { method: req.method }), {
 							BILI_COOKIE: env.BILI_COOKIE,
+							BILI_SNAPSHOT_BASE: env.BILI_SNAPSHOT_BASE,
 							BILI_ALLOWED_UIDS: env.BILI_ALLOWED_UIDS || '1933142349',
 						});
 						res.statusCode = response.status;
