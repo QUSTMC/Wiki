@@ -96,7 +96,7 @@ Endpoint 不含桶路径，必须使用 R2 S3 API HTTPS 地址。API 令牌应�
 
 Node 20 单文件部署需要重新打包上传，因为新增上传代码需要包含在 bundle 内。更新前备份原 bundle，更新后执行 `systemctl start bili-sync.service`，通过 `journalctl -u bili-sync.service -n 30 --no-pager` 查看 `uploaded public JSON`。没有该日志时不能视为已经上传。系统环境文件会在每次启动任务时重新读取，无须重启 Docker 或面板。
 
-R2 桶自定义域名例如 `https://bili-get.aurelith.top`，桶根目录对象为 `1933142349.json`。按 `deploy/bili-r2-cors.json` 配置桶 CORS，网站构建环境设置 `PUBLIC_BILI_SNAPSHOT_BASE=https://bili-get.aurelith.top`，重新构建后组件直接读取 R2，不依赖 Worker。构建时也使用同一公开快照。根目录 404 正常，应测试具体对象 URL；在地址栏能打开对象不能代替跨域测试。上传后如曾缓存 404，应清除该对象在 Cloudflare 自定义域名的缓存再验证。
+R2 桶自定义域名例如 `https://bili-get.aurelith.top`，桶根目录对象为 `1933142349.json`。按 `deploy/bili-r2-cors.json` 配置桶 CORS，组件已默认直接读取 `https://bili-get.aurelith.top/UID.json`，重新构建部署后生效，无需设置构建变量，不依赖 Worker API。构建时也使用同一公开快照。根目录 404 正常，应测试具体对象 URL；在地址栏能打开对象不能代替跨域测试。上传后如曾缓存 404，应清除该对象在 Cloudflare 自定义域名的缓存再验证。
 
 ## 服务器无法连接 R2：通过 GitHub Actions 上传
 
@@ -121,7 +121,7 @@ R2 桶自定义域名例如 `https://bili-get.aurelith.top`，桶根目录对象
 
 验证上述上传成功后，在服务器 `/etc/qust-bili.env` 中将 `R2_ENDPOINT` 留空，即可关闭服务器直传，避免重复尝试失败；保留取数定时器和 HTTP 快照服务。无需重启 Docker、代理、面板或现有网站。停用 GitHub 定时上传时，删除或设 `BILI_R2_SYNC_ENABLED=false`。
 
-网站仍需设置构建变量 `PUBLIC_BILI_SNAPSHOT_BASE=https://bili-get.aurelith.top`，配置桶的 GET/HEAD CORS 后重新构建；这些步骤与谁负责上传无关。
+网站组件已默认使用 `https://bili-get.aurelith.top/UID.json`，无需设置构建变量。配置桶的 GET/HEAD CORS 后重新构建部署即可；更换快照域名时修改 `src/components/BiliDynamic.astro` 中的 `publicSnapshotBase`。
 
 ## 无域名：使用独立 HTTP 快照服务
 
