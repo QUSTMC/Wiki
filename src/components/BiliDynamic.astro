@@ -21,25 +21,27 @@ const cssSize = (value: number | string | undefined) => typeof value === 'number
 const scrollable = height !== undefined || maxHeight !== undefined;
 const options = biliOptions(Astro.props.uid, Astro.props.limit ?? 10, Astro.props.type ?? 'all');
 const params = new URLSearchParams({ uid: options.uid, limit: String(options.limit), type: options.type });
-const endpoint = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/bili?${params}`;
+const publicSnapshotBase = import.meta.env.PUBLIC_BILI_SNAPSHOT_BASE?.replace(/\/$/, '');
+if (publicSnapshotBase && new URL(publicSnapshotBase).protocol !== 'https:') throw new Error('PUBLIC_BILI_SNAPSHOT_BASE must use HTTPS');
+const endpoint = publicSnapshotBase ? `${publicSnapshotBase}/${options.uid}.json` : `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/bili?${params}`;
 let feed: BiliFeed | undefined;
 // The first deploy has no live API yet. Reuse the backend fetcher at build time
 // when no explicitly configured API is available, without running a local server.
-if (import.meta.env.BILI_API_BASE) {
+if (!publicSnapshotBase && import.meta.env.BILI_API_BASE) {
 	try {
 		const response = await fetch(`${import.meta.env.BILI_API_BASE.replace(/\/$/, '')}/api/bili?${params}`, { signal: AbortSignal.timeout(10000) });
 		if (response.ok) { const data = await response.json(); if (data.success && Array.isArray(data.items)) feed = data; }
 	} catch { /* First deploy or temporarily unavailable proxy. */ }
 }
 if (!feed) {
-	try { feed = import.meta.env.BILI_SNAPSHOT_BASE
-		? await getBiliSnapshot(options, import.meta.env.BILI_SNAPSHOT_BASE)
+	try { feed = (publicSnapshotBase || import.meta.env.BILI_SNAPSHOT_BASE)
+		? await getBiliSnapshot(options, publicSnapshotBase || import.meta.env.BILI_SNAPSHOT_BASE)
 		: await getBiliFeed(options, import.meta.env.BILI_COOKIE || process.env.BILI_COOKIE || ''); }
 	catch { console.warn(`[BiliDynamic] UID ${options.uid}: build-time fetch unavailable; using static link fallback.`); }
 }
 const items = feed?.items || [];
 ---
-<section class="bili-dynamic not-content" data-bili-dynamic data-scrollable={scrollable || undefined} data-endpoint={endpoint} data-items={JSON.stringify(items)} data-ready={String(Boolean(feed))} aria-label="B 站动态"
+<section class="bili-dynamic not-content" data-bili-dynamic data-scrollable={scrollable || undefined} data-endpoint={endpoint} data-direct-snapshot={publicSnapshotBase ? 'true' : undefined} data-uid={options.uid} data-limit={options.limit} data-type={options.type} data-items={JSON.stringify(items)} data-ready={String(Boolean(feed))} aria-label="B 站动态"
 	style={{ '--bili-width': cssSize(width), '--bili-height': cssSize(height), '--bili-max-width': cssSize(maxWidth), '--bili-max-height': cssSize(maxHeight) }}>
 	<div class="bili-heading"><h2>B 站动态</h2><a href={`https://space.bilibili.com/${options.uid}/dynamic`} target="_blank" rel="noopener noreferrer">全部动态 ↗</a></div>
 	<div class="bili-list" data-bili-list tabindex={scrollable ? 0 : undefined} role={scrollable ? 'region' : undefined} aria-label={scrollable ? '动态列表' : undefined} set:html={renderBiliList(items, feed ? '暂无公开动态。' : '动态暂时无法获取，可前往 B 站查看。')} />
@@ -47,6 +49,7 @@ const items = feed?.items || [];
 <script>
 	import { renderBiliList } from '../lib/bili-render';
 	import type { BiliItem } from '../lib/bili-data';
+	import { biliOptions, filterBiliItems, biliImage } from '../lib/bili-data';
 	for (const root of document.querySelectorAll<HTMLElement>('[data-bili-dynamic]')) {
 		if (root.dataset.initialized) continue;
 		root.dataset.initialized = 'true';
@@ -59,7 +62,17 @@ const items = feed?.items || [];
 				const data = await response.json();
 				if (!data.success || !Array.isArray(data.items)) return;
 				if (data.stale && JSON.parse(root.dataset.items || '[]').length) return;
-				const items = data.items as BiliItem[];
+				let items = data.items as BiliItem[];
+				if (root.dataset.directSnapshot) {
+					if (data.uid !== root.dataset.uid || !Number.isFinite(data.fetchedAt) || Date.now() - data.fetchedAt >= 86400000 || data.fetchedAt > Date.now() + 300000 || items.length > 200) return;
+					items = items.map(item => {
+						if (!item || typeof item.id !== 'string' || !/^\d+$/.test(item.id) || !Number.isFinite(item.publishedAt) || item.publishedAt <= 0 || typeof item.text !== 'string' || typeof item.title !== 'string' || typeof item.type !== 'string' || !Array.isArray(item.images)) throw new Error('Invalid snapshot');
+						return { ...item, text: item.text.slice(0, 10000), title: item.title.slice(0, 300), images: item.images.slice(0, 9).map(biliImage).filter((url): url is string => Boolean(url)) };
+					});
+					items = [...new Map(items.map(item => [item.id, item])).values()].sort((a, b) => b.publishedAt - a.publishedAt || b.id.localeCompare(a.id));
+					items = filterBiliItems(items, biliOptions(root.dataset.uid, root.dataset.limit, root.dataset.type));
+					if (Date.now() - data.fetchedAt > 1800000 && JSON.parse(root.dataset.items || '[]').length) return;
+				}
 				if (!items.length && JSON.parse(root.dataset.items || '[]').length) {
 					console.warn('[BiliDynamic] Empty refresh result; keeping existing dynamics.');
 					return;
