@@ -2,7 +2,6 @@
 import 'oreui-web/styles.css';
 import '../styles/bili.css';
 import { biliOptions, type BiliType, type BiliFeed } from '../lib/bili-data';
-import { getBiliFeed } from '../lib/bili-service';
 import { getBiliSnapshot } from '../lib/bili-snapshot';
 import { renderBiliList } from '../lib/bili-render';
 
@@ -20,28 +19,15 @@ const { width, height, maxWidth, maxHeight } = Astro.props;
 const cssSize = (value: number | string | undefined) => typeof value === 'number' ? `${value}px` : value;
 const scrollable = height !== undefined || maxHeight !== undefined;
 const options = biliOptions(Astro.props.uid, Astro.props.limit ?? 10, Astro.props.type ?? 'all');
-const params = new URLSearchParams({ uid: options.uid, limit: String(options.limit), type: options.type });
-const publicSnapshotBase = import.meta.env.PUBLIC_BILI_SNAPSHOT_BASE?.replace(/\/$/, '');
-if (publicSnapshotBase && new URL(publicSnapshotBase).protocol !== 'https:') throw new Error('PUBLIC_BILI_SNAPSHOT_BASE must use HTTPS');
-const endpoint = publicSnapshotBase ? `${publicSnapshotBase}/${options.uid}.json` : `${import.meta.env.BASE_URL.replace(/\/$/, '')}/api/bili?${params}`;
+const publicSnapshotBase = 'https://bili-get.aurelith.top';
+const endpoint = `${publicSnapshotBase}/${options.uid}.json`;
 let feed: BiliFeed | undefined;
-// The first deploy has no live API yet. Reuse the backend fetcher at build time
-// when no explicitly configured API is available, without running a local server.
-if (!publicSnapshotBase && import.meta.env.BILI_API_BASE) {
-	try {
-		const response = await fetch(`${import.meta.env.BILI_API_BASE.replace(/\/$/, '')}/api/bili?${params}`, { signal: AbortSignal.timeout(10000) });
-		if (response.ok) { const data = await response.json(); if (data.success && Array.isArray(data.items)) feed = data; }
-	} catch { /* First deploy or temporarily unavailable proxy. */ }
-}
-if (!feed) {
-	try { feed = (publicSnapshotBase || import.meta.env.BILI_SNAPSHOT_BASE)
-		? await getBiliSnapshot(options, publicSnapshotBase || import.meta.env.BILI_SNAPSHOT_BASE)
-		: await getBiliFeed(options, import.meta.env.BILI_COOKIE || process.env.BILI_COOKIE || ''); }
-	catch { console.warn(`[BiliDynamic] UID ${options.uid}: build-time fetch unavailable; using static link fallback.`); }
-}
+// SSG and browser refresh share the public R2 source, without an API fallback.
+try { feed = await getBiliSnapshot(options, publicSnapshotBase); }
+catch { console.warn(`[BiliDynamic] UID ${options.uid}: build-time fetch unavailable; using static link fallback.`); }
 const items = feed?.items || [];
 ---
-<section class="bili-dynamic not-content" data-bili-dynamic data-scrollable={scrollable || undefined} data-endpoint={endpoint} data-direct-snapshot={publicSnapshotBase ? 'true' : undefined} data-uid={options.uid} data-limit={options.limit} data-type={options.type} data-items={JSON.stringify(items)} data-ready={String(Boolean(feed))} aria-label="B 站动态"
+<section class="bili-dynamic not-content" data-bili-dynamic data-scrollable={scrollable || undefined} data-endpoint={endpoint} data-direct-snapshot="true" data-uid={options.uid} data-limit={options.limit} data-type={options.type} data-items={JSON.stringify(items)} data-ready={String(Boolean(feed))} aria-label="B 站动态"
 	style={{ '--bili-width': cssSize(width), '--bili-height': cssSize(height), '--bili-max-width': cssSize(maxWidth), '--bili-max-height': cssSize(maxHeight) }}>
 	<div class="bili-heading"><h2>B 站动态</h2><a href={`https://space.bilibili.com/${options.uid}/dynamic`} target="_blank" rel="noopener noreferrer">全部动态 ↗</a></div>
 	<div class="bili-list" data-bili-list tabindex={scrollable ? 0 : undefined} role={scrollable ? 'region' : undefined} aria-label={scrollable ? '动态列表' : undefined} set:html={renderBiliList(items, feed ? '暂无公开动态。' : '动态暂时无法获取，可前往 B 站查看。')} />

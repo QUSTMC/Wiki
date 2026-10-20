@@ -23,10 +23,10 @@ test('Bili static fallback and silent refresh preserve stable DOM and handle cha
 		let arrived;
 		const requested = new Promise(resolve => { arrived = resolve; });
 		let original;
-		await page.route('**/api/bili?**', async route => {
+		await page.route('https://bili-get.aurelith.top/1933142349.json', async route => {
 			arrived(); await gate;
 			if (mode === 'failed') return route.fulfill({ status: 503, json: { success: false } });
-			return route.fulfill({ json: { success: true, items: mode === 'empty' ? [] : mode === 'same' ? original : [{
+			return route.fulfill({ json: { success: true, uid: '1933142349', items: mode === 'empty' ? [] : mode === 'same' ? original : [{
 				id: '123456789012345', publishedAt: 1792400000, type: 'DYNAMIC_TYPE_AV', title: '测试视频',
 				text: '<script>unsafe()</script> 测试动态', images: [], url: 'javascript:unsafe()',
 			}], fetchedAt: Date.now(), stale: mode === 'stale' } });
