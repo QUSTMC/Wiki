@@ -5,7 +5,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
     "BILI_ALLOWED_UIDS": "1933142349",
-    "BILI_SNAPSHOT_BASE": "http://47.105.123.24:20003/bili"
+    "BILI_SNAPSHOT_BASE": "https://bili-get.aurelith.top"
   },
   "assets": {
     "directory": "./dist",
