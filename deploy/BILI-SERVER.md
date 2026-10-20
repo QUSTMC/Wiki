@@ -81,6 +81,48 @@ Worker 缓存快照 5 分钟，浏览器缓存 60 秒，源站示例缓存 60 �
 
 恢复直连模式时，在运行时和构建环境两处移除 `BILI_SNAPSHOT_BASE` 并重新部署即可。
 
+## R2 自动上传与浏览器直连
+
+取数程序支持在保存本地文件后通过 S3 SigV4 PUT 上传同名 `UID.json`。在服务器 `/etc/qust-bili.env` 中添加：
+
+```ini
+R2_ENDPOINT=https://你的账户ID.r2.cloudflarestorage.com
+R2_BUCKET=bili-get
+R2_ACCESS_KEY_ID=你的访问密钥ID
+R2_SECRET_ACCESS_KEY="你的机密访问密钥"
+```
+
+Endpoint 不含桶路径，必须使用 R2 S3 API HTTPS 地址。API 令牌应仅允许该桶的对象读写。配置文件保持 `root:root`、权限 `600`，不要放入公开目录或版本库。空 Secret 会跳过上传、保留本地取数；上传失败会保留新的本地文件并报告失败。下一次成功取数会重新尝试上传。上传对象设置 `Content-Type: application/json; charset=utf-8`、`Cache-Control: public, max-age=60`，不会上传 Cookie 或服务器环境文件。不要将 R2 密钥设为 `PUBLIC_*`。
+
+Node 20 单文件部署需要重新打包上传，因为新增上传代码需要包含在 bundle 内。更新前备份原 bundle，更新后执行 `systemctl start bili-sync.service`，通过 `journalctl -u bili-sync.service -n 30 --no-pager` 查看 `uploaded public JSON`。没有该日志时不能视为已经上传。系统环境文件会在每次启动任务时重新读取，无须重启 Docker 或面板。
+
+R2 桶自定义域名例如 `https://bili-get.aurelith.top`，桶根目录对象为 `1933142349.json`。按 `deploy/bili-r2-cors.json` 配置桶 CORS，网站构建环境设置 `PUBLIC_BILI_SNAPSHOT_BASE=https://bili-get.aurelith.top`，重新构建后组件直接读取 R2，不依赖 Worker。构建时也使用同一公开快照。根目录 404 正常，应测试具体对象 URL；在地址栏能打开对象不能代替跨域测试。上传后如曾缓存 404，应清除该对象在 Cloudflare 自定义域名的缓存再验证。
+
+## 服务器无法连接 R2：通过 GitHub Actions 上传
+
+若 B 站取数成功，但访问 R2 时在 TLS 握手阶段出现 `ECONNRESET` 或 `SSL_ERROR_SYSCALL`，尚未进入 R2 鉴权。先确认服务器网络出口；反复更换 R2 密钥不能解决此类错误。已有代理也必须先验证节点可用，不能只看代理进程正在运行。
+
+仓库提供 `.github/workflows/bili-r2-sync.yml`：GitHub runner 读取服务器现有的公开 JSON，校验后上传 R2。服务器继续每 10 分钟取数，浏览器继续直接读 R2；无须在服务器安装代理或替换其他服务。工作流不安装 npm 依赖、不提交 JSON、不触发网站重新构建，也不需要 B 站 Cookie。服务器提供的快照 URL 必须能从公网访问。
+
+将代码提交到 GitHub 默认分支后，在仓库 **Settings → Secrets and variables → Actions** 配置：
+
+| 类型 | 名称 | 值 |
+| --- | --- | --- |
+| Variable | `BILI_MIRROR_SOURCE` | `http://47.105.123.24:20003/bili`，仅包含公开动态的目录 |
+| Variable | `R2_ENDPOINT` | `https://你的账户ID.r2.cloudflarestorage.com`，不含桶名 |
+| Secret | `R2_ACCESS_KEY_ID` | 具有 `bili-get` 桶对象读写权限的访问密钥 ID |
+| Secret | `R2_SECRET_ACCESS_KEY` | 对应的机密访问密钥 |
+
+当前工作流固定桶名 `bili-get`、UID `1933142349`，更换账号或桶时需同时修改工作流。密钥从原来保存在服务器的配置中取用，直接填到 GitHub Secrets，不发到聊天、不提交到仓库。源地址只读取公开内容，上传凭据仅发给 R2；HTTP 源不提供传输加密，条件允许时应改用 HTTPS。
+
+先到 **Actions → Sync Bilibili snapshots to R2 → Run workflow** 手动运行。确认日志出现 `uploaded public JSON`，且 `https://bili-get.aurelith.top/1933142349.json` 返回非空动态后，再添加 Variable `BILI_R2_SYNC_ENABLED=true` 开启定时上传。默认每小时第 7、17、27、37、47、57 分钟触发；GitHub 调度可能延迟，服务器取数与上传合计延迟通常约 0–20 分钟，不能保证准点。公开仓库长期无活动时，GitHub 可能暂停定时工作流；应关注 Actions 的失败和停用通知。私有仓库需留意 Actions 分钟额度。
+
+`scripts/bili-r2-mirror.mjs` 拒绝超过 30 分钟、空列表、UID 不符、格式错误或请求失败的快照，失败退出且保留旧 R2 对象；保留原始 `fetchedAt`，不会把旧数据伪装为刚获取。`node --test tests/bili-r2-mirror.test.mjs` 验证读取、校验和上传流程。
+
+验证上述上传成功后，在服务器 `/etc/qust-bili.env` 中将 `R2_ENDPOINT` 留空，即可关闭服务器直传，避免重复尝试失败；保留取数定时器和 HTTP 快照服务。无需重启 Docker、代理、面板或现有网站。停用 GitHub 定时上传时，删除或设 `BILI_R2_SYNC_ENABLED=false`。
+
+网站仍需设置构建变量 `PUBLIC_BILI_SNAPSHOT_BASE=https://bili-get.aurelith.top`，配置桶的 GET/HEAD CORS 后重新构建；这些步骤与谁负责上传无关。
+
 ## 无域名：使用独立 HTTP 快照服务
 
 没有域名时可用 `http://服务器IP:20003/bili` 作为 `BILI_SNAPSHOT_BASE`。浏览器仍请求网站同源 HTTPS API，由 Worker 在服务端读取 HTTP JSON，不产生浏览器混合内容问题。HTTP 仅承载公开动态；Cookie 不会发送给快照服务器。HTTPS 可用时仍优先使用 HTTPS。

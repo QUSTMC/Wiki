@@ -1,0 +1,37 @@
+name: Sync Bilibili snapshots to R2
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Offset from the hour to reduce contention. GitHub may delay scheduled runs.
+    - cron: '7,17,27,37,47,57 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bili-r2-sync
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    # Configure and test manually before enabling scheduled uploads.
+    if: github.event_name == 'workflow_dispatch' || vars.BILI_R2_SYNC_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate public snapshots and upload to R2
+        run: node scripts/bili-r2-mirror.mjs
+        env:
+          BILI_MIRROR_SOURCE: ${{ vars.BILI_MIRROR_SOURCE }}
+          BILI_ALLOWED_UIDS: '1933142349'
+          R2_ENDPOINT: ${{ vars.R2_ENDPOINT }}
+          R2_BUCKET: bili-get
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
