@@ -4,10 +4,12 @@ import starlight from '@astrojs/starlight';
 import secretPagesIntegration from './src/lib/secret-integration.mjs';
 import loadingDiagnostics from './src/lib/loading-diagnostics.mjs';
 import biliDevIntegration from './src/lib/bili-dev-integration.mjs';
+import misodeIntegration from './src/lib/misode-integration.mjs';
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
+		misodeIntegration(),
 		starlight({
 			title: 'QUSTMC',
 			favicon: '/icon.ico',

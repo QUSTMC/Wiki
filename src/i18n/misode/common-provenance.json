@@ -1,0 +1,41 @@
+{
+  "schemaRef": "f70b052cba38357cebd655c5bb1c6bae96352866",
+  "symbols": [
+    "::java::data::loot::CompositePoolEntry",
+    "::java::data::loot::condition::AllOf",
+    "::java::data::loot::condition::AnyOf",
+    "::java::data::loot::condition::Inverted",
+    "::java::data::loot::condition::LootCondition",
+    "::java::data::loot::condition::MatchTool",
+    "::java::data::loot::condition::RandomChance",
+    "::java::data::loot::function::LootFunction",
+    "::java::data::loot::function::SetCount",
+    "::java::data::loot::function::SetLore",
+    "::java::data::loot::function::SetName",
+    "::java::data::loot::LootCondition",
+    "::java::data::loot::LootFunction",
+    "::java::data::loot::LootPool",
+    "::java::data::loot::LootPoolEntry",
+    "::java::data::loot::LootTable",
+    "::java::data::recipe::CraftingShaped",
+    "::java::data::recipe::CraftingShapeless",
+    "::java::data::recipe::Recipe",
+    "::java::data::recipe::Smelting",
+    "::java::data::recipe::SmithingTransform",
+    "::java::data::recipe::SmithingTrim",
+    "::java::data::recipe::Stonecutting",
+    "::java::pack::Pack",
+    "::java::pack::PackBase",
+    "::java::pack::PackFeatures",
+    "::java::pack::PackFilter",
+    "::java::pack::PackFormat",
+    "::java::pack::PackOverlay"
+  ],
+  "routes": [
+    "loot-table",
+    "recipe",
+    "item-modifier",
+    "predicate",
+    "pack-mcmeta"
+  ]
+}

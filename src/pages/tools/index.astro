@@ -1,0 +1,11 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+---
+<StarlightPage hasSidebar={false} frontmatter={{ title: '更多功能', description: 'QUST MC 工具与游戏数据导航', tableOfContents: false, prev: false, next: false }}>
+  <p>选择你需要的工具或查询服务。</p>
+  <CardGrid>
+    <LinkCard title="Misode · Minecraft 生成器" description="制作战利品表、配方、进度及世界生成等数据包内容，支持 JSON 编辑与预览。" href="/misode/" />
+    <LinkCard title="列车战绩" description="查看 StarRail Express 排行榜，查询玩家战绩与对局记录。" href="/train/" />
+  </CardGrid>
+</StarlightPage>

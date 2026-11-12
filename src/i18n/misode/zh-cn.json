@@ -1,0 +1,152 @@
+{
+  "copy_logs": {
+    "source": "Copy logs",
+    "translation": "复制日志"
+  },
+  "generator.block_transformer": {
+    "source": "Block Transformer",
+    "translation": "方块转换器"
+  },
+  "generator.block_sound_set": {
+    "source": "Block Sound Set",
+    "translation": "方块声音集"
+  },
+  "generator.cat_sound_variant": {
+    "source": "Cat Sound Variant",
+    "translation": "猫声音变体"
+  },
+  "generator.chicken_sound_variant": {
+    "source": "Chicken Sound Variant",
+    "translation": "鸡声音变体"
+  },
+  "generator.context_float_provider": {
+    "source": "Context Float Provider",
+    "translation": "上下文浮点数提供器"
+  },
+  "generator.context_int_provider": {
+    "source": "Context Integer Provider",
+    "translation": "上下文整数提供器"
+  },
+  "generator.cow_sound_variant": {
+    "source": "Cow Sound Variant",
+    "translation": "牛声音变体"
+  },
+  "generator.decorated_pot_pattern": {
+    "source": "Decorated Pot Pattern",
+    "translation": "饰纹陶罐图案"
+  },
+  "generator.jsg:rig_waves": {
+    "source": "JSG RIG Waves",
+    "translation": "JSG RIG 波浪",
+    "review": "needs-context",
+    "reviewNote": "尚未确认 RIG 的领域含义以及 Waves 指波形还是波次，暂不采用模型的“波浪”。"
+  },
+  "generator.jsg_core:recipes": {
+    "source": "JSG: Core Recipes",
+    "translation": "JSG: 核心配方"
+  },
+  "generator.loot-table-modifier:loot_modifier": {
+    "source": "Loot Modifier",
+    "translation": "战利品修饰器"
+  },
+  "generator.lychee:recipe": {
+    "source": "Lychee Recipe",
+    "translation": "Lychee 配方"
+  },
+  "generator.pig_sound_variant": {
+    "source": "Pig Sound Variant",
+    "translation": "猪声音变体"
+  },
+  "generator.slot_source": {
+    "source": "Slot Source",
+    "translation": "槽位源"
+  },
+  "generator.sounds": {
+    "source": "Sounds.json",
+    "translation": "Sounds.json"
+  },
+  "generator.sulfur_cube_archetype": {
+    "source": "Sulfur Cube Archetype",
+    "translation": "硫方怪原型"
+  },
+  "generator.tag/trade_set": {
+    "source": "Trade Set Tag",
+    "translation": "交易集合标签"
+  },
+  "generator.tag/villager_trade": {
+    "source": "Villager Trade Tag",
+    "translation": "村民交易标签"
+  },
+  "generator.pixelmon:raid_ally_set": {
+    "source": "Pixelmon Raid Ally Set",
+    "translation": "Pixelmon 袭击盟友集合",
+    "review": "needs-context",
+    "reviewNote": "Pixelmon 的 Raid 与原版“袭击”不是已确认的同一概念，需核对该模组术语。"
+  },
+  "generator.pixelmon:raid_spawn_set": {
+    "source": "Pixelmon Raid Spawn Set",
+    "translation": "Pixelmon 袭击生成集合",
+    "review": "needs-context",
+    "reviewNote": "Pixelmon 的 Raid 与原版“袭击”不是已确认的同一概念，需核对该模组术语。"
+  },
+  "generator.starexpress:guidebook_entry": {
+    "source": "Guidebook Entry",
+    "translation": "指南条目"
+  },
+  "generator.trade_set": {
+    "source": "Trade Set",
+    "translation": "交易集合"
+  },
+  "generator.treeplacer:sapling_overrides": {
+    "source": "Sapling Overrides",
+    "translation": "树苗覆盖"
+  },
+  "generator.villager_trade": {
+    "source": "Villager Trade",
+    "translation": "村民交易"
+  },
+  "generator.world_clock": {
+    "source": "World Clock",
+    "translation": "世界时钟"
+  },
+  "generator.worldgen/carver": {
+    "source": "Carver",
+    "translation": "雕刻器"
+  },
+  "generator.worldgen/feature": {
+    "source": "Feature",
+    "translation": "地物"
+  },
+  "generator.worldgen/material_condition": {
+    "source": "Material Condition",
+    "translation": "材质条件"
+  },
+  "generator.worldgen/material_rule": {
+    "source": "Material Rule",
+    "translation": "材质规则"
+  },
+  "modded": {
+    "source": "Modded",
+    "translation": "模组"
+  },
+  "partner.loot-table-modifier": {
+    "source": "Loot Table Modifier",
+    "translation": "战利品表修饰器"
+  },
+  "partner.lychee": {
+    "source": "Lychee",
+    "translation": "Lychee"
+  },
+  "partner.starexpress": {
+    "source": "Starry Express",
+    "translation": "Starry Express"
+  },
+  "partner.tauridev": {
+    "source": "Tau'ri Dev",
+    "translation": "Tau'ri Dev"
+  },
+  "partner.treeplacer": {
+    "source": "Treeplacer",
+    "translation": "Treeplacer"
+  }
+}

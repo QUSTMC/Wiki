@@ -1,5 +1,9 @@
 # build output
 dist/
+# generated Misode application
+/public/misode/
+/vendor/misode/dist/
+
 # generated types
 .astro/
 

@@ -1,0 +1,142 @@
+{
+  "label.parent": {
+    "source": "Parent",
+    "translation": "父进度"
+  },
+  "doc.parent.1": {
+    "source": "If this field is absent, this advancement is a root advancement.\nCircular references cause a loading failure.",
+    "translation": "如果缺少此字段，则此进度为根进度。\n循环引用会导致加载失败。"
+  },
+  "label.display": {
+    "source": "Display",
+    "translation": "显示设置"
+  },
+  "doc.display.3": {
+    "source": "If present, advancement will be visible in the advancement tabs.",
+    "translation": "如果存在，进度将在进度选项卡中可见。"
+  },
+  "label.criteria": {
+    "source": "Criteria",
+    "translation": "判据"
+  },
+  "doc.criteria.5": {
+    "source": "If `requirements` is not defined, all defined criteria will be required.",
+    "translation": "如果未定义 `requirements`，则需要所有定义的判据。"
+  },
+  "label.requirements": {
+    "source": "Requirements",
+    "translation": "完成要求"
+  },
+  "doc.requirements.7": {
+    "source": "If all criteria are required at once, this may be omitted.\n\nContains all of the `criteria` keys.\n\nIf all of the lists each have at least one criteria met, the advancement is complete (basically AND grouping of OR groups).",
+    "translation": "如果所有判据都是必需条件，则可以省略。\n\n包含所有的 `criteria` 键。\n\n如果所有列表中的每个列表都至少满足一个判据，则进度完成（本质上是 OR 组的 AND 组合）。"
+  },
+  "label.rewards": {
+    "source": "Rewards",
+    "translation": "奖励"
+  },
+  "doc.rewards.9": {
+    "source": "Provided to the player when this advancement is obtained.",
+    "translation": "当玩家获得此进度时提供。"
+  },
+  "label.sends_telemetry_event": {
+    "source": "Sends telemetry event",
+    "translation": "发送遥测事件"
+  },
+  "doc.sends_telemetry_event.11": {
+    "source": "Defaults to `false`. The vanilla game client only reads this for advancements from the `minecraft` namespace.",
+    "translation": "默认为 `false`。原版游戏客户端仅对来自 `minecraft` 命名空间的进度读取此项。"
+  },
+  "label.trigger": {
+    "source": "Trigger",
+    "translation": "触发器"
+  },
+  "doc.trigger.13": {
+    "source": "Many triggers can occur multiple times, however, the reward will only be provided multiple times if the advancement is first revoked, which is often done within the function reward.",
+    "translation": "许多触发器可以多次发生，但是，只有在进度首先被撤销的情况下，奖励才会多次提供，这通常在函数奖励中完成。"
+  },
+  "label.icon": {
+    "source": "Icon",
+    "translation": "图标"
+  },
+  "label.title": {
+    "source": "Title",
+    "translation": "标题"
+  },
+  "label.description": {
+    "source": "Description",
+    "translation": "描述"
+  },
+  "label.frame": {
+    "source": "Frame",
+    "translation": "边框"
+  },
+  "doc.frame.18": {
+    "source": "Controls the advancement tile frame. Defaults to `task`.",
+    "translation": "控制进度图标的边框。默认为 `task`。"
+  },
+  "label.show_toast": {
+    "source": "Show toast",
+    "translation": "显示提示"
+  },
+  "doc.show_toast.20": {
+    "source": "Whether to show the toast pop up after completing this advancement. Defaults to `true`.",
+    "translation": "完成此进度后是否显示提示弹窗。默认为 `true`。"
+  },
+  "label.announce_to_chat": {
+    "source": "Announce to chat",
+    "translation": "在聊天中公告"
+  },
+  "doc.announce_to_chat.22": {
+    "source": "Whether to announce in the chat when this advancement has been completed. Defaults to `true`.",
+    "translation": "当此进度完成时是否在聊天中公告。默认为 `true`。"
+  },
+  "label.hidden": {
+    "source": "Hidden",
+    "translation": "隐藏"
+  },
+  "doc.hidden.24": {
+    "source": "Whether or not to hide this advancement and all its children from the advancement screen,\nuntil this advancement have been completed.\nHas no effect on root advancements themselves, but still affects all their children.\nDefaults to `false`.",
+    "translation": "是否在完成此进度之前，从进度界面中隐藏此进度及其所有子进度。\n对根进度本身无效，但仍会影响其所有子进度。\n默认为 `false`。"
+  },
+  "label.item": {
+    "source": "Item",
+    "translation": "物品"
+  },
+  "label.nbt": {
+    "source": "Nbt",
+    "translation": "NBT"
+  },
+  "label.experience": {
+    "source": "Experience",
+    "translation": "经验"
+  },
+  "doc.experience.28": {
+    "source": "XP to add.",
+    "translation": "要添加的经验值。"
+  },
+  "label.loot": {
+    "source": "Loot",
+    "translation": "战利品"
+  },
+  "doc.loot.30": {
+    "source": "Loot tables to give.",
+    "translation": "要提供的战利品表。"
+  },
+  "label.recipes": {
+    "source": "Recipes",
+    "translation": "配方"
+  },
+  "doc.recipes.32": {
+    "source": "Recipes to unlock.",
+    "translation": "要解锁的配方。"
+  },
+  "label.function": {
+    "source": "Function",
+    "translation": "函数"
+  },
+  "doc.function.34": {
+    "source": "Function to run as and at the player. Function tags are not allowed.",
+    "translation": "以玩家身份并在玩家位置运行的函数。不允许使用函数标签。"
+  }
+}

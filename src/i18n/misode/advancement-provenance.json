@@ -1,0 +1,13 @@
+{
+  "schemaRepository": "https://github.com/SpyglassMC/vanilla-mcdoc",
+  "schemaRef": "f70b052cba38357cebd655c5bb1c6bae96352866",
+  "symbolsSha256": "0cc263df8b0f389074be20c143edd267324024a6cee40fc4761ff24979dc8db3",
+  "model": "google/gemma-4-12b-qat",
+  "scope": [
+    "Advancement",
+    "AdvancementDisplay",
+    "AdvancementIcon",
+    "AdvancementRewards",
+    "AdvancementCriterion"
+  ]
+}
