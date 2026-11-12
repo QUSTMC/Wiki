@@ -11,3 +11,5 @@
 修改样式后运行 `npm run build`，或运行 `node scripts/build-misode.mjs` 重新应用主题。开发服务器使用项目规定的后台模式启动。
 
 默认语言也在本站注入层中设置：应用启动前，若没有保存过 `language`，初始化为 `zh-cn`（简体中文）；已有的手动选择保持不变。无需修改上游 Store 或现有翻译文件，后续可以单独补齐中文翻译。
+
+资源标识符的原生 datalist 已改为独立补全组件 `src/integrations/misode/CompletionInput.tsx`。按输入过滤，每次最多渲染 60 个候选；保留自由输入、失焦保存、方向键、Enter、Escape、Tab。浮层挂在 body，避免编辑器容器裁切，并在滚动/缩放/点击外部时关闭。普通 select 暂不替换。构建插件仅在内存中适配原组件；上游结构改变会阻止构建并要求复核。

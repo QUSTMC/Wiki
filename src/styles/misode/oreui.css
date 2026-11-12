@@ -229,3 +229,22 @@ header nav .btn-menu > .btn svg { display: block; width: 20px; height: 20px; mar
   color: var(--white);
   fill: var(--white);
 }
+
+/* Bounded autocomplete portal: no native datalist popup and no huge option DOM. */
+.qust-completions {
+  position: fixed;
+  z-index: 200;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 2px solid var(--qust-edge);
+  border-radius: 0;
+  background: var(--background-2);
+  color: var(--text-1);
+  box-shadow: var(--qust-bevel), 0 4px var(--black-opacity-30);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 14px;
+  touch-action: pan-y;
+}
+.qust-completion-option { padding: 8px 12px; min-height: 36px; cursor: pointer; overflow-wrap: anywhere; }
+.qust-completion-option:hover, .qust-completion-option[aria-selected='true'] { background: var(--primary-background); color: var(--primary-text); }
+.qust-completion-status { padding: 8px 12px; border-top: 1px solid var(--qust-edge); color: var(--text-3); font-family: 'QUST Fusion Pixel', system-ui, sans-serif; }
