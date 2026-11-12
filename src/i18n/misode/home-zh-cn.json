@@ -1,0 +1,50 @@
+{
+  "home.0.title": {
+    "source": "Converter",
+    "translation": "格式转换器"
+  },
+  "home.1.desc": {
+    "source": "Turn /give commands into loot tables",
+    "translation": "将 /give 命令转换为战利品表"
+  },
+  "home.2.title": {
+    "source": "Customized Worlds",
+    "translation": "自定义世界"
+  },
+  "home.3.desc": {
+    "source": "Create data packs to customize your world",
+    "translation": "创建数据包来自定义你的世界"
+  },
+  "home.4.title": {
+    "source": "Report Inspector",
+    "translation": "性能报告分析"
+  },
+  "home.5.desc": {
+    "source": "Analyse your performance reports",
+    "translation": "分析你的性能报告"
+  },
+  "home.6.title": {
+    "source": "Minecraft Sounds",
+    "translation": "Minecraft 声音"
+  },
+  "home.7.desc": {
+    "source": "Browse through and mix all the vanilla sounds",
+    "translation": "浏览并混合所有原版声音"
+  },
+  "home.8.title": {
+    "source": "Transformation preview",
+    "translation": "变换预览"
+  },
+  "home.9.desc": {
+    "source": "Visualize transformations for display entities",
+    "translation": "可视化显示实体的变换"
+  },
+  "home.10.title": {
+    "source": "Template Placer",
+    "translation": "结构模板放置工具"
+  },
+  "home.11.desc": {
+    "source": "Automatically place all the structure pieces in your world",
+    "translation": "在你的世界中自动放置所有结构组件"
+  }
+}

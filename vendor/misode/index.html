@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script>function gtag() {}</script>
+	<script>
+		(() => {
+			const theme = localStorage.getItem('theme')
+			const prefersLight = matchMedia('(prefers-color-scheme: light)').matches
+			if (theme === 'system' ? !prefersLight : theme !== 'light') {
+				document.documentElement.classList.add('dark')
+			}
+		})()
+	</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Misode's Generators - Minecraft 26.1, 26.2, 26.3</title>
+	<link rel="icon" href="/src/favicon-32.png" sizes="32x32">
+	<script>
+		if (typeof BigInt !== 'function') {
+			BigInt = function(e) { return e }
+		}
+		if (typeof BigInt64Array !== 'function') {
+			BigInt64Array = function() { }
+		}
+	</script>
+</head>
+<body data-pagefind-ignore>
+	
+	<script src="./src/app/Main.tsx" type="module"></script>
+</body>
+</html>

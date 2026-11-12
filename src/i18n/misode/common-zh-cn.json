@@ -1,0 +1,286 @@
+{
+  "label.children": {
+    "source": "Children",
+    "translation": "子条目"
+  },
+  "label.terms": {
+    "source": "Terms",
+    "translation": "条件项"
+  },
+  "doc.terms.55d5fc60f0a9": {
+    "source": "Passes when all of these conditions pass.",
+    "translation": "当所有这些条件都通过时通过。"
+  },
+  "doc.terms.61a5a2f013e7": {
+    "source": "Passes when any of these conditions pass.",
+    "translation": "当其中任何一个条件通过时通过。"
+  },
+  "label.term": {
+    "source": "Term",
+    "translation": "项"
+  },
+  "label.condition": {
+    "source": "Condition",
+    "translation": "条件"
+  },
+  "label.type": {
+    "source": "Type",
+    "translation": "类型"
+  },
+  "label.predicate": {
+    "source": "Predicate",
+    "translation": "谓词"
+  },
+  "label.chance": {
+    "source": "Chance",
+    "translation": "几率"
+  },
+  "doc.chance.eefc6aa333a1": {
+    "source": "Accepts a value between `0` & `1` (inclusive).",
+    "translation": "接受 `0` 与 `1` 之间的值（包含）。"
+  },
+  "label.function": {
+    "source": "Function",
+    "translation": "函数"
+  },
+  "label.count": {
+    "source": "Count",
+    "translation": "数量"
+  },
+  "label.add": {
+    "source": "Add",
+    "translation": "添加"
+  },
+  "doc.add.5c8f5f6520a8": {
+    "source": "Whether to add to the existing count. Defaults to `false`.",
+    "translation": "是否添加到现有数量。默认为 `false`。"
+  },
+  "label.entity": {
+    "source": "Entity",
+    "translation": "实体"
+  },
+  "doc.entity.91916ffcf750": {
+    "source": "The entity used to resolve the text components.",
+    "translation": "用于解析文本组件的实体。"
+  },
+  "label.lore": {
+    "source": "Lore",
+    "translation": "物品描述"
+  },
+  "label.replace": {
+    "source": "Replace",
+    "translation": "替换"
+  },
+  "doc.replace.09459d386902": {
+    "source": "Whether to replace the existing lore list. Defaults to true.",
+    "translation": "是否替换现有的物品描述列表。默认为 true。"
+  },
+  "doc.entity.30c141252627": {
+    "source": "Specifies the entity to act as the target `@s` in the JSON text component.",
+    "translation": "指定在 JSON 文本组件中充当目标 `@s` 的实体。"
+  },
+  "label.name": {
+    "source": "Name",
+    "translation": "名称"
+  },
+  "label.target": {
+    "source": "Target",
+    "translation": "目标"
+  },
+  "doc.target.24821cccc377": {
+    "source": "Which name component to set. Defaults to `custom_name`.",
+    "translation": "要设置的名称组件。默认为 `custom_name`。"
+  },
+  "label.rolls": {
+    "source": "Rolls",
+    "translation": "抽取次数"
+  },
+  "label.bonus_rolls": {
+    "source": "Bonus rolls",
+    "translation": "额外抽取次数"
+  },
+  "label.entries": {
+    "source": "Entries",
+    "translation": "条目"
+  },
+  "label.functions": {
+    "source": "Functions",
+    "translation": "函数"
+  },
+  "label.conditions": {
+    "source": "Conditions",
+    "translation": "条件"
+  },
+  "label.modifier": {
+    "source": "Modifier",
+    "translation": "修饰器"
+  },
+  "label.pools": {
+    "source": "Pools",
+    "translation": "战利品池"
+  },
+  "label.random_sequence": {
+    "source": "Random sequence",
+    "translation": "随机序列"
+  },
+  "label.pattern": {
+    "source": "Pattern",
+    "translation": "模式"
+  },
+  "label.key": {
+    "source": "Key",
+    "translation": "键"
+  },
+  "label.result": {
+    "source": "Result",
+    "translation": "结果"
+  },
+  "label.ingredients": {
+    "source": "Ingredients",
+    "translation": "材料"
+  },
+  "label.ingredient": {
+    "source": "Ingredient",
+    "translation": "材料"
+  },
+  "label.experience": {
+    "source": "Experience",
+    "translation": "经验"
+  },
+  "label.cookingtime": {
+    "source": "Cookingtime",
+    "translation": "烹饪时间"
+  },
+  "doc.cookingtime.bc46465ed5e0": {
+    "source": "Defaults to `200`.",
+    "translation": "默认为 `200`。"
+  },
+  "doc.cookingtime.800c5a63e205": {
+    "source": "Hint: The \"Normal\" value for this is `200`.",
+    "translation": "提示：此项的“正常”值为 `200`。"
+  },
+  "label.group": {
+    "source": "Group",
+    "translation": "组"
+  },
+  "doc.group.0400bf4fbdbb": {
+    "source": "This field is unused by the game.",
+    "translation": "此字段在游戏中未被使用。"
+  },
+  "label.base": {
+    "source": "Base",
+    "translation": "基础"
+  },
+  "doc.base.bbb067f3012d": {
+    "source": "Ingredient specifying an item to be transformed.",
+    "translation": "指定将被转换的物品的原料。"
+  },
+  "label.addition": {
+    "source": "Addition",
+    "translation": "添加"
+  },
+  "doc.addition.6e0714838341": {
+    "source": "Material that will be used.",
+    "translation": "将要使用的材料。"
+  },
+  "label.template": {
+    "source": "Template",
+    "translation": "模板"
+  },
+  "doc.template.82cdacc6f379": {
+    "source": "Template item that will be used for the pattern.",
+    "translation": "将用于图案的模板物品。"
+  },
+  "doc.result.6b096b067dfc": {
+    "source": "Resulting transformed item.",
+    "translation": "转换后的结果物品。"
+  },
+  "label.item": {
+    "source": "Item",
+    "translation": "物品"
+  },
+  "doc.base.398b517eed63": {
+    "source": "Ingredient specifying an item to be trimmed.",
+    "translation": "指定要进行纹饰的物品。"
+  },
+  "doc.pattern.ec1a9bf9e7f2": {
+    "source": "The trim pattern to apply to the result item.",
+    "translation": "应用到结果物品的纹饰图案。"
+  },
+  "label.pack": {
+    "source": "Pack",
+    "translation": "包"
+  },
+  "label.description": {
+    "source": "Description",
+    "translation": "描述"
+  },
+  "label.pack_format": {
+    "source": "Pack format",
+    "translation": "包格式"
+  },
+  "doc.pack_format.7f779b5b7ef3": {
+    "source": "Optional since 1.21.9. Define it if you want older versions to recognize your pack with\na “made for a newer version” warning message.\n\nBecause of backwards compatibility, only the main pack format can\nbe used here. Minor formats can only be specified in min and max format.",
+    "translation": "自 1.21.9 起可选。如果你希望旧版本在识别你的包时显示“为新版本制作”的警告消息，请定义它。\n\n由于向后兼容性，此处只能使用主包格式。次版本格式只能在 min 和 max 格式中指定。"
+  },
+  "label.supported_formats": {
+    "source": "Supported formats",
+    "translation": "支持的格式"
+  },
+  "doc.supported_formats.88bb36b7f1fe": {
+    "source": "Must not be specified in case min_format indicates a format version for 1.21.9 and\nlater.",
+    "translation": "如果 min_format 指示的是 1.21.9 及更高版本的格式版本，则不得在此处指定。"
+  },
+  "label.min_format": {
+    "source": "Min format",
+    "translation": "最小格式"
+  },
+  "doc.min_format.bd31a80befc9": {
+    "source": "The minimun format that is supported. To specify a minor version, use a list of two\nintegers.",
+    "translation": "支持的最小格式。要指定次要版本，请使用包含两个整数的列表。"
+  },
+  "label.max_format": {
+    "source": "Max format",
+    "translation": "最大格式"
+  },
+  "doc.max_format.31a73c0a2f07": {
+    "source": "The maximum format that is supported. To specify a minor version, use a list of two\nintegers.",
+    "translation": "支持的最大格式。要指定次要版本，请使用包含两个整数的列表。"
+  },
+  "label.filter": {
+    "source": "Filter",
+    "translation": "筛选"
+  },
+  "label.features": {
+    "source": "Features",
+    "translation": "特性"
+  },
+  "label.overlays": {
+    "source": "Overlays",
+    "translation": "叠加层"
+  },
+  "label.language": {
+    "source": "Language",
+    "translation": "语言"
+  },
+  "doc.language.aa31ded1cf4a": {
+    "source": "Only used by resource pack. \\\nAdds additional languages to the language menu.",
+    "translation": "仅由资源包使用。\\\n向语言菜单中添加额外的语言。"
+  },
+  "label.enabled": {
+    "source": "Enabled",
+    "translation": "启用"
+  },
+  "label.block": {
+    "source": "Block",
+    "translation": "方块"
+  },
+  "label.directory": {
+    "source": "Directory",
+    "translation": "目录"
+  },
+  "label.formats": {
+    "source": "Formats",
+    "translation": "格式"
+  }
+}

@@ -1,0 +1,231 @@
+/* QUST MC OreUI adapter for Misode. Kept outside vendor/misode for upstream updates.
+ * Shared colors/bevels: Spectrollay (MIT); see src/styles/vendor/oreui/LICENSE. */
+@font-face {
+  font-family: 'QUST Fusion Pixel';
+  src: url('/fusion-pixel-10px-monospaced-zh_hans.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root:root {
+  color-scheme: light;
+  --background-1: var(--gray-10);
+  --background-2: var(--gray-20);
+  --background-2-shimmer: var(--gray-30);
+  --background-3: var(--gray-30);
+  --background-3-shimmer: var(--gray-40);
+  --background-4: var(--gray-30);
+  --background-4-shimmer: var(--gray-40);
+  --background-5: var(--gray-40);
+  --background-6: var(--gray-50);
+  --text-1: var(--gray-100);
+  --text-2: var(--gray-80);
+  --text-3: var(--gray-60);
+  --nav: var(--gray-90);
+  --nav-hover: var(--green-70);
+  --nav-faded: var(--gray-60);
+  --nav-faded-hover: var(--gray-90);
+  --accent-primary: var(--green-70);
+  --accent-site-1: var(--primary-background);
+  --accent-site-2: var(--primary-background-hovered);
+  --selection: #3c852740;
+  --qust-edge: var(--gray-60);
+  --qust-bevel: inset 2px 2px var(--white-opacity-80), inset -2px -2px var(--black-opacity-20);
+  --qust-input: var(--white);
+  --qust-focus: var(--green-70);
+  --node-border: var(--gray-50);
+  --node-background-label: var(--gray-20);
+  --node-background-input: var(--qust-input);
+  --node-background-hover: var(--gray-30);
+  --node-text: var(--text-1);
+  --node-text-dimmed: var(--text-3);
+  --node-indent-border: var(--gray-40);
+}
+
+:root.dark {
+  color-scheme: dark;
+  --background-1: var(--gray-90);
+  --background-2: var(--gray-80);
+  --background-2-shimmer: var(--gray-70);
+  --background-3: var(--gray-70);
+  --background-3-shimmer: var(--gray-60);
+  --background-4: var(--gray-70);
+  --background-4-shimmer: var(--gray-60);
+  --background-5: var(--gray-60);
+  --background-6: var(--gray-50);
+  --text-1: var(--gray-10);
+  --text-2: var(--gray-20);
+  --text-3: var(--gray-40);
+  --nav: var(--white);
+  --nav-hover: var(--green-10);
+  --nav-faded: var(--gray-40);
+  --nav-faded-hover: var(--gray-20);
+  --accent-primary: var(--green-10);
+  --qust-edge: var(--gray-100);
+  --qust-bevel: inset 2px 2px var(--white-opacity-20), inset -2px -2px var(--black-opacity-20);
+  --qust-input: var(--gray-90);
+  --qust-focus: var(--green-10);
+  --node-border: var(--gray-60);
+  --node-background-label: var(--gray-80);
+  --node-background-hover: var(--gray-70);
+  --node-indent-border: var(--gray-60);
+}
+
+body {
+  font-family: 'QUST Fusion Pixel', system-ui, sans-serif;
+  color: var(--text-2);
+  background: var(--background-1);
+}
+/* Preserve the source editor's monospace metrics and semantic syntax colors. */
+input, select, textarea, button { font-family: inherit; }
+.ace_editor, .ace_editor textarea, code, pre {
+  font-family: ui-monospace, Consolas, monospace;
+}
+header {
+  border-bottom: 2px solid var(--qust-edge);
+  box-shadow: var(--qust-bevel), 0 4px var(--black-opacity-20);
+}
+header h1 { font-weight: 800; }
+header nav a[data-native] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 8px;
+  text-decoration: none;
+}
+
+.card, .tool-card, .tool-group {
+  border: 2px solid var(--qust-edge);
+  border-radius: 0;
+  background: var(--background-2);
+  box-shadow: var(--qust-bevel), 0 4px var(--qust-edge);
+  transition: background-color 120ms, border-color 120ms;
+}
+.tool-group { gap: 2px; padding-bottom: 4px; }
+.tool-group .tool-card { border: 0; box-shadow: none; }
+a.card:hover, a.tool-card:hover, .tool-group a.tool-card:hover {
+  border-color: var(--qust-focus);
+  background: var(--background-3);
+}
+.card-title, .tool-card h3 { font-weight: 700; }
+
+.btn, header .btn-menu > .btn, header nav a[data-native] {
+  border: 2px solid var(--secondary-border);
+  border-radius: 0;
+  background: var(--secondary-background);
+  color: var(--secondary-text);
+  fill: currentColor;
+  box-shadow: inset 0 -4px var(--secondary-shadow), inset 2px 2px var(--white-opacity-60), inset -2px -6px var(--white-opacity-40);
+  transition: background-color 100ms, box-shadow 100ms;
+}
+.btn { padding: 4px 9px 6px; }
+.btn:not(.btn-input):not(.disabled):hover,
+header .btn-menu > .btn:hover, header nav a[data-native]:hover {
+  background: var(--secondary-background-hovered);
+}
+.btn.active, .btn-group .btn.active {
+  color: var(--primary-text);
+  fill: currentColor;
+  background: var(--primary-background);
+  border-color: var(--primary-shadow);
+  box-shadow: inset 0 -4px var(--primary-shadow), inset 2px 2px var(--white-opacity-20);
+}
+.btn.active:not(.btn-input):not(.disabled):hover { background: var(--primary-background-hovered); }
+.btn:not(.btn-input):not(.disabled):active, header nav a[data-native]:active {
+  box-shadow: inset 2px 2px var(--black-opacity-20);
+}
+.btn.disabled, .btn[aria-disabled='true'] {
+  opacity: 0.55;
+  color: var(--secondary-text);
+  box-shadow: none;
+}
+.btn.danger { color: var(--accent-danger); }
+.btn.btn-input {
+  background: var(--qust-input);
+  color: var(--text-1);
+  border-color: var(--qust-edge);
+  box-shadow: inset 2px 2px var(--black-opacity-20);
+}
+.btn-input input, .btn-input select { background: transparent; color: inherit; }
+.convert-select, .convert-textarea, .file-modal input, .fancy-menu input {
+  border: 2px solid var(--qust-edge);
+  border-radius: 0;
+  background: var(--qust-input);
+  color: var(--text-1);
+  box-shadow: inset 2px 2px var(--black-opacity-20);
+}
+.btn-group, .btn-row, .btn-row .btn, .btn-group .btn,
+.modal, .fancy-menu, .popup-source, .popup-preview, .popup-project, .popup-share {
+  border-radius: 0;
+}
+.btn-group, .modal, .fancy-menu, .popup-source, .popup-preview, .popup-project, .popup-share {
+  border: 2px solid var(--qust-edge);
+  box-shadow: var(--qust-bevel), 0 4px var(--black-opacity-30);
+}
+.btn-group { background: var(--background-2); }
+.modal { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: auto; }
+:is(a, button, input, select, textarea, [tabindex]):focus-visible,
+.btn-input:focus-within {
+  outline: 2px solid var(--qust-focus);
+  outline-offset: 2px;
+}
+footer { color: var(--text-3); }
+footer a { color: var(--accent-primary); }
+@media (prefers-reduced-motion: reduce) {
+  .card, .tool-card, .btn, header nav a[data-native] { transition: none; }
+}
+
+/* Upstream reserves 24px icon slots; the Wiki return link needs its text width. */
+header .title { min-width: 0; }
+header .title h1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+header nav { flex-shrink: 0; }
+header nav li { margin-inline: 6px; }
+header nav li > a[data-native] { width: auto; height: auto; white-space: nowrap; }
+header nav li > .btn-menu { width: 32px; height: 32px; }
+/* Center icons on the raised face, excluding the 4px bottom bevel. */
+header nav .btn-menu > .btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0 0 4px;
+}
+header nav .btn-menu > .btn svg { display: block; width: 20px; height: 20px; margin: 0; }
+.card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.card, .card-grid, .card-column, .tool-group { min-width: 0; }
+.card-content { overflow-wrap: anywhere; }
+.navigation { flex-wrap: wrap; }
+.navigation .query-search { flex: 1 1 12rem; width: auto; min-width: 0; }
+.navigation .query-search input { min-width: 0; width: 100%; }
+@media (max-width: 980px) {
+  .card-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 580px) {
+  header { padding-inline: 4px; gap: 4px; }
+  header .home-link svg { margin-left: 0; flex-shrink: 0; }
+  header .title h1 { font-size: 1rem; }
+  body header nav li { margin-inline: 3px; }
+  header nav a[data-native] { padding-inline: 5px; font-size: 14px; }
+  .card-overlay { float: none; display: block; overflow-wrap: anywhere; }
+}
+
+.qust-translation-notice {
+  max-width: 928px;
+  margin: 16px auto 0;
+  padding: 12px 16px;
+  border: 2px solid var(--qust-edge);
+  border-inline-start: 4px solid var(--primary-background);
+  background: var(--background-2);
+  color: var(--text-2);
+  box-shadow: var(--qust-bevel);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.qust-translation-notice p { margin-top: 4px; }
+.qust-translation-notice a { color: var(--accent-primary); text-underline-offset: 3px; }
+@media (max-width: 960px) { .qust-translation-notice { margin-inline: 16px; } }
+
+/* Keep header language/theme glyphs legible on dark OreUI button faces. */
+:root.dark header nav .btn-menu > .btn svg {
+  color: var(--white);
+  fill: var(--white);
+}
