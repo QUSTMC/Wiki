@@ -35,6 +35,16 @@ export default mergeConfig(loaded.config, {
       }
 
       if (!id.replaceAll('\\', '/').split('?')[0].endsWith('/components/generator/McdocRenderer.tsx')) return;
+      code = code.replace('const datalistId = `mcdoc_completions_${hexId()}`', 'const datalistId = useMemo(() => `mcdoc_completions_${hexId()}`, [])');
+      const datalistStart = code.indexOf('\t\t\t{completions.length > 0 && <datalist');
+      const datalistEnd = code.indexOf('\n\t\t\t{value && gen && <a', datalistStart);
+      if (datalistStart < 0 || datalistEnd < 0) this.error('Misode completion renderer changed; review bounded autocomplete adapter');
+      code = code.slice(0, datalistStart) + `<QustCompletionInput
+        options={completions.map(c => c.value)} value={value ?? ''} id={datalistId}
+        className={colorKind === 'hex_rgb' ? 'short-input' : idRegistry ? 'long-input' : ''}
+        onValue={setValue} onCommit={onChangeValue} />` + code.slice(datalistEnd);
+      const completionComponent = readFileSync(fileURLToPath(new URL('../src/integrations/misode/CompletionInput.tsx', import.meta.url)), 'utf8');
+      code = `import { createPortal as qustCreatePortal } from 'preact/compat';\n` + code + '\n' + completionComponent;
       const original = "function Key({ label, doc, raw }: KeyProps) {";
       const rendering = "{raw ? label.toString() : formatIdentifier(label.toString())}";
       if (!code.includes(original) || !code.includes(rendering)) this.error('Misode schema renderer changed; review the display-only translation adapter');

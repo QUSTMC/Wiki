@@ -28,7 +28,7 @@ function digest(paths) {
 }
 export function buildMisode() {
   const fingerprintHash = createHash('sha256').update(digest([source]));
-  for (const file of ['src/i18n/misode/zh-cn.json', 'scripts/misode-i18n.mjs', 'scripts/misode-vite.config.mjs', 'scripts/misode-schema-runtime.mjs', 'src/i18n/misode/advancement-source.json', 'src/i18n/misode/advancement-zh-cn.json', 'src/i18n/misode/common-source.json', 'src/i18n/misode/common-zh-cn.json', 'src/i18n/misode/home-source.json', 'src/i18n/misode/home-zh-cn.json']) fingerprintHash.update(readFileSync(join(root, file)));
+  for (const file of ['src/i18n/misode/zh-cn.json', 'scripts/misode-i18n.mjs', 'scripts/misode-vite.config.mjs', 'scripts/misode-schema-runtime.mjs', 'src/i18n/misode/advancement-source.json', 'src/i18n/misode/advancement-zh-cn.json', 'src/i18n/misode/common-source.json', 'src/i18n/misode/common-zh-cn.json', 'src/i18n/misode/home-source.json', 'src/i18n/misode/home-zh-cn.json', 'src/integrations/misode/CompletionInput.tsx']) fingerprintHash.update(readFileSync(join(root, file)));
   const fingerprint = fingerprintHash.digest('hex');
   const marker = join(destination, '.build-hash');
   if (existsSync(join(destination, 'index.html')) && existsSync(marker) && readFileSync(marker, 'utf8') === fingerprint) {

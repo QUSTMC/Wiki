@@ -139,6 +139,27 @@ test('Misode integration keeps navigation, deep links and resources under its pr
   await requirements.locator('.node-doc').waitFor({state:'visible'});
   assert.match(await requirements.locator('.node-doc').innerText(), /判据/);
   assert.equal(await requirements.locator('.node-doc code').filter({hasText:/^criteria$/}).count(),1);
+  // Resource completion must not invoke a browser datalist or create an unbounded DOM.
+  const parentInput = page.locator('.node-header').filter({has:page.locator('label > span').filter({hasText:/^父进度$/})}).first().locator('input');
+  await parentInput.click();
+  await page.locator('[data-qust-completions]').waitFor();
+  assert.equal(await parentInput.getAttribute('list'), null);
+  assert.equal(await page.locator('datalist').count(), 0);
+  assert.ok(await page.locator('[data-qust-completions] [role=option]').count() <= 60);
+  await parentInput.fill('story/root');
+  await page.locator('[data-qust-completions] [role=option]').filter({hasText:/^minecraft:story\/root$/}).waitFor();
+  await parentInput.press('ArrowDown');
+  await parentInput.press('Enter');
+  await page.waitForFunction(() => document.querySelector('.ace_content')?.textContent?.includes('minecraft:story/root'));
+  await parentInput.click();
+  await page.locator('[data-qust-completions] [role=option]').first().click();
+  await page.locator('[data-qust-completions]').waitFor({state:'hidden'});
+  await parentInput.fill('custom:my_parent');
+  await parentInput.press('Tab');
+  await page.waitForFunction(() => document.querySelector('.ace_content')?.textContent?.includes('custom:my_parent'));
+  await parentInput.click();
+  await parentInput.press('Escape');
+  await page.locator('[data-qust-completions]').waitFor({state:'hidden'});
   // Add a real optional field and verify the generated JSON still uses the original key.
   await page.locator('.node-header').filter({has:page.locator('label > span').filter({hasText:/^父进度$/})}).first().locator('input').fill('minecraft:story/root');
   await page.locator('.node-header').filter({has:page.locator('label > span').filter({hasText:/^父进度$/})}).first().locator('input').press('Tab');
