@@ -67,3 +67,24 @@ Misode 首页在独立构建插件中注入汉化来源声明，说明本站补�
 
 
 首页另外提取了六张工具卡片的标题和简介，共 12 项，位于 `home-source.json` 和 `home-zh-cn.json`。构建插件只适配对应显示属性，中文模式应用译文，其他语言保留上游原文。包筛选中的 block 表示屏蔽规则而非方块，因此暂时保留该字段英文，避免错误套用通用方块译法。
+
+
+## 全量快照补译（2026-11-13）
+
+以 `full-provenance.json` 中的 vanilla-mcdoc ref 为基线，收集所有原版符号字段/字面枚举与文档、仓库内模组 mcdoc 注释/字段、静态 JSX 文字/显示属性、显式错误提示与基本类型显示名，共 4,538 项：2,382 项标签/枚举、2,032 段说明、124 项界面文案。`full-source.json` 是可审查的提取清单，`full-zh-cn.json` 记录逐项原文、译文及模型来源，`full-coverage.json` 记录完整性与风险候选。已有译文按精确原文复用，其余由指定本地 Gemma 模型生成。
+
+批量工具 `scripts/translate-misode-full.mjs` 使用本地服务原生 `/api/v1/chat` 接口关闭推理输出，4 路小批请求。失败批次自动重试/拆分，逐批校验并落盘，重新运行仅续译缺失项。输入术语按最长边界匹配，模组专用来源与特殊分表保持作用域；所有推理与生成都在用户指定的本地模型服务执行。审计记录在 `.astro/misode-translations/full/`，构建不访问模型。
+
+`scripts/misode-full-runtime.mjs` 负责按原文查询显示译文；构建插件适配 Schema 的显示组件和枚举格式化函数。`scripts/misode-jsx-i18n.mjs` 使用 TypeScript AST 定位 UI 文本与显示属性，避免误改 value、href、回调、自定义键或业务数据。上游源码不落盘修改。客户端词典剔除上下文和模型审计元数据，减少加载体积。
+
+```pwsh
+node scripts/extract-misode-full.mjs /path/to/symbols.json
+node scripts/extract-misode-extra.mjs
+node scripts/translate-misode-full.mjs
+node scripts/audit-misode-translations.mjs --strict
+npm run build
+```
+
+这里的“全量”是上述固定输入清单的完整覆盖，不承诺翻译未来上游新文案、用户输入、实时技术更新日志/版本文章或外部网站。UUID、RGB、轴字母、数学公式、模组专名、文件路径与资源标识保留原样。动态字段名保持原文；字段说明只有精确匹配才使用已有译文，新文档回退原文。机器生成译文并不等于逐项人工审核，继续使用页面的 AI 汉化风险提示。
+
+风险抽检集中在逻辑否定/范围/默认值、世界生成术语、坐标与 UUID 标签，数值检测候选包括英文数字单词译成阿拉伯数字等正常差异，不能直接作为误译判定。上游更新工作流运行完整性和显示隔离测试；新增/变更的 schema 应重新提取、续译并审查快照差异。

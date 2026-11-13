@@ -12,7 +12,7 @@ test('schema translation changes only displayed text in Chinese advancement page
   assert.notEqual(result.doc,original);
   assert.match(result.doc,/`requirements`/);
   assert.equal(JSON.stringify(fields),before);
-  for (const [lang,path,raw] of [['en','/misode/advancement/',false],['zh-cn','/misode/recipe/',false],['zh-cn','/misode/advancement/',true]]) {
+  for (const [lang,path,raw] of [['en','/misode/advancement/',false],['zh-cn','/misode/advancement/',true]]) {
     assert.deepEqual(translateAdvancementField(lang,path,'criteria',original,raw),{label:undefined,doc:original});
   }
   assert.equal(translateAdvancementField('zh-cn','/misode/advancement/','criteria','Changed upstream documentation',false).doc,'Changed upstream documentation');
@@ -30,6 +30,6 @@ test('common generators use route-scoped labels and exact source documentation',
   assert.match(all.doc,/所有|全部/);
   assert.match(any.doc,/任意|任何|一个/);
   assert.notEqual(all.doc,any.doc);
-  assert.deepEqual(translateAdvancementField('zh-cn','/misode/worldgen/biome/','type',passAll,false),{label:undefined,doc:passAll});
+  assert.equal(translateAdvancementField('zh-cn','/misode/worldgen/biome/','type',passAll,false).label,'类型');
   assert.deepEqual(translateAdvancementField('zh-cn','/misode/loot-table/','type',passAll,true),{label:undefined,doc:passAll});
 });
