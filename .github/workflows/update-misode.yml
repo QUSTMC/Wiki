@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Pin the OS alongside Playwright; ubuntu-latest can move to unsupported releases.
+    runs-on: ubuntu-24.04
     outputs:
       changed: ${{ steps.check.outputs.changed }}
       sha: ${{ steps.check.outputs.sha }}
@@ -43,7 +44,8 @@ jobs:
   update:
     needs: check
     if: needs.check.outputs.changed == 'true'
-    runs-on: ubuntu-latest
+    # Pin the OS alongside Playwright; ubuntu-latest can move to unsupported releases.
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     permissions:
       contents: write
