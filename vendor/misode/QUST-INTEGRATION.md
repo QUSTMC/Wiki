@@ -2,7 +2,7 @@
 
 原仓库：https://github.com/misode/misode.github.io
 
-导入分支：master；提交：`65a10e06ccd03845784a2f838f52b0bda0aa25f3`。保留 MIT LICENSE 和原作者署名。
+导入分支：master；提交：`0bb6f88ea122b94af72ec81f0f2ebca832a3b5b1`。保留 MIT LICENSE 和原作者署名。
 
 访问 `/misode/`，从 `/tools/` 导航页进入。源码保存在本目录，后续修改可直接编辑；应用保持独立 Preact/Vite 构建，不与 Starlight CSS 混合。
 
