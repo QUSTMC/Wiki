@@ -144,6 +144,31 @@ test('Misode integration keeps navigation, deep links and resources under its pr
     assert.ok(card && card.x >= -0.5 && card.x + card.width <= width + 0.5, `mobile card must not be clipped: ${JSON.stringify({ width, card })}`);
     assert.ok(back && back.y >= -0.5 && back.y + back.height <= 56.5, `return link must fit header: ${JSON.stringify(back)}`);
   }
+  // A long unbroken control label models the wider min-content width seen
+  // with Linux fallback fonts/upstream version labels. The outer grid must
+  // retain both 16px gutters instead of expanding its whole card track.
+  const intrinsicProbe = await page.locator('.navigation').first().evaluateHandle(navigation => {
+    const element = document.createElement('span');
+    element.dataset.qustIntrinsicProbe = '';
+    element.textContent = 'minecraft:long_unbroken_upstream_version_identifier';
+    element.style.cssText = 'display:block;white-space:nowrap;font:18px monospace';
+    navigation.append(element);
+    return element;
+  });
+  try {
+    await page.waitForFunction(() => [...document.querySelectorAll('a.card')].every(element => {
+      const r = element.getBoundingClientRect();
+      return r.left >= 15.5 && r.right <= innerWidth - 15.5;
+    }), null, { timeout: 5000 });
+    const container = await page.locator('.qust-translation-notice + .grid').evaluate(element => ({
+      rect: element.getBoundingClientRect().toJSON(),
+      child: element.firstElementChild.getBoundingClientRect().toJSON(),
+    }));
+    assert.ok(container.child.width <= 288.5, `homepage content must fit 320px minus gutters: ${JSON.stringify(container)}`);
+  } finally {
+    await intrinsicProbe.evaluate(element => element.remove());
+    await intrinsicProbe.dispose();
+  }
   await page.setViewportSize({ width: 1280, height: 900 });
 
   const escaped = await page.locator('a[href^="/"]').evaluateAll(links => links.map(a => a.getAttribute('href')).filter(href => !href.startsWith('/misode/') && href !== '/tools/'));
