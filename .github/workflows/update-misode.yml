@@ -82,6 +82,14 @@ jobs:
         run: |
           export PLAYWRIGHT_MODULE="file://$RUNNER_TEMP/misode-browser/node_modules/playwright/index.mjs"
           node --test tests/misode-browser.test.mjs
+      - name: Upload browser failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: misode-browser-failure
+          path: test-results/misode/
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Open or refresh update pull request
         uses: peter-evans/create-pull-request@v7
         with:

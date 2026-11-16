@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 
 test('Misode integration keeps navigation, deep links and resources under its prefix', {
@@ -28,8 +28,26 @@ test('Misode integration keeps navigation, deep links and resources under its pr
   t.after(() => { server.closeAllConnections(); server.close(); });
   const origin = `http://127.0.0.1:${server.address().port}`;
   const browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || 'msedge', headless: true });
-  t.after(() => browser.close());
   const page = await browser.newPage({ ignoreHTTPSErrors: true, reducedMotion: 'reduce', viewport: { width: 1280, height: 900 } });
+  // Register evidence collection before the browser-close teardown hook.
+  t.after(async () => {
+    if (t.passed || page.isClosed()) return;
+    const directory = resolve('test-results/misode');
+    await mkdir(directory, { recursive: true });
+    await Promise.allSettled([
+      page.screenshot({ path: resolve(directory, 'failure.png'), fullPage: true }),
+      page.content().then(html => writeFile(resolve(directory, 'failure.html'), html)),
+      page.evaluate(() => ({
+        url: location.href, width: innerWidth, clientWidth: document.documentElement.clientWidth,
+        scrollWidth: document.documentElement.scrollWidth, fonts: document.fonts.status,
+        cards: [...document.querySelectorAll('a.card')].map(element => ({
+          text: element.textContent, rect: element.getBoundingClientRect().toJSON(),
+          parent: element.parentElement?.getBoundingClientRect().toJSON(),
+        })),
+      })).then(data => writeFile(resolve(directory, 'layout.json'), JSON.stringify(data, null, 2))),
+    ]);
+  });
+  t.after(() => browser.close());
   const errors = [], missing = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => {
@@ -100,10 +118,31 @@ test('Misode integration keeps navigation, deep links and resources under its pr
   await page.locator('a[href="/misode/loot-table/"]').first().waitFor();
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
+    await page.evaluate(() => document.fonts.ready);
+    // setViewportSize acknowledges the viewport change, not every responsive
+    // component/font reflow. Poll geometry instead of asserting a transient frame.
+    try {
+      await page.waitForFunction(expectedWidth => {
+        if (innerWidth !== expectedWidth || document.fonts.status !== 'loaded') return false;
+        const cards = [...document.querySelectorAll('a.card')];
+        const back = document.querySelector('header a[data-native]')?.getBoundingClientRect();
+        return cards.length > 0 && cards.every(element => {
+          const r = element.getBoundingClientRect();
+          return r.width > 0 && r.left >= -0.5 && r.right <= expectedWidth + 0.5;
+        }) && back && back.top >= -0.5 && back.bottom <= 56.5;
+      }, width, { timeout: 10000, polling: 'raf' });
+    } catch (cause) {
+      const geometry = await page.evaluate(() => ({
+        viewport: innerWidth, fonts: document.fonts.status,
+        cards: [...document.querySelectorAll('a.card')].map(e => e.getBoundingClientRect().toJSON()),
+        back: document.querySelector('header a[data-native]')?.getBoundingClientRect().toJSON(),
+      }));
+      assert.fail(`Mobile layout did not fit ${width}px after responsive reflow: ${JSON.stringify(geometry)}; ${cause.message}`);
+    }
     const card = await page.locator('a.card').first().boundingBox();
     const back = await page.locator('header a[data-native]').boundingBox();
-    assert.ok(card && card.x >= 0 && card.x + card.width <= width, 'mobile card must not be clipped');
-    assert.ok(back && back.y >= 0 && back.y + back.height <= 56, 'return link must fit header');
+    assert.ok(card && card.x >= -0.5 && card.x + card.width <= width + 0.5, `mobile card must not be clipped: ${JSON.stringify({ width, card })}`);
+    assert.ok(back && back.y >= -0.5 && back.y + back.height <= 56.5, `return link must fit header: ${JSON.stringify(back)}`);
   }
   await page.setViewportSize({ width: 1280, height: 900 });
 
