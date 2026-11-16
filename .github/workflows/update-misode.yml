@@ -26,8 +26,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Test update merge behavior
-        run: node --test tests/misode-update.test.mjs tests/misode-theme.test.mjs tests/misode-i18n.test.mjs tests/misode-schema.test.mjs tests/misode-full.test.mjs
+      # Fresh checkouts have no vendor node_modules. Keep this job dependency-free.
+      - name: Test update and translation data without installed dependencies
+        run: node --test tests/misode-update.test.mjs tests/misode-theme.test.mjs tests/misode-i18n.test.mjs tests/misode-schema.test.mjs
       - name: Check upstream revision
         id: check
         shell: bash
@@ -66,6 +67,9 @@ jobs:
         run: npm ci --include=dev --no-audit --no-fund
       - name: Type check Misode and build Wiki
         run: npm run build
+      # The build installs the locked Misode devDependencies, including TypeScript.
+      - name: Test full integration with installed Misode dependencies
+        run: node --test tests/misode-update.test.mjs tests/misode-theme.test.mjs tests/misode-i18n.test.mjs tests/misode-schema.test.mjs tests/misode-full.test.mjs
       - name: Install browser for integration checks
         run: |
           npm install --prefix "$RUNNER_TEMP/misode-browser" --no-audit --no-fund playwright@1.56.1
