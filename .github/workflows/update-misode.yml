@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '24'
       - name: Test update merge behavior
-        run: node --test tests/misode-update.test.mjs tests/misode-theme.test.mjs tests/misode-i18n.test.mjs tests/misode-schema.test.mjs
+        run: node --test tests/misode-update.test.mjs tests/misode-theme.test.mjs tests/misode-i18n.test.mjs tests/misode-schema.test.mjs tests/misode-full.test.mjs
       - name: Check upstream revision
         id: check
         shell: bash

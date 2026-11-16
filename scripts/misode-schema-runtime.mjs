@@ -1,3 +1,4 @@
+import { fullFieldTranslation } from './misode-full-runtime.mjs';
 import translations from '../src/i18n/misode/advancement-zh-cn.json' with { type: 'json' };
 import sources from '../src/i18n/misode/advancement-source.json' with { type: 'json' };
 
@@ -9,7 +10,10 @@ export function translateAdvancementField(lang, pathname, label, doc, raw, entri
   const route = pathname.replace(/\/$/, '').split('/').at(-1);
   const advancement = route === 'advancement';
   const common = ['loot-table', 'recipe', 'item-modifier', 'predicate', 'pack-mcmeta'].includes(route);
-  if (lang !== 'zh-cn' || !pathname.startsWith('/misode/') || (!advancement && !common) || raw) return { label: undefined, doc };
+  if (lang !== 'zh-cn' || !pathname.startsWith('/misode/') || raw) return { label: undefined, doc };
+  const broad = fullFieldTranslation(lang, label, doc, raw);
+  if (pathname.includes('/worldgen/') && String(label) === 'features') broad.label = '地物';
+  if (!advancement && !common) return broad;
   const catalog = advancement ? sources : commonSources;
   if (common && entries === translations) entries = commonTranslations;
   const key = String(label);
@@ -18,5 +22,5 @@ export function translateAdvancementField(lang, pathname, label, doc, raw, entri
   const ambiguousPackBlock = route === 'pack-mcmeta' && key === 'block';
   const translatedLabel = !ambiguousPackBlock && title && title.source === catalog['label.' + key] && title.review !== 'needs-context' ? title.translation : undefined;
   const entry = Object.entries(entries).find(([id, value]) => id.startsWith('doc.' + key + '.') && value.source === doc && value.review !== 'needs-context');
-  return { label: translatedLabel, doc: entry ? entry[1].translation : doc };
+  return { label: ambiguousPackBlock ? '屏蔽规则' : translatedLabel || broad.label, doc: entry ? entry[1].translation : broad.doc };
 }

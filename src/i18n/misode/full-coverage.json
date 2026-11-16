@@ -1,0 +1,1225 @@
+{
+  "sourceEntries": 4538,
+  "translated": 4538,
+  "byKind": {
+    "label": 2382,
+    "doc": 2032,
+    "ui": 124
+  },
+  "missing": [],
+  "stale": [],
+  "invalid": [],
+  "technicalOrProperNames": [
+    {
+      "id": "label.12156e921bdb6085",
+      "source": "Id",
+      "translation": "ID"
+    },
+    {
+      "id": "label.3c446a7acea9dccc",
+      "source": "Uv",
+      "translation": "UV"
+    },
+    {
+      "id": "label.bc95e840036913ce",
+      "source": "Nbt",
+      "translation": "NBT"
+    },
+    {
+      "id": "label.b1a96dd646bccaa2",
+      "source": "Alpha",
+      "translation": "alpha"
+    },
+    {
+      "id": "doc.83418e6a42b184c0",
+      "source": "`sqrt(dx^2 + dy^2 + dz^2)`",
+      "translation": "`sqrt(dx^2 + dy^2 + dz^2)`"
+    },
+    {
+      "id": "doc.0135c4c1d0b4ca72",
+      "source": "`dx^2 + dy^2 + dz^2`",
+      "translation": "`dx^2 + dy^2 + dz^2`"
+    },
+    {
+      "id": "doc.43ec192239faf92b",
+      "source": "`abs(dx) + abs(dy) + abs(dz)`",
+      "translation": "`abs(dx) + abs(dy) + abs(dz)`"
+    },
+    {
+      "id": "doc.9b3bf41d579c0ec0",
+      "source": "`max(abs(dx), abs(dy), abs(dz))`",
+      "translation": "`max(abs(dx), abs(dy), abs(dz))`"
+    },
+    {
+      "id": "label.01ecb743cad3be82",
+      "source": "Ttl",
+      "translation": "Ttl"
+    },
+    {
+      "id": "label.437562bb87b809d9",
+      "source": "Uuid",
+      "translation": "Uuid"
+    },
+    {
+      "id": "label.157ce98b9a370dc7",
+      "source": "Url",
+      "translation": "Url"
+    },
+    {
+      "id": "label.fc7e5afb4577cf84",
+      "source": "Rgb",
+      "translation": "Rgb"
+    },
+    {
+      "id": "label.2a898bc98aaf6c96",
+      "source": "UUID",
+      "translation": "UUID"
+    },
+    {
+      "id": "label.bbe96fa9f44ea0fc",
+      "source": "AX",
+      "translation": "AX"
+    },
+    {
+      "id": "label.afe8c678b4fc83c7",
+      "source": "AY",
+      "translation": "AY"
+    },
+    {
+      "id": "label.38318c00d873bcdb",
+      "source": "AZ",
+      "translation": "AZ"
+    },
+    {
+      "id": "label.71680c71b244a1b8",
+      "source": "Johnny",
+      "translation": "Johnny"
+    },
+    {
+      "id": "label.1692ac017cf9d78f",
+      "source": "APX",
+      "translation": "APX"
+    },
+    {
+      "id": "label.1f8ec9db0c3bedef",
+      "source": "APY",
+      "translation": "APY"
+    },
+    {
+      "id": "label.3085336b61c16fc1",
+      "source": "APZ",
+      "translation": "APZ"
+    },
+    {
+      "id": "label.1322659a3e77fb90",
+      "source": "TXD",
+      "translation": "TXD"
+    },
+    {
+      "id": "label.b610975883c138a4",
+      "source": "TYD",
+      "translation": "TYD"
+    },
+    {
+      "id": "label.ab5b9bd04ac487ae",
+      "source": "TZD",
+      "translation": "TZD"
+    },
+    {
+      "id": "label.5559095bbeed7b47",
+      "source": "Mixins",
+      "translation": "Mixins"
+    },
+    {
+      "id": "label.9cd2349658685944",
+      "source": "Irc",
+      "translation": "Irc"
+    },
+    {
+      "id": "ui.7386a839ea231a12",
+      "source": "Misode",
+      "translation": "Misode"
+    },
+    {
+      "id": "ui.452bf3a02ba7b8d4",
+      "source": "Minecraft Wiki",
+      "translation": "Minecraft Wiki"
+    }
+  ],
+  "riskCandidates": [
+    {
+      "id": "doc.31c8cc1839a26cb6",
+      "reason": "logic/default/range",
+      "source": "One condition or an array where at least one condition must apply.",
+      "translation": "一个条件或一个至少包含一个适用条件的数组。"
+    },
+    {
+      "id": "doc.62e09de8a1918434",
+      "reason": "logic/default/range",
+      "source": "Minimum in codepoint range (inclusive).",
+      "translation": "码点范围的最小值（包含）。"
+    },
+    {
+      "id": "doc.b800d38c4c7ab881",
+      "reason": "logic/default/range",
+      "source": "Maximum in codepoint range (inclusive).",
+      "translation": "码点范围的最大值（包含）。"
+    },
+    {
+      "id": "label.c82ce751f636d324",
+      "reason": "numeric tokens differ",
+      "source": "Page1",
+      "translation": "第1页"
+    },
+    {
+      "id": "label.aea8eb2734a408ef",
+      "reason": "numeric tokens differ",
+      "source": "Page2",
+      "translation": "第2页"
+    },
+    {
+      "id": "doc.b6bd6b1aa72c2b74",
+      "reason": "logic/default/range",
+      "source": "Whether the default components should be handled as \"no component\". Defaults to false.",
+      "translation": "是否将默认组件视为“无组件”。默认为 false。"
+    },
+    {
+      "id": "doc.a93e98d5abd621fb",
+      "reason": "numeric tokens differ",
+      "source": "Used on compasses to determine the current angle, expressed in a decimal value of less than one.",
+      "translation": "用于指南针以确定当前角度，以小于 1 的小数表示。"
+    },
+    {
+      "id": "doc.88bcd4b1e046c263",
+      "reason": "logic/default/range",
+      "source": "Used on crossbows to determine if they are charged with any projectile. If `1`, the crossbow is charged.",
+      "translation": "用于弩以确定是否已装载任何弹射物。如果 `1`，则弩已上膛。"
+    },
+    {
+      "id": "doc.b2994840eb308891",
+      "reason": "numeric tokens differ",
+      "source": "Used on any item and is compared to the CustomModelData NBT, expressed in an integer value.\n\nThe number is still internally converted to float, causing a precision loss for some numbers above 16 million. \\\nIf the value read from the item data is greater than or equal to the value used for the predicate, the predicate is positive.",
+      "translation": "用于任何物品，并与以整数表示的 CustomModelData NBT 进行比较。\n\n该数值在内部仍会被转换为 float，导致某些超过 1600 万的数值出现精度损失。 \\\n如果从物品数据中读取的值大于或等于用于谓词的值，则谓词为正。"
+    },
+    {
+      "id": "doc.b2994840eb308891",
+      "reason": "logic/default/range",
+      "source": "Used on any item and is compared to the CustomModelData NBT, expressed in an integer value.\n\nThe number is still internally converted to float, causing a precision loss for some numbers above 16 million. \\\nIf the value read from the item data is greater than or equal to the value used for the predicate, the predicate is positive.",
+      "translation": "用于任何物品，并与以整数表示的 CustomModelData NBT 进行比较。\n\n该数值在内部仍会被转换为 float，导致某些超过 1600 万的数值出现精度损失。 \\\n如果从物品数据中读取的值大于或等于用于谓词的值，则谓词为正。"
+    },
+    {
+      "id": "doc.3460d6ddd3212752",
+      "reason": "numeric tokens differ",
+      "source": "Determines the amount a bow or crossbow has been pulled, expressed in a decimal value of less than one.",
+      "translation": "确定弓或弩被拉开的程度，表示为小于 1 的十进制值。"
+    },
+    {
+      "id": "doc.1358995e5d18125b",
+      "reason": "numeric tokens differ",
+      "source": "Used on clocks to determine the current time, expressed in a decimal value of less than one.",
+      "translation": "用于时钟，以确定当前时间，表示为小于 1 的十进制值。"
+    },
+    {
+      "id": "doc.b92fbdc86ccb7eda",
+      "reason": "logic/default/range",
+      "source": "Whether the texture should be forced into the translucent render pass. \\\nTextures without any translucent pixels are not assigned to the translucent pass by default. \\\nDefaults to `false`.",
+      "translation": "是否应将纹理强制进入半透明渲染通道。 \\\n默认情况下，不包含任何半透明像素的纹理不会被分配到半透明通道。 \\\n默认为 `false`。"
+    },
+    {
+      "id": "doc.bcba3fe994d15e17",
+      "reason": "logic/default/range",
+      "source": "Default is 1.0.",
+      "translation": "默认为 1.0。"
+    },
+    {
+      "id": "doc.fc0f80cc8f35d23a",
+      "reason": "logic/default/range",
+      "source": "Sets the default time for each frame in increments of one game tick. Defaults to 1.",
+      "translation": "以一个游戏刻为增量设置每帧的默认时间。默认为 1。"
+    },
+    {
+      "id": "doc.2fe0dd6d83481e3e",
+      "reason": "logic/default/range",
+      "source": "Defaults to displaying all the frames from top to bottom.",
+      "translation": "默认为从上到下显示所有帧。"
+    },
+    {
+      "id": "doc.e69ef5f2c5ff88e9",
+      "reason": "logic/default/range",
+      "source": "If `requirements` is not defined, all defined criteria will be required.",
+      "translation": "如果未定义 `requirements`，则需要所有定义的判据。"
+    },
+    {
+      "id": "doc.b2ef73a10a80fe82",
+      "reason": "logic/default/range",
+      "source": "If all criteria are required at once, this may be omitted.\n\nContains all of the `criteria` keys.\n\nIf all of the lists each have at least one criteria met, the advancement is complete (basically AND grouping of OR groups).",
+      "translation": "如果所有判据都是必需条件，则可以省略。\n\n包含所有的 `criteria` 键。\n\n如果所有列表中的每个列表都至少满足一个判据，则进度完成（本质上是 OR 组的 AND 组合）。"
+    },
+    {
+      "id": "doc.d2b322c5da230440",
+      "reason": "logic/default/range",
+      "source": "Whether or not to hide this advancement and all its children from the advancement screen,\nuntil this advancement have been completed.\nHas no effect on root advancements themselves, but still affects all their children.\nDefaults to `false`.",
+      "translation": "是否在完成此进度之前，从进度界面中隐藏此进度及其所有子进度。\n对根进度本身无效，但仍会影响其所有子进度。\n默认为 `false`。"
+    },
+    {
+      "id": "doc.9544af1cff33fdbc",
+      "reason": "logic/default/range",
+      "source": "Fancy spiked border (used for the kill all mobs advancement).",
+      "translation": "华丽尖刺边界（用于“击败所有生物”进度）。"
+    },
+    {
+      "id": "doc.b36b78780a9707cd",
+      "reason": "logic/default/range",
+      "source": "Must have at least one of the listed tags.",
+      "translation": "必须至少拥有其中一个列出的标签。"
+    },
+    {
+      "id": "doc.4afefdcf82a0b905",
+      "reason": "logic/default/range",
+      "source": "Must have all the listed tags.",
+      "translation": "必须拥有所有列出的标签。"
+    },
+    {
+      "id": "doc.7c2903065d27ab0e",
+      "reason": "logic/default/range",
+      "source": "Whether the block at most 0.5 blocks below the entity is present which can affect its movement.",
+      "translation": "实体下方最多 0.5 个方块处是否存在可能影响其移动的方块。"
+    },
+    {
+      "id": "doc.d6dfb3e3ea597afe",
+      "reason": "logic/default/range",
+      "source": "If a disallowed face is interacted with, the next transformer will be attempted. \\\nDefaults to empty (allowing all faces).",
+      "translation": "如果与禁止的面交互，将尝试下一个转换器。 \\\n默认为空（允许所有面）。"
+    },
+    {
+      "id": "doc.5c765d91208abaa0",
+      "reason": "logic/default/range",
+      "source": "If the original block and the transformed block are both copper chests of any kind, the transform applies to the other half of the double chest.",
+      "translation": "如果原始方块和转换后的方块均为任何类型的铜箱子，则转换将应用于双箱子的另一半。"
+    },
+    {
+      "id": "doc.09601713ef774378",
+      "reason": "logic/default/range",
+      "source": "Default hurt sound.",
+      "translation": "默认伤害声音。"
+    },
+    {
+      "id": "doc.3abd951fecef6e93",
+      "reason": "logic/default/range",
+      "source": "Controls if special death message variants are used. Defaults to `default`.\n\nFor more info see: https://minecraft.wiki/w/Damage_type#Death_messages",
+      "translation": "控制是否使用特殊的死亡消息变体。默认为 `default`。\n\n更多信息请参阅：https://minecraft.wiki/w/Damage_type#Death_messages"
+    },
+    {
+      "id": "doc.27ea98962b2c2107",
+      "reason": "logic/default/range",
+      "source": "Closes the dialog.\nReturns to the previous non-dialog screen, if any.",
+      "translation": "关闭对话。\n返回到之前的非对话界面（如有）。"
+    },
+    {
+      "id": "doc.40c69e31402a3511",
+      "reason": "logic/default/range",
+      "source": "A multiline label.\nClick events in the text trigger `after_action` like any other action.",
+      "translation": "多行标签。\n文本中的点击事件将像其他操作一样触发 `after_action`。"
+    },
+    {
+      "id": "doc.0c5e3e24dff2d2f7",
+      "reason": "logic/default/range",
+      "source": "If not present, clicking button will simply close dialog without any action.",
+      "translation": "若不存在，点击按钮将仅关闭对话框而没有任何操作。"
+    },
+    {
+      "id": "doc.68c4c315a39679af",
+      "reason": "logic/default/range",
+      "source": "Start value, inclusive.",
+      "translation": "起始值，包含该值。"
+    },
+    {
+      "id": "doc.4bf5be36950b4570",
+      "reason": "logic/default/range",
+      "source": "End value, inclusive.",
+      "translation": "结束值，包含该值。"
+    },
+    {
+      "id": "doc.48d218b9eb311415",
+      "reason": "logic/default/range",
+      "source": "Step size of the input.\nIf not present, any value from range is allowed.",
+      "translation": "输入的步长。\n若未设置，则允许范围内的任何值。"
+    },
+    {
+      "id": "doc.ae984d231a214cad",
+      "reason": "logic/default/range",
+      "source": "Predicate context: Entity Parameters.\n\n`this` is the entity hitting the Block, unless during a projectile attack, then, `this` is the projectile.",
+      "translation": "谓词上下文：实体参数。\n\n`this` 是击中方块的实体，除非在弹射物攻击期间，此时 `this` 为弹射物。"
+    },
+    {
+      "id": "doc.6c77b833098c63a1",
+      "reason": "logic/default/range",
+      "source": "Amount of projectiles being loaded/drawn. \\\nAll projectile items except the first one will have `intangible_projectile` component applied.",
+      "translation": "加载/拔出的弹射物数量。 \\\n除第一个以外的所有弹射物物品都将应用 `intangible_projectile` 组件。"
+    },
+    {
+      "id": "doc.4d86ad191533fc5d",
+      "reason": "numeric tokens differ",
+      "source": "Amount of durability increase per experience point, `mending` uses 2x.",
+      "translation": "每点经验增加的耐久度数量，`mending` 使用 2 倍。"
+    },
+    {
+      "id": "doc.23dfad1afa1a9c32",
+      "reason": "logic/default/range",
+      "source": "On every tick. Performance recommendation: don't use with `run_function` unless necessary.",
+      "translation": "每刻执行。性能建议：除非必要，否则不要与 `run_function` 配合使用。"
+    },
+    {
+      "id": "doc.0d060090e4adc1e5",
+      "reason": "logic/default/range",
+      "source": "Chance that an input value is dropped by 1.\n\nThe span is 0 to 1, with 0 being no chance to drop an input value and 1 dropping all input values.",
+      "translation": "输入值减少 1 的概率。\n\n范围为 0 到 1，其中 0 表示没有减少输入值的概率，1 表示减少所有输入值。"
+    },
+    {
+      "id": "doc.c70b800a35c614eb",
+      "reason": "logic/default/range",
+      "source": "If omitted, all block types are replaced.",
+      "translation": "如果省略，所有方块类型将被替换。"
+    },
+    {
+      "id": "doc.14bf74c50bd1a32b",
+      "reason": "logic/default/range",
+      "source": "How commonly the Enchantment appears, compared to the total combined `weight` of all available Enchantments.",
+      "translation": "与所有可用魔咒的总 `weight` 相比，该魔咒出现的常见程度。"
+    },
+    {
+      "id": "doc.065cdcebbdefd12a",
+      "reason": "logic/default/range",
+      "source": "If `true`, each of the items becomes an independent entry in the pool with the same `weight` and `quality`. \\\nIf `false`, drops all items in the tag.",
+      "translation": "如果为 `true`，每个物品都将成为战利品池中具有相同 `weight` 和 `quality` 的独立条目。\\\n如果为 `false`，掉落标签中的所有物品。"
+    },
+    {
+      "id": "doc.c0e4fb2b488a5e5c",
+      "reason": "logic/default/range",
+      "source": "If `true`, each of the items becomes an independent entry in the pool with the same `weight` and `quality`. \\\nIf `false`, drops all items in the tag. \\\nDefaults to `false`.",
+      "translation": "如果 `true`，每个物品都成为战利品池中具有相同 `weight` 和 `quality` 的独立条目。\n如果 `false`，掉落标签中的所有物品。\n默认为 `false`。"
+    },
+    {
+      "id": "doc.55d5fc60f0a90998",
+      "reason": "logic/default/range",
+      "source": "Passes when all of these conditions pass.",
+      "translation": "当所有这些条件都通过时通过。"
+    },
+    {
+      "id": "doc.61a5a2f013e7d29b",
+      "reason": "logic/default/range",
+      "source": "Passes when any of these conditions pass.",
+      "translation": "当其中任何一个条件通过时通过。"
+    },
+    {
+      "id": "doc.eefc6aa333a1c31a",
+      "reason": "logic/default/range",
+      "source": "Accepts a value between `0` & `1` (inclusive).",
+      "translation": "接受 `0` 与 `1` 之间的值（包含）。"
+    },
+    {
+      "id": "doc.fe3e1c0105630f8f",
+      "reason": "logic/default/range",
+      "source": "Generated structure to locate. Accepts any of the structure types used by the `/locate` command. Defaults to buried treasure.",
+      "translation": "要定位的生成结构。接受 `/locate` 命令中使用的任何结构类型。默认为埋藏的宝藏。"
+    },
+    {
+      "id": "doc.ac33b28c2952c682",
+      "reason": "logic/default/range",
+      "source": "Generated structure to locate. Accepts any of the structure types used by the `/locate` command.",
+      "translation": "要定位的生成结构。接受 `/locate` 命令中使用的任何结构类型。"
+    },
+    {
+      "id": "doc.246267e9ca7daec9",
+      "reason": "logic/default/range",
+      "source": "If omitted, all components present are included",
+      "translation": "如果省略，则包含所有存在的组件"
+    },
+    {
+      "id": "doc.39bb85188a00d896",
+      "reason": "logic/default/range",
+      "source": "Replace any existing contents of the target.",
+      "translation": "替换目标的所有现有内容。"
+    },
+    {
+      "id": "doc.a31c2986d03efaf9",
+      "reason": "logic/default/range",
+      "source": "If omitted, all enchantments applicable to the item are possible",
+      "translation": "若省略，则所有适用于该物品的魔咒均可获得"
+    },
+    {
+      "id": "doc.a1daa395efd4271e",
+      "reason": "logic/default/range",
+      "source": "The allowed enchantments. If omitted, all enchantments applicable to the item are possible.",
+      "translation": "允许的魔咒。若省略，则所有适用于该物品的魔咒均可获得。"
+    },
+    {
+      "id": "doc.ebd28a04c8459de1",
+      "reason": "logic/default/range",
+      "source": "Whether to only enchant with item-compatible enchantments. Defaults to `true`.\n\nNote: Books are considered compatible with all Enchantments.",
+      "translation": "是否仅使用与物品兼容的魔咒进行附魔。默认为 `true`。\n\n注意：书被视为与所有魔咒兼容。"
+    },
+    {
+      "id": "doc.55ed6b2f59cd0828",
+      "reason": "logic/default/range",
+      "source": "Decimal percentage. Can be negative when used in combination with `add`. \\\nAccepts a value between `-1` & `1` (inclusive).",
+      "translation": "十进制百分比。与 `add` 结合使用时可以为负值。\n接受 `-1` 到 `1` 之间的值（包含边界）。"
+    },
+    {
+      "id": "doc.d4d2de3973155b56",
+      "reason": "logic/default/range",
+      "source": "If omitted, the original colors are kept (or `[]` is used if there was no component).\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "如果省略，则保留原始颜色（如果之前没有组件，则使用 `[]`）。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。这些字段中的每一个必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.49595ef67fa53854",
+      "reason": "logic/default/range",
+      "source": "If omitted, the original fade colors are kept (or `[]` is used if there was no component).\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "如果省略，则保留原始渐变颜色（如果之前没有组件，则使用 `[]`）。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。这些字段中的每一个必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.ed592ae16d84239c",
+      "reason": "logic/default/range",
+      "source": "Possible potions to select from.\nDefaults to all potions.",
+      "translation": "可选的药水。\n默认为所有药水。"
+    },
+    {
+      "id": "doc.5b033bdcefde4b6f",
+      "reason": "logic/default/range",
+      "source": "If `true`, each of the loot tables becomes an independent entry in the pool with the same `weight` and `quality`. \\\nIf `false`, drops all loot tables. \\\nDefaults to `false`.",
+      "translation": "如果 `true`，每个战利品表都成为池中具有相同 `weight` 和 `quality` 的独立条目。\\\n如果 `false`，则掉落所有战利品表。\\\n默认为 `false`。"
+    },
+    {
+      "id": "doc.2f484f2c9d5c2039",
+      "reason": "logic/default/range",
+      "source": "The firework star ingredient. \\\nProvides explosion data by the `firework_explosion` component. \\\nAny count of stars (including 0) are allowed.",
+      "translation": "烟花星火材料。\\\n通过 `firework_explosion` 组件提供爆炸数据。\\\n允许任意数量的星火（包括 0）。"
+    },
+    {
+      "id": "doc.f29a4d59d1935f8b",
+      "reason": "logic/default/range",
+      "source": "If an item targeted by `slot_source` has this container component, selects all items inside.",
+      "translation": "如果 `slot_source` 目标物品具有此容器组件，则选择其中所有物品。"
+    },
+    {
+      "id": "doc.640f5b3ef07d3f89",
+      "reason": "logic/default/range",
+      "source": "Loot table to use when summoning ominous item spawners. One roll seeded based on rough location to determine all items used during the battle.",
+      "translation": "召唤不祥物品生成器时使用的战利品表。根据大致位置进行一次种子化抽取，以确定战斗期间使用的所有物品。"
+    },
+    {
+      "id": "doc.823723361c679d4b",
+      "reason": "logic/default/range",
+      "source": "The spawn conditions for this variant. Selection process:\n- Conditions for all variants for the given entity type are evaluated for the spawn position\n- Entries with a priority lower than the maximum priority of the remaining entries are removed\n- A random entry is picked out of the remaining ones\n- If no conditions are remaining, the variant remains unchanged from the default",
+      "translation": "此变体的生成条件。选择过程：\n- 评估给定实体类型所有变体的条件以匹配生成位置\n- 移除优先级低于剩余条目中最大优先级的条目\n- 从剩余条目中随机选择一个\n- 若没有剩余条件，变体保持默认状态"
+    },
+    {
+      "id": "doc.146b94fa7ebc159f",
+      "reason": "logic/default/range",
+      "source": "Second item required by the merchant. \\\nThe count is not affected by any factors.",
+      "translation": "商人要求的第二个物品。\\\n数量不受任何因素影响。"
+    },
+    {
+      "id": "doc.bd0b959656a56ac3",
+      "reason": "logic/default/range",
+      "source": "Default music to play",
+      "translation": "默认播放音乐"
+    },
+    {
+      "id": "doc.a54912e34038e77e",
+      "reason": "logic/default/range",
+      "source": "Overrides default music when underwater",
+      "translation": "水下时覆盖默认音乐"
+    },
+    {
+      "id": "doc.a9bdf1b75ac2698b",
+      "reason": "logic/default/range",
+      "source": "Overrides default music when in creative mode",
+      "translation": "在创造模式时覆盖默认音乐"
+    },
+    {
+      "id": "doc.6c181dc49474b21a",
+      "reason": "logic/default/range",
+      "source": "Defaults to constant 0. \\\nAt least one of the offsets must be specified.",
+      "translation": "默认为常数 0。\\\n必须指定至少一个偏移量。"
+    },
+    {
+      "id": "label.dd365d104baf574a",
+      "reason": "numeric tokens differ",
+      "source": "Argument1",
+      "translation": "参数1"
+    },
+    {
+      "id": "label.e3fe068d963c7e0c",
+      "reason": "numeric tokens differ",
+      "source": "Argument2",
+      "translation": "参数2"
+    },
+    {
+      "id": "doc.d895f6a2ce1d81da",
+      "reason": "logic/default/range",
+      "source": "When empty or not present, defaults to all 1.0. \\\nOtherwise, the size must match `octave_count`.",
+      "translation": "当为空或不存在时，默认为所有 1.0。\\\n否则，大小必须与 `octave_count` 匹配。"
+    },
+    {
+      "id": "label.00e55375934780d3",
+      "reason": "numeric tokens differ",
+      "source": "Use alternate layer0 chance",
+      "translation": "使用备选层0概率"
+    },
+    {
+      "id": "label.da06c7cacbfc410b",
+      "reason": "numeric tokens differ",
+      "source": "Placements require layer0 alternate",
+      "translation": "放置需要层0备选"
+    },
+    {
+      "id": "doc.53a588873aa9d4fe",
+      "reason": "logic/default/range",
+      "source": "The features to generate, in order. \\\nAll features are placed regardless of individual placement success.",
+      "translation": "按顺序生成的地物。 \\\n所有地物无论单个放置是否成功都会被放置。"
+    },
+    {
+      "id": "doc.7b4613b14cd14a99",
+      "reason": "logic/default/range",
+      "source": "The features to generate, in order. \\\nIf any feature in the list is not placed, the following features will also be skipped.",
+      "translation": "按顺序生成的地物。\\\n如果列表中任何地物未被放置，后续地物也将被跳过。"
+    },
+    {
+      "id": "label.23b127d0ddf7544d",
+      "reason": "numeric tokens differ",
+      "source": "Chance of spread radius2",
+      "translation": "扩散半径2概率"
+    },
+    {
+      "id": "label.015ec111827f7d6b",
+      "reason": "numeric tokens differ",
+      "source": "Chance of spread radius3",
+      "translation": "扩散半径3概率"
+    },
+    {
+      "id": "doc.b07399ea26fa133f",
+      "reason": "logic/default/range",
+      "source": "Rotations to choose from and apply to this template, centered around the origin.\nIf not specified, defaults to all allowed rotations.",
+      "translation": "可供选择并应用于此模板的旋转，以原点为中心。\n如果未指定，则默认为所有允许的旋转。"
+    },
+    {
+      "id": "doc.f6fcf064f23d33ee",
+      "reason": "logic/default/range",
+      "source": "Defaults to `all`.",
+      "translation": "默认为 `all`。"
+    },
+    {
+      "id": "doc.88bb36b7f1fe4b2e",
+      "reason": "logic/default/range",
+      "source": "Must not be specified in case min_format indicates a format version for 1.21.9 and\nlater.",
+      "translation": "如果 min_format 指示的是 1.21.9 及更高版本的格式版本，则不得在此处指定。"
+    },
+    {
+      "id": "doc.3371ea0b3be89bdb",
+      "reason": "logic/default/range",
+      "source": "Adds all of the modifiers' amounts to the current value of the attribute.",
+      "translation": "将所有修正量的数值加到属性的当前值上。"
+    },
+    {
+      "id": "doc.97f003e3d189282c",
+      "reason": "logic/default/range",
+      "source": "aka. `add_value`. Adds all of the modifiers' amounts to the current value of the attribute.",
+      "translation": "即 `add_value`。将所有修正量的数值加到属性的当前值上。"
+    },
+    {
+      "id": "doc.f0b8202bc1a33492",
+      "reason": "logic/default/range",
+      "source": "Elytra texture override.\nIf this texture is not present either as override or in player profile, the cape texture is used.\nIf the cape texture is also not present, the default elytra texture is used.",
+      "translation": "鞘翅纹理覆盖。\n如果该纹理既不是作为覆盖存在，也不在玩家资料中，则使用披风纹理。\n如果披风纹理也不存在，则使用默认的鞘翅纹理。"
+    },
+    {
+      "id": "doc.ad06ddb2aee85c37",
+      "reason": "logic/default/range",
+      "source": "Event that is being received, if any",
+      "translation": "正在接收的事件，如果有的话"
+    },
+    {
+      "id": "label.0c1ad712dd11a219",
+      "reason": "numeric tokens differ",
+      "source": "Text1",
+      "translation": "文本1"
+    },
+    {
+      "id": "label.a75903b9505ba5c3",
+      "reason": "numeric tokens differ",
+      "source": "Text2",
+      "translation": "文本2"
+    },
+    {
+      "id": "label.f35cffa4f7bb0c1f",
+      "reason": "numeric tokens differ",
+      "source": "Text3",
+      "translation": "文本3"
+    },
+    {
+      "id": "label.023041c6962eee6b",
+      "reason": "numeric tokens differ",
+      "source": "Text4",
+      "translation": "文本4"
+    },
+    {
+      "id": "doc.363712eedc26df9e",
+      "reason": "logic/default/range",
+      "source": "All mobs that have been spawned by this trial spawner and are currently alive",
+      "translation": "由此试炼生成器生成且当前存活的所有生物"
+    },
+    {
+      "id": "doc.1315deace7e4bab7",
+      "reason": "logic/default/range",
+      "source": "When a player is in range of the vault, the same display item will be shown to all players.\nThis is also used for the items that are being ejected from the vault.",
+      "translation": "当玩家进入宝库范围时，所有玩家都将看到相同的显示物品。\n此项也用于从宝库中弹出的物品。"
+    },
+    {
+      "id": "doc.403e6c0687d8ced5",
+      "reason": "logic/default/range",
+      "source": "Sound played during and on completion of item consumption. \\\nIf not specified, the default eating sound will be played.",
+      "translation": "消耗物品期间及完成后播放的声音。 \\\n如果未指定，将播放默认的进食声音。"
+    },
+    {
+      "id": "doc.614b1a8f9faa65c8",
+      "reason": "logic/default/range",
+      "source": "Sound event to play when the item is equipped. \\\nIf not specified, the default armor equip sound will be played.",
+      "translation": "装备物品时播放的声音事件。 \\\n如果未指定，将播放默认的护甲装备声音。"
+    },
+    {
+      "id": "doc.cfc2e865b5ae7138",
+      "reason": "logic/default/range",
+      "source": "Sound event to play when the item is sheared from a mob. \\\nIf not specified, the default shearing sound (`item.shears.snip`) will be played.",
+      "translation": "从生物身上剪下该物品时播放的声音事件。\\\n若未指定，将播放默认剪羊毛声音 (`item.shears.snip`)。"
+    },
+    {
+      "id": "doc.46db15c6c2e1b33d",
+      "reason": "logic/default/range",
+      "source": "Slot or slot type the item must be in for the modifier to take effect. Defaults to `any`.",
+      "translation": "修改生效时物品必须所在的槽位或槽位类型。默认为 `any`。"
+    },
+    {
+      "id": "doc.50e590ed48614681",
+      "reason": "logic/default/range",
+      "source": "Controls how much damage should be blocked in a given attack. If not specified, all damage is blocked.\nEach entry in the list contributes an amount of damage to be blocked, optionally filtered by a damage type.\nEach entry adds to blocked damage, determined by `clamp(base + factor * dealt_damage, 0, dealt_damage)`.\nThe final damage applied in the attack to the entity is determined by `dealt_damage - clamp(blocked_damage, 0, dealt_damage)`.",
+      "translation": "控制在给定攻击中应阻挡多少伤害。如果未指定，则阻挡所有伤害。\n列表中的每项都贡献要阻挡的伤害量，可按伤害类型过滤。\n每项都会增加被阻挡的伤害，由 `clamp(base + factor * dealt_damage, 0, dealt_damage)` 决定。\n攻击对实体造成的最终伤害由 `dealt_damage - clamp(blocked_damage, 0, dealt_damage)` 决定。"
+    },
+    {
+      "id": "doc.78ae9a3787fac4ff",
+      "reason": "logic/default/range",
+      "source": "Whether the entity should make any sound.",
+      "translation": "实体是否应发出任何声音。"
+    },
+    {
+      "id": "doc.ae89941ad7d9a676",
+      "reason": "logic/default/range",
+      "source": "An optional damage type to filter this reduction by.\nIf not specified, any damage type is accepted for this reduction.",
+      "translation": "用于过滤此减伤的可选伤害类型。\n如果未指定，则接受任何伤害类型。"
+    },
+    {
+      "id": "doc.1b9856f7ba5a6dea",
+      "reason": "logic/default/range",
+      "source": "Color of the armor.\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "护甲颜色。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。每个字段必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.48cea0b1a2210a05",
+      "reason": "logic/default/range",
+      "source": "Whether players can equip this item onto a target mob by right-clicking it (as long as this item can be equipped on the target at all).\nThe item will not be equipped if the target already has an item in the relevant slot.\nDefaults to `false`.",
+      "translation": "玩家是否可以通过右键点击目标生物将其装备到目标身上（前提是该物品可以装备到目标身上）。\n如果目标在相关槽位中已有物品，则不会装备该物品。\n默认为 `false`。"
+    },
+    {
+      "id": "doc.16c12437bcb7837d",
+      "reason": "logic/default/range",
+      "source": "Colors of the initial particles of the explosion, randomly selected from.\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "爆炸初始粒子的颜色，从随机选择中选取。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。每个字段必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.2c86249c5e6df9c2",
+      "reason": "logic/default/range",
+      "source": "Calculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "计算为 `RED << 16 | GREEN << 8 | BLUE`。这些字段中的每一个必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.62bb5d2091a57d7e",
+      "reason": "logic/default/range",
+      "source": "Overrides the default mining speed.",
+      "translation": "覆盖默认挖掘速度。"
+    },
+    {
+      "id": "doc.9cd63a9851fd5fa2",
+      "reason": "logic/default/range",
+      "source": "If present, this item will be part of a cooldown group and no longer share cooldowns with its base item type.\nInstead, cooldowns applied to this item will only be shared with any other items that are part of the same cooldown group.",
+      "translation": "如果存在，此物品将成为一个冷却组的一部分，不再与其基础物品类型共享冷却时间。\n相反，应用于此物品的冷却时间将仅与同一冷却组中的其他物品共享。"
+    },
+    {
+      "id": "doc.33e8cec0e4f55614",
+      "reason": "logic/default/range",
+      "source": "A list of tests. For each test, there must be at least one entry whose contents match exactly.",
+      "translation": "测试列表。对于每个测试，必须至少有一个条目的内容完全匹配。"
+    },
+    {
+      "id": "doc.6c5628af02743ec9",
+      "reason": "logic/default/range",
+      "source": "Color of the particles.\ncalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive",
+      "translation": "粒子的颜色。\n计算为 `RED << 16 | GREEN << 8 | BLUE`。这些字段中的每一个必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "label.5ac0bc1131b3e33f",
+      "reason": "numeric tokens differ",
+      "source": "Owner uuidmost",
+      "translation": "所有者UUID高64位"
+    },
+    {
+      "id": "label.f3a545ff26ec9821",
+      "reason": "numeric tokens differ",
+      "source": "Owner uuidleast",
+      "translation": "所有者UUID低64位"
+    },
+    {
+      "id": "doc.86f2a937c45c26ef",
+      "reason": "logic/default/range",
+      "source": "If present, the particle that the area effect cloud displays instead of the default `entity_effect` particle based on the potion contents.",
+      "translation": "如果存在，范围效果云根据药水内容显示的粒子，替代默认的`entity_effect`粒子。"
+    },
+    {
+      "id": "doc.c337fe2fb9e3fe94",
+      "reason": "logic/default/range",
+      "source": "Default potion effect.",
+      "translation": "默认药水效果。"
+    },
+    {
+      "id": "doc.3082815c3607f94d",
+      "reason": "logic/default/range",
+      "source": "Ticks after the next client tick to wait until starting the interpolation.\n\nInfo:\n\nAll interpolated properties are part of a single interpolation set.\n\nAny update to an interpolated property will cause all values of the interpolation set to be saved as \"current\".\n - Data command executions that do not change the value of a property (even if it's present in NBT) do not count as updates.\n - Updates are synchronized to clients at most once per tick, so multiple updates within a single command or a function will still count as a single update.\n\nPrevious current values are saved as \"previous\".\n\nIf interpolation is enabled, the entity will transition between \"previous\" and \"current\" values over time.\n\n`interpolation_duration` must be set every time an interpolatable property is updated to cause interpolation.\n\nNegative values are allowed, will cause an instant jump to the subtracted duration value, then interpolation will continue as normal.",
+      "translation": "等待开始插值所需的客户端滴答数。\n\n信息：\n\n所有插值属性都属于同一个插值集。\n\n对任何插值属性的更新都会导致插值集中的所有值被保存为“当前”值。\n - 未改变属性值的 Data 命令执行（即使 NBT 中存在该属性）不计入更新。\n - 更新最多每滴答同步到客户端一次，因此单个命令或函数中的多次更新仍计为一次更新。\n\n之前的“当前”值将被保存为“之前”值。\n\n如果启用了插值，实体将随时间在“之前”和“当前”值之间过渡。\n\n每次更新可插值属性以触发插值时，必须设置 `interpolation_duration`。\n\n允许负值，将导致立即跳转到减去的时间值，然后正常继续插值。"
+    },
+    {
+      "id": "doc.df2b836348635bd1",
+      "reason": "logic/default/range",
+      "source": "When defined, overrides light values used for rendering. Omitted by default (which means rendering uses values from the entity position).",
+      "translation": "定义时，覆盖渲染使用的光照值。默认省略（意味着渲染使用实体位置的值）。"
+    },
+    {
+      "id": "doc.cea25e05f8806b46",
+      "reason": "logic/default/range",
+      "source": "Maximum view range of this entity. Actual distance depends on client-side render distance and entity distance scaling. Default value 1.0 (roughly the same as fireball).",
+      "translation": "此实体的最大视野范围。实际距离取决于客户端渲染距离和实体距离缩放。默认值为 1.0（大致与火球相同）。"
+    },
+    {
+      "id": "doc.7b73917b4edc13ca",
+      "reason": "logic/default/range",
+      "source": "Describe width of the culling bounding box.\n\nBounding box spans vertically from y to y+height and horizontally width/2 in all directions from the entity position.\n\nIf set to 0, culling is disabled. Defaults to 0.",
+      "translation": "描述剔除包围盒的宽度。\n\n包围盒在垂直方向上从 y 到 y+height 跨度，在水平方向上从实体位置向所有方向跨度 width/2。\n\n如果设置为 0，则禁用剔除。默认为 0。"
+    },
+    {
+      "id": "doc.47196f2d8452ab0e",
+      "reason": "logic/default/range",
+      "source": "Describes height of the culling bounding box.\n\nBounding box spans vertically from y to y+height and horizontally width/2 in all directions from the entity position.\n\nIf set to 0, culling is disabled. Defaults to 0.",
+      "translation": "描述剔除包围盒的高度。\n\n包围盒在垂直方向上从 y 到 y+height 跨度，在水平方向上从实体位置向所有方向跨度 width/2。\n\n如果设置为 0，则禁用剔除。默认为 0。"
+    },
+    {
+      "id": "doc.3f2adafc18d51607",
+      "reason": "logic/default/range",
+      "source": "Override glow border color. If set to 0, uses team color. Defaults to 0.\n\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "覆盖荧光边框颜色。若设为 0，则使用队伍颜色。默认为 0。\n\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。每个字段必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.4ab61084d07faa13",
+      "reason": "logic/default/range",
+      "source": "Color of background. Includes alpha channel. Defaults to 0x40000000. Interpolated.\n\nCalculated as `ALPHA << 24 | RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "背景颜色。包含 alpha 通道。默认为 0x40000000。支持插值。\n\n计算方式为 `ALPHA << 24 | RED << 16 | GREEN << 8 | BLUE`。每个字段必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.981875ae2ced48f9",
+      "reason": "logic/default/range",
+      "source": "If true, overrides `background` & rendering uses default text background color (same as in chat). Defaults to false.",
+      "translation": "若为 true，则覆盖 `background` 且渲染使用默认文本背景颜色（与聊天框相同）。默认为 false。"
+    },
+    {
+      "id": "label.f2002bba29491574",
+      "reason": "numeric tokens differ",
+      "source": "UUIDMost",
+      "translation": "UUID高64位"
+    },
+    {
+      "id": "label.fe3722c89940c532",
+      "reason": "numeric tokens differ",
+      "source": "UUIDLeast",
+      "translation": "UUID低64位"
+    },
+    {
+      "id": "doc.92ed24a05b472b21",
+      "reason": "logic/default/range",
+      "source": "Any stored data",
+      "translation": "所有存储的数据"
+    },
+    {
+      "id": "doc.9d271212e34c1ea3",
+      "reason": "numeric tokens differ",
+      "source": "Ticks that this entity has been freezing. Although this tag is defined for all entities,\nit is actually only used by mobs that are not in the `freeze_immune_entity_types` entity type tag.\nThis increases by one every tick the entity is in powdered snow, and decreases by two when it's out of it.",
+      "translation": "该实体处于冰冻状态的刻数。虽然此标签定义于所有实体，\n但实际上仅由不在 `freeze_immune_entity_types` 实体类型标签中的生物使用。\n每当实体处于粉雪中时，此值每刻增加 1，离开时减少 2。"
+    },
+    {
+      "id": "doc.9d271212e34c1ea3",
+      "reason": "logic/default/range",
+      "source": "Ticks that this entity has been freezing. Although this tag is defined for all entities,\nit is actually only used by mobs that are not in the `freeze_immune_entity_types` entity type tag.\nThis increases by one every tick the entity is in powdered snow, and decreases by two when it's out of it.",
+      "translation": "该实体处于冰冻状态的刻数。虽然此标签定义于所有实体，\n但实际上仅由不在 `freeze_immune_entity_types` 实体类型标签中的生物使用。\n每当实体处于粉雪中时，此值每刻增加 1，离开时减少 2。"
+    },
+    {
+      "id": "doc.fe54547291870363",
+      "reason": "logic/default/range",
+      "source": "Whether the block should be destroyed instead of placed after landing on a solid block.\nWhen `true`, the block is not dropped as an item, even if the DropItem tag is set to `true`.\nHowever, if the entity is deleted due to its Time value being too high, this tag is ignored and an item is dropped depending on the `DropItem` tag.\nDefaults to `1` for falling suspicious sand and suspicious gravel, and `0` for the other vanilla falling blocks and any summoned falling block.",
+      "translation": "落在固体方块上后，方块是否应被销毁而非放置。\n当为 `true` 时，即使 DropItem 标签设置为 `true`，方块也不会作为物品掉落。\n但是，如果实体因 Time 值过高而被删除，此标签将被忽略，并根据 `DropItem` 标签掉落物品。\n对于下落的异常沙子和异常沙砾，默认为 `1`；对于其他原版下落的方块和任何召唤的下落的方块，默认为 `0`。"
+    },
+    {
+      "id": "doc.177ad88fc98cd621",
+      "reason": "logic/default/range",
+      "source": "Whether an action should trigger a response. Defaults to false.\nResponse:\nAttack - When true, the default attack sound is played.\nInteraction - When true, the player's arm swings.",
+      "translation": "动作是否应触发响应。默认为 false。\n响应：\n攻击 - 当为 true 时，播放默认攻击声音。\n交互 - 当为 true 时，玩家手臂会挥动。"
+    },
+    {
+      "id": "doc.d6979fdf59553e70",
+      "reason": "logic/default/range",
+      "source": "Player who threw the item. Can be set and/or changed to any entity.",
+      "translation": "投掷物品的玩家。可以设置为和/或更改为任何实体。"
+    },
+    {
+      "id": "doc.2f5707f90f0462f2",
+      "reason": "logic/default/range",
+      "source": "Chance to drop the items it is holding, in [main hand, offhand].\n\n`0.0` is hardcoded to be unaffected by enchantments. \\\nValues between `0.0` and `1.0` (inclusive) randomizes durability of the dropped item.",
+      "translation": "从 [主手, 副手] 中掉落其持有的物品的几率。\n\n`0.0` 已硬编码为不受附魔影响。 \\\n在 `0.0` 和 `1.0` 之间（包含）的数值将随机化掉落物品的耐久度。"
+    },
+    {
+      "id": "doc.1e37c15b0d076719",
+      "reason": "logic/default/range",
+      "source": "Chance to drop the items it is wearing, in [feet, legs, body, head].\n\n`0.0` is hardcoded to be unaffected by enchantments. \\\nValues between `0.0` and `1.0` (inclusive) randomizes durability of the dropped item.",
+      "translation": "掉落其在 [脚, 腿, 躯干, 头] 槽位上佩戴的物品的几率。\n\n`0.0` 被硬编码为不受附魔影响。 \\\n在 `0.0` 和 `1.0` 之间（包含）的数值会随机化掉落物品的耐久度。"
+    },
+    {
+      "id": "doc.11e35c7e60e91f4a",
+      "reason": "logic/default/range",
+      "source": "Affects per-player reputation which affects trade offer pricing and iron golem behavior.\n\nReputation is assembled through events the villager has witnessed (within 16 blocks) or heard about from other villagers through gossip.\n\nAll reputation parts decay over time except `major_positive` which is only ever increased (when the villager is cured).\n\nDecay occurs every 24k ticks (20 minutes), tracked by `LastGossipDecay`.\n\nOnce a reputation part decays to zero it is removed from the list.",
+      "translation": "影响每个玩家的声望，进而影响交易报价和铁傀儡的行为。\n\n声望通过村民目击的事件（16 块范围内）或从其他村民通过流言听到的信息组成。\n\n除 `major_positive`（仅在村民被治愈时增加）外，所有声望部分都会随时间衰减。\n\n衰减每 24k 刻（20 分钟）发生一次，由 `LastGossipDecay` 跟踪。\n\n一旦声望部分衰减至零，它将从列表中移除。"
+    },
+    {
+      "id": "doc.32c4ffebdbb00090",
+      "reason": "logic/default/range",
+      "source": "`0.0` is hardcoded to be unaffected by enchantments. \\\nValues between `0.0` and `1.0` (inclusive) randomizes durability of the dropped item.",
+      "translation": "`0.0` 已硬编码为不受附魔影响。 \\\n在 `0.0` 和 `1.0` 之间（包含）的数值会随机化掉落物品的耐久度。"
+    },
+    {
+      "id": "doc.de538506be4890c1",
+      "reason": "logic/default/range",
+      "source": "Color of the arrow's potion bubble trail particles.\ncalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "箭的药水气泡轨迹粒子的颜色。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。这些字段中的每一个必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.8c0a91eef81b8a80",
+      "reason": "logic/default/range",
+      "source": "Name of the default potion effect.",
+      "translation": "默认药水效果的名称。"
+    },
+    {
+      "id": "doc.fcd3be1006fd4a8a",
+      "reason": "logic/default/range",
+      "source": "Whether it has been shot. This is set to true when it exists for\nat least one tick, and is used by the game to ensure it only triggers the projectile_shoot\ngame event once.",
+      "translation": "是否已射出。当它存在至少一个刻时，此项设为 true，游戏用它来确保仅触发一次\nprojectile_shoot\n游戏事件。"
+    },
+    {
+      "id": "doc.3eb46ecb691e5c4f",
+      "reason": "logic/default/range",
+      "source": "Colors of the explosion.\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "爆炸颜色。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。每个字段必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.49bc1712117d10ac",
+      "reason": "logic/default/range",
+      "source": "Colors of the explosion fade.\nCalculated as `RED << 16 | GREEN << 8 | BLUE`. Each of these fields must be between 0 and 255, inclusive.",
+      "translation": "爆炸颜色淡化。\n计算方式为 `RED << 16 | GREEN << 8 | BLUE`。每个字段必须在 0 到 255 之间（包含边界）。"
+    },
+    {
+      "id": "doc.f963579e211ff546",
+      "reason": "logic/default/range",
+      "source": "Default potion effect",
+      "translation": "默认药水效果"
+    },
+    {
+      "id": "doc.c90347915478f600",
+      "reason": "logic/default/range",
+      "source": "Licensing information.\nShould provide the complete set of preferred licenses conveying the entire mod package. In other words, compliance with all listed licenses should be sufficient for usage, redistribution, etc. of the mod package as a whole.\nFor cases where a part of code is dual-licensed, choose the preferred license. The list is not exhaustive, serves primarily as a kind of hint, and does not prevent you from granting additional rights/licenses on a case-by-case basis.\nTo aid automated tools, it is recommended to use [SPDX License Identifiers](https://spdx.org/licenses/) for open-source licenses.",
+      "translation": "许可信息。\n应提供涵盖整个模组包的完整首选许可集。换句话说，遵守所有列出的许可就足以用于整个模组包的使用、重新分发等。\n对于代码部分采用双重许可的情况，请选择首选许可。此列表并非详尽无遗，主要作为一种提示，且不会阻止您根据情况授予额外的权利/许可。\n为了辅助自动化工具，建议使用 [SPDX 许可标识符](https://spdx.org/licenses/) 用于开源许可。"
+    },
+    {
+      "id": "doc.da9742ee458c6ece",
+      "reason": "numeric tokens differ",
+      "source": "The mod's icon file. Should be a square PNG image.\nResource packs use 128×128, but that is not a hard requirement. A power of two is recommended.\nCan also be provided as a dictionary of images widths to their file paths.",
+      "translation": "模组图标文件。应为正方形 PNG 图像。\n资源包使用 128×128，但这不是硬性要求。建议使用 2 的幂次方。\n也可以作为图像宽度到文件路径的字典提供。"
+    },
+    {
+      "id": "doc.fef04ef41df90872",
+      "reason": "logic/default/range",
+      "source": "Defaults to `default`.",
+      "translation": "默认为 `default`。"
+    },
+    {
+      "id": "doc.b60c5901c486474c",
+      "reason": "logic/default/range",
+      "source": "An IntBounds describes an inclusive integer range, or a plain `int` for [n, n].",
+      "translation": "IntBounds 描述一个包含的整数范围，或者用于 [n, n] 的普通 `int`。"
+    },
+    {
+      "id": "doc.5286eb4c6db8a64b",
+      "reason": "logic/default/range",
+      "source": "A DoubleBounds describes an inclusive float range, or a plain `float` for [n, n].",
+      "translation": "DoubleBounds 描述一个包含的浮点数范围，或者用于 [n, n] 的普通 `float`。"
+    },
+    {
+      "id": "doc.a451fa59e28daa48",
+      "reason": "logic/default/range",
+      "source": "A Lychee-compatible block predicate. Extends the vanilla BlockPredicate.\nShorthand: `*` (all), `<block_id>[<prop>=<val>,...]{<nbt>}`, `#<tag>`.",
+      "translation": "兼容 Lychee 的方块谓词。扩展了原版的 BlockPredicate。\n简写：`*` (all), `<block_id>[<prop>=<val>,...]{<nbt>}`, `#<tag>`。"
+    },
+    {
+      "id": "doc.0af5c25a13b88384",
+      "reason": "logic/default/range",
+      "source": "Overrides the default description with a translation key.",
+      "translation": "使用翻译键覆盖默认描述。"
+    },
+    {
+      "id": "doc.71a243a02350498b",
+      "reason": "logic/default/range",
+      "source": "True if any of the wrapped conditions passes.",
+      "translation": "如果包装的任何条件通过则为真。"
+    },
+    {
+      "id": "doc.7dcb6f78392a359e",
+      "reason": "logic/default/range",
+      "source": "True if all of the wrapped conditions pass.",
+      "translation": "如果包装的所有条件都通过则为真。"
+    },
+    {
+      "id": "doc.95e21a7b26fb7bd7",
+      "reason": "logic/default/range",
+      "source": "Target items via JSON pointer. Defaults to all items.",
+      "translation": "通过 JSON 指针目标物品。默认为所有物品。"
+    },
+    {
+      "id": "doc.574ff7b190a04d27",
+      "reason": "logic/default/range",
+      "source": "Prevents the default recipe behavior.\nShorthand: `prevent_default`.",
+      "translation": "阻止默认的配方行为。\n简写：`prevent_default`。"
+    },
+    {
+      "id": "doc.5c439db54b395709",
+      "reason": "logic/default/range",
+      "source": "Block particles. Defaults to default explosion block particles.",
+      "translation": "方块粒子。默认为默认爆炸方块粒子。"
+    },
+    {
+      "id": "doc.257b5b3807ca3ba6",
+      "reason": "logic/default/range",
+      "source": "Use Item on a Block. Not repeatable. Default: item is consumed.",
+      "translation": "在方块上使用物品。不可重复。默认：消耗物品。"
+    },
+    {
+      "id": "doc.c72ba82d0f056865",
+      "reason": "logic/default/range",
+      "source": "Click on a Block with Item. Not repeatable. Default: item is consumed.",
+      "translation": "使用物品点击方块。不可重复。默认：消耗物品。"
+    },
+    {
+      "id": "doc.009f24f8382413d9",
+      "reason": "logic/default/range",
+      "source": "Item Entity Burning. Repeatable. Default: none.",
+      "translation": "物品实体燃烧。可重复。默认：无。"
+    },
+    {
+      "id": "doc.9751cef560fffda6",
+      "reason": "logic/default/range",
+      "source": "Item Entity inside a Block. Repeatable. Default: item is consumed.",
+      "translation": "方块内的物品实体。可重复。默认：消耗物品。"
+    },
+    {
+      "id": "doc.dc83937bd54c80ba",
+      "reason": "logic/default/range",
+      "source": "Anvil Crafting. Not repeatable. Default: anvil is damaged.",
+      "translation": "铁砧制作。不可重复。默认：铁砧受损。"
+    },
+    {
+      "id": "doc.68a1009efac3faa9",
+      "reason": "logic/default/range",
+      "source": "Block Crushing. Repeatable. Default: falling block becomes block.",
+      "translation": "方块粉碎。可重复。默认：下落的方块变为方块。"
+    },
+    {
+      "id": "doc.97eb5589782b320e",
+      "reason": "logic/default/range",
+      "source": "The landing block. Defaults to any block.",
+      "translation": "着陆方块。默认为任何方块。"
+    },
+    {
+      "id": "doc.5fc3453e1df44fc5",
+      "reason": "logic/default/range",
+      "source": "Lightning Channeling. Repeatable. Default: items are consumed.",
+      "translation": "闪电引雷。可重复。默认：物品被消耗。"
+    },
+    {
+      "id": "doc.f14ac53526f19ded",
+      "reason": "logic/default/range",
+      "source": "Item Exploding. Repeatable. Default: items are consumed.",
+      "translation": "物品爆炸。可重复。默认：物品被消耗。"
+    },
+    {
+      "id": "doc.4ad608781b5a67e4",
+      "reason": "logic/default/range",
+      "source": "Block Exploding. Not repeatable. Default: block drops items from loot table.",
+      "translation": "方块爆炸。不可重复。默认：方块从战利品表中掉落物品。"
+    },
+    {
+      "id": "doc.6d0f29a801bab749",
+      "reason": "logic/default/range",
+      "source": "Block filter for which this tree is allowed to grow on. Checks all of the red wool positions defined by the trunk.",
+      "translation": "允许此树生长的方块过滤器。检查由树干定义的全部红色羊毛位置。"
+    },
+    {
+      "id": "doc.2a08ee6d2d9c73be",
+      "reason": "logic/default/range",
+      "source": "This represents the star range of the raid that the allies from this set will appear in (i.e. 1, 5 means it will spawn in all raids or 1,1 would only spawn in 1 star raids)",
+      "translation": "这代表此集合中的盟友将出现的袭击星级范围（例如，1, 5 意味着它将出现在所有袭击中，而 1,1 则仅出现在1星袭击中）"
+    },
+    {
+      "id": "doc.dc8775ec4d5e38e7",
+      "reason": "logic/default/range",
+      "source": "Default: 25",
+      "translation": "默认值：25"
+    },
+    {
+      "id": "doc.4c05157ec1c394f9",
+      "reason": "logic/default/range",
+      "source": "Default black",
+      "translation": "默认黑色"
+    },
+    {
+      "id": "doc.a859798efb489ee4",
+      "reason": "logic/default/range",
+      "source": "Default white",
+      "translation": "默认白色"
+    },
+    {
+      "id": "doc.8d800fd06153f159",
+      "reason": "logic/default/range",
+      "source": "If the player can abandon the research (default: false)",
+      "translation": "玩家是否可以放弃研究（默认：false）"
+    },
+    {
+      "id": "doc.4d02bd817b911b2b",
+      "reason": "logic/default/range",
+      "source": "If the player can do the research multiple times (default: false)",
+      "translation": "玩家是否可以多次进行研究（默认：false）"
+    },
+    {
+      "id": "doc.53bb1fa4f9078ce9",
+      "reason": "logic/default/range",
+      "source": "If true the player can only have one of these research at a time (default: false)",
+      "translation": "如果为 true，玩家一次只能拥有其中一项研究（默认：false）"
+    },
+    {
+      "id": "doc.83e6e54af22669e7",
+      "reason": "logic/default/range",
+      "source": "Default: true",
+      "translation": "默认值：true"
+    },
+    {
+      "id": "doc.c4a4d9b883c99f86",
+      "reason": "logic/default/range",
+      "source": "Default: none",
+      "translation": "默认值：无"
+    },
+    {
+      "id": "doc.958593428ba2620c",
+      "reason": "logic/default/range",
+      "source": "Keywords that replace all instances of themselves with a link to this guidebook entry. All keywords must be a translation key.",
+      "translation": "将所有出现的关键词替换为指向此指南条目的链接。所有关键词必须是翻译键。"
+    },
+    {
+      "id": "label.6f9b8801722508ff",
+      "reason": "numeric tokens differ",
+      "source": "Item0",
+      "translation": "物品0"
+    },
+    {
+      "id": "label.3824c3c9e987ebf4",
+      "reason": "numeric tokens differ",
+      "source": "Item1",
+      "translation": "物品1"
+    },
+    {
+      "id": "label.6e8f61914596b349",
+      "reason": "numeric tokens differ",
+      "source": "Item2",
+      "translation": "物品2"
+    },
+    {
+      "id": "label.0eba79f4747039ec",
+      "reason": "numeric tokens differ",
+      "source": "Item3",
+      "translation": "物品3"
+    },
+    {
+      "id": "label.1106a4d99e4cdc7b",
+      "reason": "numeric tokens differ",
+      "source": "Item4",
+      "translation": "物品4"
+    },
+    {
+      "id": "label.f40a6c7684a9a499",
+      "reason": "numeric tokens differ",
+      "source": "Item5",
+      "translation": "物品5"
+    },
+    {
+      "id": "label.759028b873372a55",
+      "reason": "numeric tokens differ",
+      "source": "Item6",
+      "translation": "物品6"
+    },
+    {
+      "id": "label.86d24503cac4805d",
+      "reason": "numeric tokens differ",
+      "source": "Item7",
+      "translation": "物品7"
+    },
+    {
+      "id": "label.c90f955ec13de8ce",
+      "reason": "numeric tokens differ",
+      "source": "Item8",
+      "translation": "物品8"
+    },
+    {
+      "id": "doc.cfb0616f7ffe1d07",
+      "reason": "logic/default/range",
+      "source": "Must contain at least one entry.",
+      "translation": "必须包含至少一个条目。"
+    },
+    {
+      "id": "doc.ee97a41d4e6b4a2b",
+      "reason": "logic/default/range",
+      "source": "Default value of `1.0`.",
+      "translation": "`1.0` 的默认值。"
+    },
+    {
+      "id": "doc.690af4ae77670706",
+      "reason": "logic/default/range",
+      "source": "Should this override other datapack's files of the same name. False will merge them. Default to false",
+      "translation": "是否覆盖同名的数据包文件。False 将合并它们。默认为 false"
+    },
+    {
+      "id": "doc.f3557209057f18ba",
+      "reason": "logic/default/range",
+      "source": "(optional) Inclusive ",
+      "translation": "（可选）包含"
+    }
+  ]
+}

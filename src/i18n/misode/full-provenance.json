@@ -1,0 +1,7 @@
+{
+  "ref": "f70b052cba38357cebd655c5bb1c6bae96352866",
+  "model": "google/gemma-4-12b-qat",
+  "scope": "all vanilla-mcdoc symbols, bundled partner mcdoc comments/fields, static JSX text and display attributes",
+  "schemaRepository": "https://github.com/SpyglassMC/vanilla-mcdoc",
+  "glossaryRepository": "https://github.com/CFPAOrg/Glossary"
+}

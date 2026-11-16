@@ -37,9 +37,9 @@
   },
   "generator.jsg:rig_waves": {
     "source": "JSG RIG Waves",
-    "translation": "JSG RIG 波浪",
-    "review": "needs-context",
-    "reviewNote": "尚未确认 RIG 的领域含义以及 Waves 指波形还是波次，暂不采用模型的“波浪”。"
+    "translation": "JSG RIG 波次",
+    "review": "proper-name-preserved",
+    "reviewNote": "保留未经确认的模组专名/模式名，不宣称官方中文名。"
   },
   "generator.jsg_core:recipes": {
     "source": "JSG: Core Recipes",
@@ -79,15 +79,15 @@
   },
   "generator.pixelmon:raid_ally_set": {
     "source": "Pixelmon Raid Ally Set",
-    "translation": "Pixelmon 袭击盟友集合",
-    "review": "needs-context",
-    "reviewNote": "Pixelmon 的 Raid 与原版“袭击”不是已确认的同一概念，需核对该模组术语。"
+    "translation": "Pixelmon Raid 盟友集合",
+    "review": "proper-name-preserved",
+    "reviewNote": "保留未经确认的模组专名/模式名，不宣称官方中文名。"
   },
   "generator.pixelmon:raid_spawn_set": {
     "source": "Pixelmon Raid Spawn Set",
-    "translation": "Pixelmon 袭击生成集合",
-    "review": "needs-context",
-    "reviewNote": "Pixelmon 的 Raid 与原版“袭击”不是已确认的同一概念，需核对该模组术语。"
+    "translation": "Pixelmon Raid 生成集合",
+    "review": "proper-name-preserved",
+    "reviewNote": "保留未经确认的模组专名/模式名，不宣称官方中文名。"
   },
   "generator.starexpress:guidebook_entry": {
     "source": "Guidebook Entry",
@@ -119,11 +119,11 @@
   },
   "generator.worldgen/material_condition": {
     "source": "Material Condition",
-    "translation": "材质条件"
+    "translation": "材料条件"
   },
   "generator.worldgen/material_rule": {
     "source": "Material Rule",
-    "translation": "材质规则"
+    "translation": "材料规则"
   },
   "modded": {
     "source": "Modded",
