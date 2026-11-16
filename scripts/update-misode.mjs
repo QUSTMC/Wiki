@@ -17,6 +17,22 @@ function content(repo, revision, path, present) {
 }
 function same(a, b) { return a === null || b === null ? a === b : a.equals(b); }
 
+function mergeInput(path, data) {
+  if (data === null || data.includes(0)) return data;
+  // merge-file does not apply working-tree normalization from merge.renormalize.
+  // Normalize text explicitly, preserving binary data byte-for-byte.
+  let text = data.toString('utf8');
+  if (!Buffer.from(text, 'utf8').equals(data)) return data;
+  text = text.replace(/\r\n/g, '\n');
+  if (path === 'src/app/services/DataFetcher.ts') {
+    // This exact legacy adaptation now lives in our build plugin. Remove only
+    // the path prefix, retaining every surrounding upstream/local logic change.
+    text = text.replace('cachedFetch(`/misode/mcdoc/${dependency}.mcdoc`', 'cachedFetch(`/mcdoc/${dependency}.mcdoc`');
+  }
+  return Buffer.from(text, 'utf8');
+}
+
+
 export function updateMisode(repo, workspace = root) {
   const destination = join(workspace, 'vendor/misode');
   const stateFile = join(workspace, 'vendor/misode-upstream.json');
@@ -34,9 +50,9 @@ export function updateMisode(repo, workspace = root) {
     for (const path of new Set([...basePaths, ...nextPaths])) {
       const target = resolve(destination, path);
       if (!target.startsWith(resolve(destination) + sep)) throw new Error(`Invalid path: ${path}`);
-      const base = content(repo, state.revision, path, basePaths);
-      const incoming = content(repo, latest, path, nextPaths);
-      const local = existsSync(target) ? readFileSync(target) : null;
+      const base = mergeInput(path, content(repo, state.revision, path, basePaths));
+      const incoming = mergeInput(path, content(repo, latest, path, nextPaths));
+      const local = mergeInput(path, existsSync(target) ? readFileSync(target) : null);
       let merged;
       if (same(base, incoming)) continue;
       if (same(local, base) || same(local, incoming)) merged = incoming;
@@ -44,7 +60,7 @@ export function updateMisode(repo, workspace = root) {
         conflicts.push(path); continue;
       } else {
         for (const [name, data] of [['local', local], ['base', base], ['incoming', incoming]]) writeFileSync(join(scratch, name), data);
-        // Ignore line-ending differences introduced by Windows checkouts.
+        // Inputs have already been normalized; all remaining differences are real edits.
         const result = spawnSync('git', ['-c', 'merge.renormalize=true', 'merge-file', '--stdout', '--', join(scratch, 'local'), join(scratch, 'base'), join(scratch, 'incoming')], { maxBuffer: 30 * 1024 * 1024 });
         if (result.error) throw result.error;
         if (result.status !== 0) { conflicts.push(path); continue; }

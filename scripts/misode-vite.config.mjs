@@ -15,6 +15,15 @@ export default mergeConfig(loaded.config, {
     name: 'qust-misode-chinese',
     enforce: 'pre',
     transform(code, id) {
+      if (id.replaceAll('\\', '/').split('?')[0].endsWith('/app/services/DataFetcher.ts')) {
+        const originalPath = '`/mcdoc/${dependency}.mcdoc`';
+        const localPath = '`/misode/mcdoc/${dependency}.mcdoc`';
+        if (!code.includes(originalPath) && !code.includes(localPath)) this.error('Misode dependency document path changed; review the /misode/ resource adapter');
+        // Build-only adaptation: avoid conflicting with upstream fetch logic.
+        code = code.replace(originalPath, localPath);
+        return { code, map: null };
+      }
+
       const fullRuntime = fileURLToPath(new URL('./misode-full-runtime.mjs', import.meta.url));
       const translatedJsx = translateStaticJsx(code, id, uiSources, fullRuntime);
       if (translatedJsx) code = translatedJsx;
