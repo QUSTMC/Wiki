@@ -248,3 +248,33 @@ header nav .btn-menu > .btn svg { display: block; width: 20px; height: 20px; mar
 .qust-completion-option { padding: 8px 12px; min-height: 36px; cursor: pointer; overflow-wrap: anywhere; }
 .qust-completion-option:hover, .qust-completion-option[aria-selected='true'] { background: var(--primary-background); color: var(--primary-text); }
 .qust-completion-status { padding: 8px 12px; border-top: 1px solid var(--qust-edge); color: var(--text-3); font-family: 'QUST Fusion Pixel', system-ui, sans-serif; }
+
+/* The homepage's outer grid defaults to an auto/min-content track. A wider
+ * control or platform fallback font must not expand every generator card. */
+.qust-translation-notice + .grid {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+.qust-translation-notice + .grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.navigation > * { max-width: 100%; }
+.navigation > .btn-menu { min-width: 0; }
+.tool-card > div { min-width: 0; overflow-wrap: anywhere; }
+
+/* Nested homepage columns/news panels need the same shrink contract as the
+ * outer generator grid; asynchronous cards must not set an auto minimum. */
+.qust-translation-notice + .grid :is(.grid, .flex-col, .tool-body) {
+  min-width: 0;
+  max-width: 100%;
+}
+.qust-translation-notice + .grid :is(.grid, .flex-col, .tool-body) > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.qust-translation-notice + .grid .card {
+  box-sizing: border-box;
+  max-width: 100%;
+}

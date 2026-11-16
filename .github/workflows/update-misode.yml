@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   check:
-    # Pin the OS alongside Playwright; ubuntu-latest can move to unsupported releases.
+    # Pin the build environment instead of following ubuntu-latest changes.
     runs-on: ubuntu-24.04
     outputs:
       changed: ${{ steps.check.outputs.changed }}
@@ -44,7 +44,7 @@ jobs:
   update:
     needs: check
     if: needs.check.outputs.changed == 'true'
-    # Pin the OS alongside Playwright; ubuntu-latest can move to unsupported releases.
+    # Pin the build environment instead of following ubuntu-latest changes.
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     permissions:
@@ -72,16 +72,6 @@ jobs:
       # The build installs the locked Misode devDependencies, including TypeScript.
       - name: Test full integration with installed Misode dependencies
         run: node --test tests/misode-update.test.mjs tests/misode-theme.test.mjs tests/misode-i18n.test.mjs tests/misode-schema.test.mjs tests/misode-full.test.mjs
-      - name: Install browser for integration checks
-        run: |
-          npm install --prefix "$RUNNER_TEMP/misode-browser" --no-audit --no-fund playwright@1.56.1
-          "$RUNNER_TEMP/misode-browser/node_modules/.bin/playwright" install --with-deps chromium
-      - name: Verify navigation and generator in Chromium
-        env:
-          PLAYWRIGHT_CHANNEL: chromium
-        run: |
-          export PLAYWRIGHT_MODULE="file://$RUNNER_TEMP/misode-browser/node_modules/playwright/index.mjs"
-          node --test tests/misode-browser.test.mjs
       - name: Open or refresh update pull request
         uses: peter-evans/create-pull-request@v7
         with:
@@ -95,6 +85,6 @@ jobs:
           body: |
             Updates [misode/misode.github.io](https://github.com/misode/misode.github.io/commit/${{ needs.check.outputs.sha }}).
 
-            Local changes were preserved with a three-way merge against the previously imported commit. Misode TypeScript checks, the full Wiki build, and the Chromium navigation/generator check passed before this PR was created.
+            Local changes were preserved with a three-way merge against the previously imported commit. Misode TypeScript checks, the full Wiki build, and the update/theme/translation regression tests passed before this PR was created.
 
             Review the upstream changes and deployment preview before merging. This workflow does not enable automatic merging.

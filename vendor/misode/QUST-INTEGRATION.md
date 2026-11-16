@@ -18,7 +18,7 @@ Minecraft 版本元数据、schema、预览资源仍从上游 mcmeta/vanilla-mcd
 
 工作流 `.github/workflows/update-misode.yml` 每天北京时间 11:23 检查上游 master，也可在 GitHub Actions 中手动运行。GitHub 定时任务可能延迟。有新提交时，以 `vendor/misode-upstream.json` 的 revision 为基线进行三方合并，保留本站修改及后续自定义内容；不是用上游文件直接覆盖本站。
 
-冲突时中止，不写入半成品；无冲突时执行 Misode TypeScript 检查、完整 Astro 构建及 Chromium 导航/生成器测试，全部通过后创建或更新同一个 `codex/update-misode` 分支的 PR。不会自动合并。故障会显示在 Actions 的失败记录中。
+冲突时中止，不写入半成品；无冲突时执行 Misode TypeScript 检查、完整 Astro 构建及更新、主题、翻译回归测试，全部通过后创建或更新同一个 `codex/update-misode` 分支的 PR。不会自动合并。故障会显示在 Actions 的失败记录中。
 
 工作流必须先提交到默认分支才会开始定时运行。请在 GitHub Settings → Actions → General → Workflow permissions 中启用 “Allow GitHub Actions to create and approve pull requests”；组织策略也需要允许创建 PR。无需额外 PAT，使用内置 GITHUB_TOKEN。该令牌创建的 PR 通常不会触发其他 push/pull_request 工作流，因此更新验证在本工作流内完成。
 
