@@ -155,17 +155,50 @@ test('Misode integration keeps navigation, deep links and resources under its pr
     navigation.append(element);
     return element;
   });
+  // Cover asynchronously inserted nested cards without depending on the timing
+  // or language of the external news feed in a particular CI run.
+  const nestedProbe = await page.locator('.tool-body').first().evaluateHandle(body => {
+    const card = document.createElement('a');
+    card.className = 'card';
+    card.dataset.qustNestedProbe = '';
+    const content = document.createElement('div');
+    content.className = 'card-content';
+    content.textContent = 'MinecraftLongUnbrokenNewsTitle_'.repeat(12);
+    card.append(content);
+    body.append(card);
+    return card;
+  });
   try {
-    await page.waitForFunction(() => [...document.querySelectorAll('a.card')].every(element => {
-      const r = element.getBoundingClientRect();
-      return r.left >= 15.5 && r.right <= innerWidth - 15.5;
-    }), null, { timeout: 5000 });
+    try {
+      await page.waitForFunction(() => {
+        const primary = document.querySelectorAll('.qust-translation-notice + .grid > :first-child .card-grid > a.card');
+        const all = document.querySelectorAll('a.card');
+        return primary.length > 0 && [...primary].every(element => {
+          const r = element.getBoundingClientRect();
+          return r.left >= 15.5 && r.right <= innerWidth - 15.5;
+        }) && [...all].every(element => {
+          const r = element.getBoundingClientRect();
+          const parent = element.parentElement.getBoundingClientRect();
+          return r.left >= -0.5 && r.right <= innerWidth + 0.5 && r.left >= parent.left - 0.5 && r.right <= parent.right + 0.5;
+        });
+      }, null, { timeout: 5000 });
+    } catch (cause) {
+      const geometry = await page.locator('a.card').evaluateAll(cards => cards.map(element => ({
+        text: element.textContent?.slice(0, 160),
+        rect: element.getBoundingClientRect().toJSON(),
+        parent: { class: element.parentElement.className, rect: element.parentElement.getBoundingClientRect().toJSON() },
+        primary: element.matches('.qust-translation-notice + .grid > :first-child .card-grid > a.card'),
+      })));
+      assert.fail(`Intrinsic-width stress layout failed at ${await page.evaluate(() => innerWidth)}px: ${JSON.stringify(geometry)}; ${cause.message}`);
+    }
     const container = await page.locator('.qust-translation-notice + .grid').evaluate(element => ({
       rect: element.getBoundingClientRect().toJSON(),
       child: element.firstElementChild.getBoundingClientRect().toJSON(),
     }));
     assert.ok(container.child.width <= 288.5, `homepage content must fit 320px minus gutters: ${JSON.stringify(container)}`);
   } finally {
+    await nestedProbe.evaluate(element => element.remove());
+    await nestedProbe.dispose();
     await intrinsicProbe.evaluate(element => element.remove());
     await intrinsicProbe.dispose();
   }

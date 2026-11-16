@@ -263,3 +263,18 @@ header nav .btn-menu > .btn svg { display: block; width: 20px; height: 20px; mar
 .navigation > * { max-width: 100%; }
 .navigation > .btn-menu { min-width: 0; }
 .tool-card > div { min-width: 0; overflow-wrap: anywhere; }
+
+/* Nested homepage columns/news panels need the same shrink contract as the
+ * outer generator grid; asynchronous cards must not set an auto minimum. */
+.qust-translation-notice + .grid :is(.grid, .flex-col, .tool-body) {
+  min-width: 0;
+  max-width: 100%;
+}
+.qust-translation-notice + .grid :is(.grid, .flex-col, .tool-body) > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.qust-translation-notice + .grid .card {
+  box-sizing: border-box;
+  max-width: 100%;
+}
