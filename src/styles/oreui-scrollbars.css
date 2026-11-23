@@ -1,0 +1,54 @@
+/* Shared OreUI scrollbar appearance. CSS only: native scrolling, no DOM/JS shim.
+ * Explicit .ore-scrollbar widgets keep the oreui-web component implementation. */
+:root {
+  --qust-scroll-track: var(--gray-90);
+  --qust-scroll-edge: var(--gray-100);
+  --qust-scroll-thumb: var(--gray-40);
+  --qust-scroll-hover: var(--gray-30);
+  --qust-scroll-light: var(--white-opacity-60);
+  --qust-scroll-shadow: var(--gray-60);
+}
+:root[data-theme='light'], :root:not(.dark):not([data-theme]) {
+  --qust-scroll-track: var(--gray-30);
+  --qust-scroll-edge: var(--gray-60);
+  --qust-scroll-thumb: var(--gray-40);
+  --qust-scroll-hover: var(--gray-50);
+  --qust-scroll-light: var(--white-opacity-80);
+  --qust-scroll-shadow: var(--gray-60);
+}
+/* Chromium supports scrollbar-color too, but it suppresses the custom bevels.
+ * Use the standard properties only where WebKit scrollbar styling is absent. */
+@supports not selector(::-webkit-scrollbar) {
+  :where(html, body, body *):not(.ore-scrollbar) {
+    scrollbar-color: var(--qust-scroll-thumb) var(--qust-scroll-track);
+    scrollbar-width: auto;
+  }
+}
+:where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+:where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar-track {
+  background: var(--qust-scroll-track);
+  border: 1px solid var(--qust-scroll-edge);
+}
+:where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar-thumb {
+  min-height: 32px;
+  min-width: 32px;
+  border: 2px solid var(--qust-scroll-edge);
+  border-radius: 0;
+  background: var(--qust-scroll-thumb);
+  box-shadow: inset 2px 2px var(--qust-scroll-light), inset -2px -3px var(--qust-scroll-shadow);
+}
+:where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar-thumb:hover {
+  background: var(--qust-scroll-hover);
+}
+:where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar-corner {
+  background: var(--qust-scroll-track);
+}
+/* Let operating-system accessibility colors take precedence. */
+@media (forced-colors: active) {
+  :where(html, body, body *):not(.ore-scrollbar) { scrollbar-color: auto; }
+  :where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar-track { background: Canvas; border-color: CanvasText; }
+  :where(html, body, body *):not(.ore-scrollbar)::-webkit-scrollbar-thumb { background: ButtonText; border-color: Canvas; box-shadow: none; }
+}
