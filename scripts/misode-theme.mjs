@@ -7,6 +7,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 export const themeInputs = [
   join(root, 'src/styles/vendor/oreui/colors.css'),
   join(root, 'src/styles/misode/oreui.css'),
+  join(root, 'src/styles/oreui-scrollbars.css'),
   fileURLToPath(import.meta.url),
 ];
 
@@ -15,7 +16,7 @@ const defaults = `<script data-qust-misode-defaults>try{if(localStorage.getItem(
 
 /** Inject our theme into every generated entry, without changing upstream source. */
 export function applyMisodeTheme(directory) {
-  const css = themeInputs.slice(0, 2).map(path => readFileSync(path, 'utf8')).join('\n');
+  const css = themeInputs.slice(0, -1).map(path => readFileSync(path, 'utf8')).join('\n');
   const hash = createHash('sha256');
   for (const path of themeInputs) hash.update(readFileSync(path));
   const version = hash.digest('hex').slice(0, 16);

@@ -1,6 +1,7 @@
 /* OreUI → Starlight adapter. Upstream colors and bevels: Spectrollay (MIT).
  * See vendor/oreui/LICENSE and README.md for attribution and update details. */
 @import './vendor/oreui/colors.css';
+@import './oreui-scrollbars.css';
 
 :root {
 	--sl-color-white: var(--white);
